@@ -11,6 +11,37 @@
 		4833047219AF1635002F8DA9 /* AeroGearOAuth2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833047119AF1635002F8DA9 /* AeroGearOAuth2Tests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4833048019AF28AD002F8DA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F3C40A1197BCCD80072D66A;
+			remoteInfo = AGURLSessionStubs;
+		};
+		4833048219AF28AD002F8DA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F3C40AC197BCCD80072D66A;
+			remoteInfo = AGURLSessionStubsTests;
+		};
+		4833048A19AF28D9002F8DA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 488B6B5C196B19BC000297C9;
+			remoteInfo = AeroGearHttp;
+		};
+		4833048C19AF28D9002F8DA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 488B6B67196B19BC000297C9;
+			remoteInfo = AeroGearHttpTests;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833046619AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -18,6 +49,8 @@
 		4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroGearOAuth2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833047019AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4833047119AF1635002F8DA9 /* AeroGearOAuth2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AeroGearOAuth2Tests.swift; sourceTree = "<group>"; };
+		4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AGURLSessionStubs.xcodeproj; path = "aerogear-ios-httpstub/AGURLSessionStubs.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AeroGearHttp.xcodeproj; path = "aerogear-ios-http/AeroGearHttp.xcodeproj"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +101,7 @@
 		4833046519AF1635002F8DA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */,
 				4833046619AF1635002F8DA9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -85,9 +119,28 @@
 		4833046F19AF1635002F8DA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */,
 				4833047019AF1635002F8DA9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4833047C19AF28AD002F8DA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4833048119AF28AD002F8DA9 /* AGURLSessionStubs.framework */,
+				4833048319AF28AD002F8DA9 /* AGURLSessionStubsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4833048519AF28D9002F8DA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4833048B19AF28D9002F8DA9 /* AeroGearHttp.framework */,
+				4833048D19AF28D9002F8DA9 /* AeroGearHttpTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +219,16 @@
 			mainGroup = 4833045819AF1635002F8DA9;
 			productRefGroup = 4833046319AF1635002F8DA9 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4833048519AF28D9002F8DA9 /* Products */;
+					ProjectRef = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
+				},
+				{
+					ProductGroup = 4833047C19AF28AD002F8DA9 /* Products */;
+					ProjectRef = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4833046119AF1635002F8DA9 /* AeroGearOAuth2 */,
@@ -173,6 +236,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4833048119AF28AD002F8DA9 /* AGURLSessionStubs.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AGURLSessionStubs.framework;
+			remoteRef = 4833048019AF28AD002F8DA9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4833048319AF28AD002F8DA9 /* AGURLSessionStubsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AGURLSessionStubsTests.xctest;
+			remoteRef = 4833048219AF28AD002F8DA9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4833048B19AF28D9002F8DA9 /* AeroGearHttp.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AeroGearHttp.framework;
+			remoteRef = 4833048A19AF28D9002F8DA9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4833048D19AF28D9002F8DA9 /* AeroGearHttpTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AeroGearHttpTests.xctest;
+			remoteRef = 4833048C19AF28D9002F8DA9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4833046019AF1635002F8DA9 /* Resources */ = {
@@ -374,6 +468,7 @@
 				4833047719AF1635002F8DA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2Tests" */ = {
 			isa = XCConfigurationList;
@@ -382,6 +477,7 @@
 				4833047A19AF1635002F8DA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
