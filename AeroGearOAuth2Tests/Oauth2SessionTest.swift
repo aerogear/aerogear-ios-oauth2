@@ -17,12 +17,14 @@
 
 import UIKit
 import XCTest
+import AeroGearOAuth2
 
-class AeroGearOAuth2Tests: XCTestCase {
-    
+class OAuth2SessionTests: XCTestCase {
+
+    //let dictionary: [String:Any] = [ "accessToken": "ACCESS_TOKEN"]
+    //let dictionaryComplete: [String:Any] = ["id": "MY_FACEBOOK_ID", "accessToken": "ACCESS_TOKEN", "accessTokenExpirationDate": "12/02/2021", "refreshToken": "REFRESH_TOKEN"]
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
@@ -30,16 +32,14 @@ class AeroGearOAuth2Tests: XCTestCase {
         super.tearDown()
     }
     
-//    func testExample() {
-//        // This is an example of a functional test case.
-//        XCTAssert(true, "Pass")
-//    }
-//    
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock() {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
+    func testInitFromDictionary() {
+        let session = OAuth2Session(accountId: "MY_FACEBOOK_ID")
+        XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+    }
+    
+    func testInitFromDictionaryComplete() {
+        let session = OAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS")
+        XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+    }
     
 }

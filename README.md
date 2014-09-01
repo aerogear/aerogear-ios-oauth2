@@ -31,6 +31,8 @@ Before running the tests, ensure that a copy is added in your project using `git
 git submodule init && git submodule update
 ```
 
+Before Building or running test for AeroGearAuth2, please select 'AGURLSessionStubs' and run test target on simulator. Do the same for 'AeroGearHttp'.
+
 You are now ready to run the tests.
 
 ## Adding the library to your project 

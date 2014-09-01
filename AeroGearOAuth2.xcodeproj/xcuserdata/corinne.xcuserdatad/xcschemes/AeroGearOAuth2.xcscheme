@@ -28,7 +28,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4833046C19AF1635002F8DA9"
+               BuildableName = "AeroGearOAuth2Tests.xctest"
+               BlueprintName = "AeroGearOAuth2Tests"
+               ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BuildableName = "AeroGearOAuth2.framework"
+            BlueprintName = "AeroGearOAuth2"
+            ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
