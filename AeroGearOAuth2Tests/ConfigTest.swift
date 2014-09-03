@@ -20,7 +20,6 @@ import XCTest
 import AeroGearOAuth2
 
 class ConfigTests: XCTestCase {
-    //public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, revokeTokenEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
 
     let myConfig1 = Config(base: "http://someserver.com", authzEndpoint: "rest/authz", redirectURL: "redirect", accessTokenEndpoint: "rest/access", clientId: "id", revokeTokenEndpoint: "rest/revoke")
     let myConfig2 = Config(base: "http://someserver.com/", authzEndpoint: "rest/authz", redirectURL: "redirect", accessTokenEndpoint: "rest/access", clientId: "id", revokeTokenEndpoint: "rest/revoke")

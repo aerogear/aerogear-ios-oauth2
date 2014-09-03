@@ -21,8 +21,6 @@ import AeroGearOAuth2
 
 class OAuth2SessionTests: XCTestCase {
 
-    //let dictionary: [String:Any] = [ "accessToken": "ACCESS_TOKEN"]
-    //let dictionaryComplete: [String:Any] = ["id": "MY_FACEBOOK_ID", "accessToken": "ACCESS_TOKEN", "accessTokenExpirationDate": "12/02/2021", "refreshToken": "REFRESH_TOKEN"]
     override func setUp() {
         super.setUp()
     }

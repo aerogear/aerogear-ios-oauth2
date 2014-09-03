@@ -16,7 +16,6 @@
 */
 
 import AeroGearHttp
-
 public typealias SuccessType = AnyObject?->()
 public typealias FailureType = NSError->()
 
@@ -41,7 +40,11 @@ public class OAuth2Module {
     
     // used without AccountManager, default accountId, not really usefull
     public convenience init(config:Config) {
-        self.init(config: config, accountId:"ACCOUNT_FOR_CLIENTID_\(config.clientId)")
+        if (config.accountId != nil) {
+            self.init(config: config, accountId:config.accountId!)
+        } else {
+            self.init(config: config, accountId:"ACCOUNT_FOR_CLIENTID_\(config.clientId)")
+        }
     }
     
     // used by AccountManager with a user given accountId
@@ -56,7 +59,16 @@ public class OAuth2Module {
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
     
     public func requestAuthorizationCodeSuccess(success:SuccessType, failure:FailureType) {
-        let url = NSURL(string:"\(config.authzEndpointURL.absoluteString)/?scope=\(config.scopes)&redirect_uri=\(config.redirectURL)&client_id=\(config.clientId)&response_type=code")
+        
+        let urlString = self.urlAsString();
+        println("URL==\(urlString)")
+        
+        let url = NSURL(string: urlString)
+        
+        //let url = NSURL(string:"\(config.authzEndpointURL.absoluteString!)?scope=\(config.scopes)&redirect_uri=\(config.redirectURL)&client_id=\(config.clientId)&response_type=code")
+        
+        println("\(config.authzEndpointURL.absoluteString!)?scope=\(config.scopes)&redirect_uri=\(config.redirectURL)&client_id=\(config.clientId)&response_type=code")
+        println("URL:\(url.absoluteString!)")
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
@@ -88,9 +100,9 @@ public class OAuth2Module {
     }
     
     public func exchangeAuthorizationCodeForAccessToken(code: String, success:SuccessType, failure:FailureType) {
-
+        
     }
-
+    
     public func requestAccessSuccess(success:SuccessType, failure:FailureType) {
         if (self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()) {
             // we already have a valid access token, nothing more to be done
@@ -113,15 +125,15 @@ public class OAuth2Module {
         httpSession.baseURL = config.revokeTokenEndpointURL!
         
         httpSession.POST(parameters: paramDict, success: { (param: AnyObject?) -> () in
-                self.oauth2Session.saveAccessToken()
-                success(param!)
+            self.oauth2Session.saveAccessToken()
+            success(param!)
             }, failure: { (error: NSError) -> () in
                 failure(error)
-            })
-
+        })
+        
     }
-
-
+    
+    
     // MARK: Internal Methods
     
     func extractCode(notification:NSNotification, success:AnyObject->(), failure:NSError->()) {
@@ -137,7 +149,7 @@ public class OAuth2Module {
             NSNotificationCenter.defaultCenter().removeObserver(applicationLaunchNotificationObserver!)
             self.applicationLaunchNotificationObserver = nil;
         }
-
+        
         if (applicationDidBecomeActiveNotificationObserver != nil) {
             NSNotificationCenter.defaultCenter().removeObserver(applicationDidBecomeActiveNotificationObserver!)
             applicationDidBecomeActiveNotificationObserver = nil
@@ -155,6 +167,33 @@ public class OAuth2Module {
     func isAuthorized() -> Bool {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()
     }
-
-
+    
+    func urlAsString() -> String {
+        let scope = self.scope()
+        let urlRedirect = self.urlEncodeString(config.redirectURL)
+        let url = "\(config.authzEndpointURL.absoluteString!)?scope=\(scope)&redirect_uri=\(urlRedirect)&client_id=\(config.clientId)&response_type=code"
+        return url
+    }
+    
+    func scope() -> String {
+        // Create a string to concatenate all scopes existing in the _scopes array.
+        var scopeString = ""
+        for scope in config.scopes {
+            scopeString += self.urlEncodeString(scope)
+            // If the current scope is other than the last one, then add the "+" sign to the string to separate the scopes.
+            if (scope != config.scopes.last) {
+                scopeString += "+"
+            }
+        }
+        return scopeString
+    }
+    
+    func urlEncodeString(stringToURLEncode:String) -> String {
+        let encodedURL = CFURLCreateStringByAddingPercentEscapes(nil,
+            stringToURLEncode as NSString,
+            nil,
+            "!@#$%&*'();:=+,/?[]",
+            CFStringBuiltInEncodings.UTF8.toRaw())
+        return encodedURL as NSString
+    }
 }
