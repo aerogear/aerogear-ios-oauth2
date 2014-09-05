@@ -64,22 +64,6 @@ public class OAuth2Session {
         }
     }
     
-    /**
-    * Serialize into NSDictionary instance an AGOAuth2AuthzSession object.
-    */
-//    func toDictionary() {
-//    }
-    
-    /**
-    * Init OAuth2Session object from a Dictionary.
-    */
-//    public init(dictionary: [String: Any]) {
-//        self.accessToken = dictionary["accessToken"] as?  String
-//        self.accessTokenExpirationDate = dictionary["accessTokenExpirationDate"] as? NSDate
-//        self.refreshToken = dictionary["refreshToken"] as? String
-//        self.accountId = dictionary["id"] as String
-//    }
-    
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil) {
         self.accessToken = accessToken
         self.accessTokenExpirationDate = accessTokenExpirationDate

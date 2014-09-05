@@ -36,8 +36,12 @@ public struct Config {
     
     public var authzEndpointURL: NSURL {
         get {
-            var formattedEndpoint = authzEndpoint.hasPrefix("/") ? (authzEndpoint as NSString).substringFromIndex(1) : authzEndpoint
-            return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+            if authzEndpoint.hasPrefix("http") {
+                return NSURL(string: authzEndpoint)
+            } else {
+                var formattedEndpoint = authzEndpoint.hasPrefix("/") ? (authzEndpoint as NSString).substringFromIndex(1) : authzEndpoint
+                return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+            }
         }
     }
     
@@ -56,8 +60,12 @@ public struct Config {
     */
     public var accessTokenEndpointURL: NSURL {
         get {
-            var formattedEndpoint = accessTokenEndpoint.hasPrefix("/") ? (accessTokenEndpoint as NSString).substringFromIndex(1) : accessTokenEndpoint
-            return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+            if accessTokenEndpoint.hasPrefix("http") {
+                return NSURL(string: accessTokenEndpoint)
+            } else {
+                var formattedEndpoint = accessTokenEndpoint.hasPrefix("/") ? (accessTokenEndpoint as NSString).substringFromIndex(1) : accessTokenEndpoint
+                return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+            }
         }
     }
     
@@ -72,8 +80,12 @@ public struct Config {
     public var revokeTokenEndpointURL: NSURL? {
         get {
             if let unwrappedRevokeTokenEndpoint = revokeTokenEndpoint {
-                var formattedEndpoint = unwrappedRevokeTokenEndpoint.hasPrefix("/") ? (unwrappedRevokeTokenEndpoint as NSString).substringFromIndex(1) : unwrappedRevokeTokenEndpoint
-                return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+                if (revokeTokenEndpoint != nil && revokeTokenEndpoint!.hasPrefix("http")) {
+                    return NSURL(string: revokeTokenEndpoint!)
+                } else {
+                    var formattedEndpoint = unwrappedRevokeTokenEndpoint.hasPrefix("/") ? (unwrappedRevokeTokenEndpoint as NSString).substringFromIndex(1) : unwrappedRevokeTokenEndpoint
+                    return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+                }
             } else {
                 return nil
             }
