@@ -47,26 +47,26 @@ public class OAuth2Module {
             return Http()
         }
     }
-    var oauth2Session: TrustedPersistantOAuth2Session
+    var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
     
-    // used without AccountManager, default accountId, not really usefull
+    // Default accountId, default to TrustedPersistantOAuth2Session
     public required convenience init(config: Config) {
         if (config.accountId != nil) {
-            self.init(config: config, accountId:config.accountId!)
+            self.init(config: config, accountId:config.accountId!, session: TrustedPersistantOAuth2Session(accountId: config.accountId!))
         } else {
-            self.init(config: config, accountId:"ACCOUNT_FOR_CLIENTID_\(config.clientId)")
+            let accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
+            self.init(config: config, accountId: accountId, session: TrustedPersistantOAuth2Session(accountId: accountId))
         }
     }
     
-    // used by AccountManager with a user given accountId
-    public required init(config: Config, accountId: String) {
+    public required init(config: Config, accountId: String, session: OAuth2Session) {
         self.config = config
         // TODO use timeout config paramter
         self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration())
-        self.oauth2Session = TrustedPersistantOAuth2Session(accountId: accountId)
+        self.oauth2Session = session
         self.state = .AuthorizationStateUnknown
     }
     

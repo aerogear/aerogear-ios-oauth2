@@ -20,8 +20,8 @@ import AeroGearHttp
 
 public class FacebookOAuth2Module: OAuth2Module {
 
-    required public init(config: Config, accountId: String) {
-        super.init(config: config, accountId: accountId)
+    required public init(config: Config, accountId: String, session: OAuth2Session) {
+        super.init(config: config, accountId: accountId, session: session)
         self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration(), requestSerializer: JsonRequestSerializer(url: NSURL(string: config.base), headers: [String: String]()), responseSerializer: StringResponseSerializer())
     }
     

@@ -62,11 +62,7 @@ public class AccountManager {
     
     public class func addAccount(config: Config, moduleClass: OAuth2Module.Type) -> OAuth2Module {
         var myModule:OAuth2Module
-        if let unwrappedAccountId = config.accountId {
-            myModule = moduleClass(config: config, accountId: unwrappedAccountId)
-        } else { // generated accountId with clienId stored in oauth2Session
-            myModule = moduleClass(config: config)
-        }
+        myModule = moduleClass(config: config)
         // TODO check accountId is unique in modules list
         sharedInstance.modules[myModule.oauth2Session.accountId] = myModule
         return myModule

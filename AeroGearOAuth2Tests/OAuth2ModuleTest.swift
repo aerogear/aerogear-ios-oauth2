@@ -17,29 +17,35 @@
 
 import UIKit
 import XCTest
+import AeroGearOAuth2
+import AGURLSessionStubs
 
-class AeroGearOAuth2Tests: XCTestCase {
+class OAuth2ModuleTests: XCTestCase {
+    
+    func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
+        var data: NSData
+        if ((params) != nil) {
+            data = NSJSONSerialization.dataWithJSONObject(params!, options: nil, error: nil)!
+        } else {
+            data = NSData.data()
+        }
+        return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
+    }
+    
+    func http_200_response(request: NSURLRequest!) -> StubResponse {
+        return http_200(request, params: ["key1":"value1"])
+    }
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        StubsManager.removeAllStubs()
     }
     
-//    func testExample() {
-//        // This is an example of a functional test case.
-//        XCTAssert(true, "Pass")
-//    }
-//    
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock() {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-    
+    func testRequestAccessSucessful() {
+        //TODO AGIOS-mock
+    }
 }
