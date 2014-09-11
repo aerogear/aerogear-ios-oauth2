@@ -16,58 +16,36 @@
 */
 import Foundation
 
-extension String {
-    var doubleValue: Double {
-        return (self as NSString).doubleValue
-    }
-}
-
-public class OAuth2Session {
-    
+public protocol OAuth2Session {
     /**
     * The account id.
     */
-    public let accountId: String
+    var accountId: String {get}
     
     /**
     * The access token which expires.
     */
-    var accessToken: String?
+    var accessToken: String? {get set}
     
     /**
     * The access token's expiration date.
     */
-    var accessTokenExpirationDate: NSDate?
+    var accessTokenExpirationDate: NSDate? {get set}
     
     /**
     * The refresh tokens. This toke does not expire and should be used to renew access token when expired.
     */
-    var refreshToken: String?
+    var refreshToken: String? {get set}
     
     /**
     * Check validity of accessToken. return true if still valid, false when expired.
     */
-    func tokenIsNotExpired() -> Bool {
-        return self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0 ;
-    }
+    func tokenIsNotExpired() -> Bool
     
     /**
     * Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
     * for grant access.
     */
-    func saveAccessToken(accessToken: String? = nil, refreshToken: String? = nil, expiration: String? = nil) {
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        let now = NSDate()
-        if let inter = expiration?.doubleValue {
-            self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
-        }
-    }
-    
-    public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil) {
-        self.accessToken = accessToken
-        self.accessTokenExpirationDate = accessTokenExpirationDate
-        self.refreshToken = refreshToken
-        self.accountId = accountId
-    }
+    func saveAccessToken()
+    func saveAccessToken(accessToken: String?, refreshToken: String?, expiration: String?)
 }

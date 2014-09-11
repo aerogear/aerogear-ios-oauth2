@@ -17,7 +17,7 @@
 
 import Foundation
 
-public struct Config {
+public class Config {
     /**
     * Applies the baseURL to the configuration.
     */

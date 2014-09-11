@@ -16,10 +16,11 @@
 */
 
 import Foundation
+import AeroGearHttp
 
 public class FacebookOAuth2Module: OAuth2Module {
 
-    override public init(config: Config, accountId: String) {
+    required public init(config: Config, accountId: String) {
         super.init(config: config, accountId: accountId)
         self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration(), requestSerializer: JsonRequestSerializer(url: NSURL(string: config.base), headers: [String: String]()), responseSerializer: StringResponseSerializer())
     }
@@ -52,7 +53,7 @@ public class FacebookOAuth2Module: OAuth2Module {
                     }
                 }
                 //println("access:\(accessToken!) expires:\(expiredIn!)")
-                self.oauth2Session.saveAccessToken(accessToken: accessToken, refreshToken: nil, expiration: expiredIn)
+                self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, expiration: expiredIn)
                 success(accessToken)
             }
             }, failure: {(error: NSError) -> () in

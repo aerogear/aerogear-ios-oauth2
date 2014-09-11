@@ -19,6 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 
+
 class OAuth2SessionTests: XCTestCase {
 
     override func setUp() {
@@ -30,14 +31,32 @@ class OAuth2SessionTests: XCTestCase {
         super.tearDown()
     }
     
-    func testInitFromDictionary() {
-        let session = OAuth2Session(accountId: "MY_FACEBOOK_ID")
+    func testInitUntrustedMemoryOAuth2SessionWithoutAccessToken() {
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID")
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+        XCTAssert(session.accessToken ==  nil, "session should be without access token")
     }
     
-    func testInitFromDictionaryComplete() {
-        let session = OAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS")
+    func testInitUntrustedMemoryOAuth2SessionWithAccessToken() {
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS")
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+        XCTAssert(session.accessToken ==  "ACCESS", "session should be with access token")
+    }
+    
+    func testSaveNilTokens() {
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS", refreshToken: "REFRESH")
+        session.saveAccessToken()
+        XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+        XCTAssert(session.accessToken ==  nil, "session should be without access token")
+        XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
+    }
+    
+    func testSaveTokens() {
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS", refreshToken: "REFRESH")
+        session.saveAccessToken()
+        XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
+        XCTAssert(session.accessToken ==  nil, "session should be without access token")
+        XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
     }
     
 }

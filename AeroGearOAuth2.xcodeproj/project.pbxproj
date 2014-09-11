@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		48070BF819B07AA000FCE5FA /* ConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48070BF719B07AA000FCE5FA /* ConfigTest.swift */; };
+		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
+		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
+		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
 		4833046819AF1635002F8DA9 /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4833047219AF1635002F8DA9 /* AeroGearOAuth2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833047119AF1635002F8DA9 /* AeroGearOAuth2Tests.swift */; };
 		483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
@@ -50,6 +53,9 @@
 
 /* Begin PBXFileReference section */
 		48070BF719B07AA000FCE5FA /* ConfigTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTest.swift; sourceTree = "<group>"; };
+		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
+		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
+		4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2Module.swift; sourceTree = "<group>"; };
 		4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833046619AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AeroGearOAuth2.h; sourceTree = "<group>"; };
@@ -110,6 +116,9 @@
 				483304A419AF44DF002F8DA9 /* Config.swift */,
 				48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */,
 				48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */,
+				4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */,
+				4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */,
+				4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */,
 			);
 			path = AeroGearOAuth2;
 			sourceTree = "<group>";
@@ -311,7 +320,10 @@
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
+				4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */,
+				4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */,
 				483304A519AF44DF002F8DA9 /* Config.swift in Sources */,
+				4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
