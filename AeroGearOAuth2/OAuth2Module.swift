@@ -37,35 +37,36 @@ public class OAuth2Module {
     let config: Config
     var httpAuthz: Http
 
-    public lazy var http: Http = {
-        var headerFields: [String: String]?
-        if (self.isAuthorized()) {
-            headerFields = self.authorizationFields()
-            return Http(url: nil, sessionConfig: nil, headers: headerFields != nil ? headerFields! : [String: String]())
+    public var http: Http {
+        get {
+            var headerFields: [String: String]?
+            if (self.isAuthorized()) {
+                headerFields = self.authorizationFields()
+                return Http(url: nil, sessionConfig: nil, headers: headerFields != nil ? headerFields! : [String: String]())
+            }
+            return Http()
         }
-        
-        return Http()
-        }()
+    }
     var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
     
-    // used without AccountManager, default accountId, not really usefull
-    public convenience init(config: Config) {
+    // Default accountId, default to TrustedPersistantOAuth2Session
+    public required convenience init(config: Config) {
         if (config.accountId != nil) {
-            self.init(config: config, accountId:config.accountId!)
+            self.init(config: config, accountId:config.accountId!, session: TrustedPersistantOAuth2Session(accountId: config.accountId!))
         } else {
-            self.init(config: config, accountId:"ACCOUNT_FOR_CLIENTID_\(config.clientId)")
+            let accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
+            self.init(config: config, accountId: accountId, session: TrustedPersistantOAuth2Session(accountId: accountId))
         }
     }
     
-    // used by AccountManager with a user given accountId
-    public init(config: Config, accountId: String) {
+    public required init(config: Config, accountId: String, session: OAuth2Session) {
         self.config = config
         // TODO use timeout config paramter
         self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration())
-        self.oauth2Session = OAuth2Session(accountId:accountId)
+        self.oauth2Session = session
         self.state = .AuthorizationStateUnknown
     }
     
@@ -114,7 +115,7 @@ public class OAuth2Module {
                     let expiration = unwrappedResponse["expires_in"] as NSNumber
                     let exp: String = expiration.stringValue
                     
-                    self.oauth2Session.saveAccessToken(accessToken: accessToken, refreshToken: unwrappedRefreshToken, expiration: exp)
+                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, expiration: exp)
                     success(unwrappedResponse["access_token"]);
                 }
             }, failure: { (error: NSError) -> Void in
@@ -139,7 +140,7 @@ public class OAuth2Module {
                 let expiration = unwrappedResponse["expires_in"] as NSNumber
                 let exp: String = expiration.stringValue
                 
-                self.oauth2Session.saveAccessToken(accessToken: accessToken, refreshToken: refreshToken, expiration: exp)
+                self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, expiration: exp)
                 success(accessToken)
             }
         }, failure: {(error: NSError) -> () in
