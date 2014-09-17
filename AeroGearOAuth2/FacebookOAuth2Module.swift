@@ -16,13 +16,12 @@
 */
 
 import Foundation
-import AeroGearHttp
 
 public class FacebookOAuth2Module: OAuth2Module {
 
     required public init(config: Config, accountId: String, session: OAuth2Session) {
         super.init(config: config, accountId: accountId, session: session)
-        self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration(), requestSerializer: JsonRequestSerializer(url: NSURL(string: config.base), headers: [String: String]()), responseSerializer: StringResponseSerializer())
+        self.http = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration(), requestSerializer: JsonRequestSerializer(url: NSURL(string: config.base), headers: [String: String]()), responseSerializer: StringResponseSerializer())
     }
     
     override public func exchangeAuthorizationCodeForAccessToken(code: String, success: SuccessType, failure: FailureType) {
@@ -32,8 +31,8 @@ public class FacebookOAuth2Module: OAuth2Module {
             paramDict["client_secret"] = unwrapped
         }
         
-        httpAuthz.baseURL = config.accessTokenEndpointURL
-        httpAuthz.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
+        http.baseURL = config.accessTokenEndpointURL
+        http.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
             if let unwrappedResponse = responseObject as? String {
                 
                 var accessToken: String? = nil
@@ -67,9 +66,9 @@ public class FacebookOAuth2Module: OAuth2Module {
             return;
         }
         let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
-        httpAuthz.baseURL = config.revokeTokenEndpointURL!
-        
-        httpAuthz.DELETE(parameters: paramDict, success: { (param: AnyObject?) -> () in
+
+        http.baseURL = config.revokeTokenEndpointURL!
+        http.DELETE(parameters: paramDict, success: { (param: AnyObject?) -> () in
             self.oauth2Session.saveAccessToken()
             success(param!)
             }, failure: { (error: NSError) -> () in
