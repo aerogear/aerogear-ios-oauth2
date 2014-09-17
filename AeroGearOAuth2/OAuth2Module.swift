@@ -17,11 +17,10 @@
 
 import Foundation
 import UIKit
-import AeroGearHttp
 
 public let AGAppLaunchedWithURLNotification = "AGAppLaunchedWithURLNotification"
 public let AGAppDidBecomeActiveNotification = "AGAppDidBecomeActiveNotification"
-let AGAuthzErrorDomain = "AGAuthzErrorDomain"
+public let AGAuthzErrorDomain = "AGAuthzErrorDomain"
 
 enum AuthorizationState {
     case AuthorizationStatePendingExternalApproval
@@ -31,9 +30,8 @@ enum AuthorizationState {
 
 public class OAuth2Module: AuthzModule {
     let config: Config
-    var httpAuthz: Http
+    var http: Http
 
-    public var http: Http
     var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
@@ -52,11 +50,9 @@ public class OAuth2Module: AuthzModule {
     public required init(config: Config, accountId: String, session: OAuth2Session) {
         self.config = config
         // TODO use timeout config paramter
-        self.httpAuthz = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration())
+        self.http = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration())
         self.oauth2Session = session
         self.state = .AuthorizationStateUnknown
-        self.http = Http()
-        self.http.authzModule = self
     }
     
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
@@ -97,8 +93,8 @@ public class OAuth2Module: AuthzModule {
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
-            httpAuthz.baseURL = config.accessTokenEndpointURL
-            httpAuthz.POST(parameters: paramDict, success: { (responseObject: AnyObject?) -> Void in
+            http.baseURL = config.accessTokenEndpointURL
+            http.POST(parameters: paramDict, success: { (responseObject: AnyObject?) -> Void in
                 if let unwrappedResponse = responseObject as? [String: AnyObject] {
                     let accessToken: String = unwrappedResponse["access_token"] as NSString
                     let expiration = unwrappedResponse["expires_in"] as NSNumber
@@ -120,8 +116,8 @@ public class OAuth2Module: AuthzModule {
             paramDict["client_secret"] = unwrapped
         }
         
-        httpAuthz.baseURL = config.accessTokenEndpointURL
-        httpAuthz.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
+        http.baseURL = config.accessTokenEndpointURL
+        http.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
                 
                 let accessToken: String = unwrappedResponse["access_token"] as NSString
@@ -156,9 +152,9 @@ public class OAuth2Module: AuthzModule {
             return;
         }
         let paramDict:[String:String] = ["token":self.oauth2Session.accessToken!]
-        httpAuthz.baseURL = config.revokeTokenEndpointURL!
-        
-        httpAuthz.POST(parameters: paramDict, success: { (param: AnyObject?) -> () in
+
+        http.baseURL = config.revokeTokenEndpointURL!
+        http.POST(parameters: paramDict, success: { (param: AnyObject?) -> () in
                 self.oauth2Session.saveAccessToken()
                 success(param!)
             }, failure: { (error: NSError) -> () in
