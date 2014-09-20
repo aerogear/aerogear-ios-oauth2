@@ -17,7 +17,6 @@
 
 import Foundation
 import UIKit
-import AeroGearHttp
 
 public let AGAppLaunchedWithURLNotification = "AGAppLaunchedWithURLNotification"
 public let AGAppDidBecomeActiveNotification = "AGAppDidBecomeActiveNotification"
@@ -51,7 +50,7 @@ public class OAuth2Module: AuthzModule {
     public required init(config: Config, accountId: String, session: OAuth2Session) {
         self.config = config
         // TODO use timeout config paramter
-        self.http = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration())
+        self.http = Http(url: config.base)
         self.oauth2Session = session
         self.state = .AuthorizationStateUnknown
     }

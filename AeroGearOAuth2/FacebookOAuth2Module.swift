@@ -16,13 +16,15 @@
 */
 
 import Foundation
-import AeroGearHttp
 
 public class FacebookOAuth2Module: OAuth2Module {
 
     required public init(config: Config, accountId: String, session: OAuth2Session) {
         super.init(config: config, accountId: accountId, session: session)
-        self.http = Http(url: config.base, sessionConfig: NSURLSessionConfiguration.defaultSessionConfiguration(), requestSerializer: JsonRequestSerializer(url: NSURL(string: config.base), headers: [String: String]()), responseSerializer: StringResponseSerializer())
+        
+        http = Http(url: config.base)
+        http.responseSerializer = StringResponseSerializer()
+        
     }
     
     override public func exchangeAuthorizationCodeForAccessToken(code: String, success: SuccessType, failure: FailureType) {
