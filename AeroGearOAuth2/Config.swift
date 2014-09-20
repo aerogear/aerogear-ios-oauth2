@@ -93,6 +93,30 @@ public class Config {
     }
     
     /**
+    * Endpoint for request a refreshToken.
+    */
+    public let refreshTokenEndpoint: String?
+    
+    /**
+    * Computed property to get URL by taking care of extra or missing pre or postfix '/'.
+    */
+    public var refreshTokenEndpointURL: NSURL? {
+        get {
+            if let unwrappedRefreshTokenEndpoint = refreshTokenEndpoint {
+                if (refreshTokenEndpoint != nil && refreshTokenEndpoint!.hasPrefix("http")) {
+                    return NSURL(string: refreshTokenEndpoint!)
+                } else {
+                    var formattedEndpoint = unwrappedRefreshTokenEndpoint.hasPrefix("/") ? (unwrappedRefreshTokenEndpoint as NSString).substringFromIndex(1) : unwrappedRefreshTokenEndpoint
+                    return baseURL.URLByAppendingPathComponent(formattedEndpoint)
+                }
+            } else {
+                return nil
+            }
+        }
+    }
+
+    
+    /**
     * Applies the various scopes of the authorization.
     */
     public let scopes: [String]
@@ -113,11 +137,12 @@ public class Config {
     */
     public let accountId: String?
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, revokeTokenEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
         self.base = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
         self.accessTokenEndpoint = accessTokenEndpoint
+        self.refreshTokenEndpoint = refreshTokenEndpoint
         self.revokeTokenEndpoint = revokeTokenEndpoint
         self.scopes = scopes
         self.clientId = clientId
