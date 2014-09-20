@@ -27,7 +27,7 @@ public class FacebookOAuth2Module: OAuth2Module {
         
     }
     
-    override public func exchangeAuthorizationCodeForAccessToken(code: String, success: SuccessType, failure: FailureType) {
+    override public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
         
         if let unwrapped = config.clientSecret {
@@ -35,9 +35,14 @@ public class FacebookOAuth2Module: OAuth2Module {
         }
         
         http.baseURL = config.accessTokenEndpointURL
-        http.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
-            if let unwrappedResponse = responseObject as? String {
-                
+        http.POST(parameters: paramDict, completionHandler: { (response, error) in
+            
+            if (error != nil) {
+                completionHandler(nil, error)
+                return
+            }
+            
+            if let unwrappedResponse = response as? String {
                 var accessToken: String? = nil
                 var expiredIn: String? = nil
                 
@@ -56,14 +61,12 @@ public class FacebookOAuth2Module: OAuth2Module {
                 }
                 //println("access:\(accessToken!) expires:\(expiredIn!)")
                 self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, expiration: expiredIn)
-                success(accessToken)
+                completionHandler(accessToken, nil)
             }
-            }, failure: {(error: NSError) -> () in
-                failure(error)
         })
     }
     
-    override public func revokeAccessSuccess(success: SuccessType, failure: FailureType) {
+    override public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return;
@@ -71,11 +74,15 @@ public class FacebookOAuth2Module: OAuth2Module {
         let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
 
         http.baseURL = config.revokeTokenEndpointURL!
-        http.DELETE(parameters: paramDict, success: { (param: AnyObject?) -> () in
+        http.DELETE(parameters: paramDict, completionHandler: { (response, error) in
+            
+            if (error != nil) {
+                completionHandler(nil, error)
+                return
+            }
+            
             self.oauth2Session.saveAccessToken()
-            success(param!)
-            }, failure: { (error: NSError) -> () in
-                failure(error)
+            completionHandler(response!, nil)
         })
     }
 }

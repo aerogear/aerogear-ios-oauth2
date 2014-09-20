@@ -31,7 +31,7 @@ enum AuthorizationState {
 public class OAuth2Module: AuthzModule {
     let config: Config
     var http: Http
-
+    
     var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
@@ -57,14 +57,14 @@ public class OAuth2Module: AuthzModule {
     
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
     
-    public func requestAuthorizationCodeSuccess(success: SuccessType, failure: FailureType) {
+    public func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
         let urlString = self.urlAsString();
         let url = NSURL(string: urlString)
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
-            self.extractCode(notification, success: success, failure: failure)
+            self.extractCode(notification, completionHandler: completionHandler)
         })
         
         // register to receive notification when the application becomes active so we
@@ -87,30 +87,33 @@ public class OAuth2Module: AuthzModule {
         UIApplication.sharedApplication().openURL(url);
     }
     
-    public func refreshAccessTokenSuccess(success: SuccessType, failure: FailureType) {
+    public func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
-            
             http.baseURL = config.refreshTokenEndpointURL
-            http.POST(parameters: paramDict, success: { (responseObject: AnyObject?) -> Void in
-                if let unwrappedResponse = responseObject as? [String: AnyObject] {
+            http.POST(parameters: paramDict, completionHandler: { (response, error) in
+                
+                if (error != nil) {
+                    completionHandler(nil, error)
+                    return
+                }
+                
+                if let unwrappedResponse = response as? [String: AnyObject] {
                     let accessToken: String = unwrappedResponse["access_token"] as NSString
                     let expiration = unwrappedResponse["expires_in"] as NSNumber
                     let exp: String = expiration.stringValue
                     
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, expiration: exp)
-                    success(unwrappedResponse["access_token"]);
+                    completionHandler(unwrappedResponse["access_token"], nil);
                 }
-            }, failure: { (error: NSError) -> Void in
-                failure(error);
             })
         }
     }
     
-    public func exchangeAuthorizationCodeForAccessToken(code: String, success: SuccessType, failure: FailureType) {
+    public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
         
         if let unwrapped = config.clientSecret {
@@ -118,7 +121,13 @@ public class OAuth2Module: AuthzModule {
         }
         
         http.baseURL = config.accessTokenEndpointURL
-        http.POST(parameters: paramDict, success: {(responseObject: AnyObject?) -> () in
+        http.POST(parameters: paramDict, completionHandler: {(responseObject, error) in
+            
+            if (error != nil) {
+                completionHandler(nil, error)
+                return
+            }
+            
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
                 
                 let accessToken: String = unwrappedResponse["access_token"] as NSString
@@ -127,40 +136,41 @@ public class OAuth2Module: AuthzModule {
                 let exp: String = expiration.stringValue
                 
                 self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, expiration: exp)
-                success(accessToken)
+                completionHandler(accessToken, nil)
             }
-        }, failure: {(error: NSError) -> () in
-                failure(error)
         })
     }
-
-    public func requestAccessSuccess(success: SuccessType, failure: FailureType) {
+    
+    public func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         if (self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()) {
             // we already have a valid access token, nothing more to be done
-            success(self.oauth2Session.accessToken!);
+            completionHandler(self.oauth2Session.accessToken!, nil);
         } else if (self.oauth2Session.refreshToken != nil) {
             // need to refresh token
-            self.refreshAccessTokenSuccess(success, failure:failure);
+            self.refreshAccessToken(completionHandler)
         } else {
             // ask for authorization code and once obtained exchange code for access token
-            self.requestAuthorizationCodeSuccess(success, failure:failure);
+            self.requestAuthorizationCode(completionHandler)
         }
     }
     
-    public func revokeAccessSuccess(success: SuccessType, failure: FailureType) {
+    public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return;
         }
         let paramDict:[String:String] = ["token":self.oauth2Session.accessToken!]
-
+        
         http.baseURL = config.revokeTokenEndpointURL!
-        http.POST(parameters: paramDict, success: { (param: AnyObject?) -> () in
-                self.oauth2Session.saveAccessToken()
-                success(param!)
-            }, failure: { (error: NSError) -> () in
-                failure(error)
-            })
+        http.POST(parameters: paramDict, completionHandler: { (response, error) in
+            if (error != nil) {
+                completionHandler(nil, error)
+                return
+            }
+            
+            self.oauth2Session.saveAccessToken()
+            completionHandler(response, nil)
+        })
     }
     
     public func authorizationFields() -> [String: String]? {
@@ -174,21 +184,23 @@ public class OAuth2Module: AuthzModule {
     public func isAuthorized() -> Bool {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()
     }
-
+    
     // MARK: Internal Methods
     
-    func extractCode(notification: NSNotification, success: SuccessType, failure: FailureType) {
+    func extractCode(notification: NSNotification, completionHandler: (AnyObject?, NSError?) -> Void) {
         let url: NSURL? = (notification.userInfo as [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
         
         // extract the code from the URL
         let code = self.parametersFromQueryString(url?.query)["code"]
         // if exists perform the exchange
         if (code != nil) {
-            self.exchangeAuthorizationCodeForAccessToken(code!, success: success, failure: failure)
+            self.exchangeAuthorizationCodeForAccessToken(code!, completionHandler: completionHandler)
             // update state
             state = .AuthorizationStateApproved
         } else {
-            failure(NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."]))
+            
+            let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
+            completionHandler(nil, error)
         }
         // finally, unregister
         self.stopObserving()
@@ -200,23 +212,23 @@ public class OAuth2Module: AuthzModule {
             var parameterScanner: NSScanner = NSScanner(string: queryString!)
             var name:NSString? = nil
             var value:NSString? = nil
-    
+            
             while (parameterScanner.atEnd != true) {
                 name = nil;
                 parameterScanner.scanUpToString("=", intoString: &name)
                 parameterScanner.scanString("=", intoString:nil)
-    
+                
                 value = nil
                 parameterScanner.scanUpToString("&", intoString:&value)
                 parameterScanner.scanString("&", intoString:nil)
-    
+                
                 if (name != nil && value != nil) {
                     parameters[name!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!] = value!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
                 }
             }
-    }
-    
-    return parameters;
+        }
+        
+        return parameters;
     }
     
     deinit {
@@ -229,7 +241,7 @@ public class OAuth2Module: AuthzModule {
             NSNotificationCenter.defaultCenter().removeObserver(applicationLaunchNotificationObserver!)
             self.applicationLaunchNotificationObserver = nil;
         }
-
+        
         if (applicationDidBecomeActiveNotificationObserver != nil) {
             NSNotificationCenter.defaultCenter().removeObserver(applicationDidBecomeActiveNotificationObserver!)
             applicationDidBecomeActiveNotificationObserver = nil
@@ -258,10 +270,10 @@ public class OAuth2Module: AuthzModule {
     
     func urlEncodeString(stringToURLEncode: String) -> String {
         let encodedURL = CFURLCreateStringByAddingPercentEscapes(nil,
-                                        stringToURLEncode as NSString,
-                                        nil,
-                                        "!@#$%&*'();:=+,/?[]",
-                                        CFStringBuiltInEncodings.UTF8.toRaw())
+            stringToURLEncode as NSString,
+            nil,
+            "!@#$%&*'();:=+,/?[]",
+            CFStringBuiltInEncodings.UTF8.toRaw())
         return encodedURL as NSString
     }
 }
