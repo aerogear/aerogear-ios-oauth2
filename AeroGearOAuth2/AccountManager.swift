@@ -24,6 +24,7 @@ public class FacebookConfig: Config {
             redirectURL: "fb\(clientId)://authorize/",
             accessTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
             clientId: clientId,
+            refreshTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
             clientSecret: clientSecret,
             revokeTokenEndpoint: "https://www.facebook.com/me/permissions",
             scopes: scopes,
@@ -39,6 +40,7 @@ public class GoogleConfig: Config {
             redirectURL: "\(bundleString):/oauth2Callback",
             accessTokenEndpoint: "o/oauth2/token",
             clientId: clientId,
+            refreshTokenEndpoint: "o/oauth2/token",
             revokeTokenEndpoint: "rest/revoke",
             scopes: scopes,
             accountId: accountId)

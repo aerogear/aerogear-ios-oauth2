@@ -94,7 +94,8 @@ public class OAuth2Module: AuthzModule {
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
-            http.baseURL = config.accessTokenEndpointURL
+            
+            http.baseURL = config.refreshTokenEndpointURL
             http.POST(parameters: paramDict, success: { (responseObject: AnyObject?) -> Void in
                 if let unwrappedResponse = responseObject as? [String: AnyObject] {
                     let accessToken: String = unwrappedResponse["access_token"] as NSString
