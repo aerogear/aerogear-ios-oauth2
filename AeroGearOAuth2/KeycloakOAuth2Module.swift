@@ -16,11 +16,10 @@
 */
 
 import Foundation
-import AeroGearHttp
 
 public class KeycloakOAuth2Module: OAuth2Module {
        
-    public override func revokeAccessSuccess(success: SuccessType, failure: FailureType) {
+    public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return;
@@ -28,11 +27,14 @@ public class KeycloakOAuth2Module: OAuth2Module {
         let paramDict:[String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
         
         http.baseURL = config.revokeTokenEndpointURL!
-        http.POST(parameters: paramDict, success: { (param: AnyObject?) -> () in
+        http.POST(parameters: paramDict, completionHandler: { (response, error) in
+            if (error != nil) {
+                completionHandler(nil, error)
+                return
+            }
+
             self.oauth2Session.saveAccessToken()
-            success(param)
-            }, failure: { (error: NSError) -> () in
-                failure(error)
+            completionHandler(response, nil)
         })
     }
 }

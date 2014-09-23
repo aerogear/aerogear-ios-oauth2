@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import AeroGearHttp
 
 public let AGAppLaunchedWithURLNotification = "AGAppLaunchedWithURLNotification"
 public let AGAppDidBecomeActiveNotification = "AGAppDidBecomeActiveNotification"
@@ -93,7 +94,7 @@ public class OAuth2Module: AuthzModule {
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
-            http.baseURL = config.refreshTokenEndpointURL
+            http.baseURL = config.refreshTokenEndpointURL!
             http.POST(parameters: paramDict, completionHandler: { (response, error) in
                 
                 if (error != nil) {

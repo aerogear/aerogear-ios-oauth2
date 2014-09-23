@@ -50,6 +50,34 @@
 			remoteGlobalIDString = 488B6B67196B19BC000297C9;
 			remoteInfo = AeroGearHttpTests;
 		};
+		6FC65AEC19D16BB4001B59B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 488B6B5B196B19BC000297C9;
+			remoteInfo = AeroGearHttp;
+		};
+		6FC65AEE19D16BCE001B59B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833045919AF1635002F8DA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4833046119AF1635002F8DA9;
+			remoteInfo = AeroGearOAuth2;
+		};
+		6FC65AF019D16BD3001B59B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 488B6B5B196B19BC000297C9;
+			remoteInfo = AeroGearHttp;
+		};
+		6FC65AF219D16BD6001B59B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6F3C40A0197BCCD80072D66A;
+			remoteInfo = AGURLSessionStubs;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +227,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6FC65AED19D16BB4001B59B4 /* PBXTargetDependency */,
 			);
 			name = AeroGearOAuth2;
 			productName = AeroGearOAuth2;
@@ -216,6 +245,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				6FC65AF319D16BD6001B59B4 /* PBXTargetDependency */,
+				6FC65AF119D16BD3001B59B4 /* PBXTargetDependency */,
+				6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */,
 			);
 			name = AeroGearOAuth2Tests;
 			productName = AeroGearOAuth2Tests;
@@ -342,6 +374,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6FC65AED19D16BB4001B59B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AeroGearHttp;
+			targetProxy = 6FC65AEC19D16BB4001B59B4 /* PBXContainerItemProxy */;
+		};
+		6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4833046119AF1635002F8DA9 /* AeroGearOAuth2 */;
+			targetProxy = 6FC65AEE19D16BCE001B59B4 /* PBXContainerItemProxy */;
+		};
+		6FC65AF119D16BD3001B59B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AeroGearHttp;
+			targetProxy = 6FC65AF019D16BD3001B59B4 /* PBXContainerItemProxy */;
+		};
+		6FC65AF319D16BD6001B59B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AGURLSessionStubs;
+			targetProxy = 6FC65AF219D16BD6001B59B4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4833047319AF1635002F8DA9 /* Debug */ = {
