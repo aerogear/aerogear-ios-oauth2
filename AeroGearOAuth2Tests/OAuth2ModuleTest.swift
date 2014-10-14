@@ -27,7 +27,7 @@ class OAuth2ModuleTests: XCTestCase {
         if ((params) != nil) {
             data = NSJSONSerialization.dataWithJSONObject(params!, options: nil, error: nil)!
         } else {
-            data = NSData.data()
+            data = NSData()
         }
         return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
     }

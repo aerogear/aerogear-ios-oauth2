@@ -16,14 +16,11 @@
 */
 
 import Foundation
-import AeroGearHttp
+
 public class FacebookOAuth2Module: OAuth2Module {
 
-    required public init(config: Config, accountId: String, session: OAuth2Session) {
-        super.init(config: config, accountId: accountId, session: session)
-        
-        http.responseSerializer = StringResponseSerializer()
-        
+    public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer, responseSerializer: ResponseSerializer) {
+        super.init(config: config, session: session, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
     }
     
     override public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
@@ -33,8 +30,7 @@ public class FacebookOAuth2Module: OAuth2Module {
             paramDict["client_secret"] = unwrapped
         }
         
-        http.baseURL = config.accessTokenEndpointURL
-        http.POST(parameters: paramDict, completionHandler: { (response, error) in
+        http.POST(config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
             
             if (error != nil) {
                 completionHandler(nil, error)
@@ -72,8 +68,7 @@ public class FacebookOAuth2Module: OAuth2Module {
         }
         let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
 
-        http.baseURL = config.revokeTokenEndpointURL!
-        http.DELETE(parameters: paramDict, completionHandler: { (response, error) in
+        http.DELETE(config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             
             if (error != nil) {
                 completionHandler(nil, error)
