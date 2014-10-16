@@ -18,7 +18,7 @@
 import Foundation
 
 /**
-An Oauth2Module subclass specific to 'Keycloak' authorization
+An OAuth2Module subclass specific to 'Keycloak' authorization
 */
 public class KeycloakOAuth2Module: OAuth2Module {
        

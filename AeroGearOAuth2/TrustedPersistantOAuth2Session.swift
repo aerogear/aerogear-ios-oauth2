@@ -175,7 +175,7 @@ public class KeychainWrap {
 // so we need user to be prompted to enter a password
 
 /**
-An OAuth2Session implementation the permanent stores oauth metadata using the keychain.
+An OAuth2Session implementation the permanent stores OAuth2 metadata using the keychain.
 */
 public class TrustedPersistantOAuth2Session: OAuth2Session {
     

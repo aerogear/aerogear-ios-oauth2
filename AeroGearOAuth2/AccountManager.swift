@@ -73,7 +73,7 @@ public class AccountManager {
     }
     
     /**
-    Instantiate an Oauth2 Module using the configuration object passed in and adds it to the account manager. It uses the OAuth2Session account_id as the name that this module will be stored in.
+    Instantiate an OAuth2 Module using the configuration object passed in and adds it to the account manager. It uses the OAuth2Session account_id as the name that this module will be stored in.
     
     :param: config      the configuration object to use to setup an OAuth2 module
     :param: moduleClass the type of the OAuth2 module to instantiate
@@ -91,7 +91,7 @@ public class AccountManager {
     /**
     Removes an OAuth2 module
     
-    :param: name        the name that the OAuth2 module was bound to.
+    :param: name       the name that the OAuth2 module was bound to.
     :param: config      the configuration object to use to setup an OAuth2 module
     :param: moduleClass the type of the OAuth2 module to instantiate
     
@@ -148,9 +148,9 @@ public class AccountManager {
     /**
     convenient method to retrieve a faccebook oauth2 module
     
-    :param: config a facebook configuration object. See FacebookConfig
+    :param: config a Facebook configuration object. See FacebookConfig
     
-    :returns: a facebook OAuth2 module
+    :returns: a Facebook OAuth2 module
     */
     public class func addFacebookAccount(config: FacebookConfig) -> FacebookOAuth2Module {
         return addAccount(config, moduleClass: FacebookOAuth2Module.self) as FacebookOAuth2Module

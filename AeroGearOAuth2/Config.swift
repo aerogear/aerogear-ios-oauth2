@@ -18,7 +18,7 @@
 import Foundation
 
 /**
-*  Configuration object to setup an OAuth module
+*  Configuration object to setup an OAuth2 module
 */
 public class Config {
     /**

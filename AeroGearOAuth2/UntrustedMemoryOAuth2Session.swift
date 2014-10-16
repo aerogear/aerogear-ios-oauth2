@@ -23,7 +23,7 @@ extension String {
 }
 
 /**
-An OAuth2Session implementation the stores oauth metadata in-memory
+An OAuth2Session implementation the stores OAuth2 metadata in-memory
 */
 public class UntrustedMemoryOAuth2Session: OAuth2Session {
     

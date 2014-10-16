@@ -19,7 +19,7 @@ import Foundation
 import AeroGearHttp
 
 /**
-An Oauth2Module subclass specific to 'facebook' authorization
+An OAuth2Module subclass specific to 'Facebook' authorization
 */
 public class FacebookOAuth2Module: OAuth2Module {
 

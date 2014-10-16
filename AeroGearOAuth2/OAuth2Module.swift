@@ -40,7 +40,7 @@ enum AuthorizationState {
 }
 
 /**
-*  Parent class of any OAuth module implementing generic OAuth2 authorization flow
+*  Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 public class OAuth2Module: AuthzModule {
     let config: Config
@@ -230,7 +230,7 @@ public class OAuth2Module: AuthzModule {
     }
     
     /**
-    Returns a bolean indicating whether authorization has been granted
+    Returns a boolean indicating whether authorization has been granted
     
     :returns: true if authorized, false otherwise
     */
