@@ -18,6 +18,9 @@
 import Foundation
 import AeroGearHttp
 
+/**
+An Oauth2Module subclass specific to 'facebook' authorization
+*/
 public class FacebookOAuth2Module: OAuth2Module {
 
     public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer, responseSerializer: ResponseSerializer) {

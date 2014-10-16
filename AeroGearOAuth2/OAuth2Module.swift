@@ -19,16 +19,29 @@ import Foundation
 import UIKit
 import AeroGearHttp
 
+/**
+Notification constants emitted during oauth authorization flow
+*/
 public let AGAppLaunchedWithURLNotification = "AGAppLaunchedWithURLNotification"
 public let AGAppDidBecomeActiveNotification = "AGAppDidBecomeActiveNotification"
 public let AGAuthzErrorDomain = "AGAuthzErrorDomain"
 
+/**
+The current state that this module is in
+
+- AuthorizationStatePendingExternalApproval:  the module is waiting external approval
+- AuthorizationStateApproved:                the oauth flow has been approved
+- AuthorizationStateUnknown:                the oauth flow is in unknown state (e.g. user clicked cancel)
+*/
 enum AuthorizationState {
     case AuthorizationStatePendingExternalApproval
     case AuthorizationStateApproved
     case AuthorizationStateUnknown
 }
 
+/**
+*  Parent class of any OAuth module implementing generic OAuth2 authorization flow
+*/
 public class OAuth2Module: AuthzModule {
     let config: Config
     var http: Http
@@ -38,6 +51,16 @@ public class OAuth2Module: AuthzModule {
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
     
+    /**
+    Initialize an OAuth2 module
+    
+    :param: config                   the configuration object that setups the module
+    :param: session                 the session that that module will be bound to
+    :param: requestSerializer   the actual request serializer to use when performing requests
+    :param: responseSerializer the actual response serializer to use upon receiving a response
+    
+    :returns: the newly initialized OAuth2Module
+    */
     public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializer()) {
         if (config.accountId == nil) {
             config.accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
@@ -56,6 +79,11 @@ public class OAuth2Module: AuthzModule {
     
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
     
+    /**
+    Request an authorization code
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
@@ -86,6 +114,11 @@ public class OAuth2Module: AuthzModule {
         UIApplication.sharedApplication().openURL(NSURL(string: http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)!)
     }
     
+    /**
+    Request to refresh an access token
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
@@ -111,6 +144,12 @@ public class OAuth2Module: AuthzModule {
         }
     }
     
+    /**
+    Exchange an authorization code for an access token
+    
+    :param: code              the 'authorization' code to exchange for an access token
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
         
@@ -136,6 +175,11 @@ public class OAuth2Module: AuthzModule {
         })
     }
     
+    /**
+    Gateway to request authorization access
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         if (self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()) {
             // we already have a valid access token, nothing more to be done
@@ -149,6 +193,11 @@ public class OAuth2Module: AuthzModule {
         }
     }
     
+    /**
+    Request to revoke access
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
@@ -167,6 +216,11 @@ public class OAuth2Module: AuthzModule {
         })
     }
     
+    /**
+    Return any authorization fields
+    
+    :returns:  a dictionary filled with the authorization fields
+    */
     public func authorizationFields() -> [String: String]? {
         if (self.oauth2Session.accessToken == nil) {
             return nil
@@ -175,6 +229,11 @@ public class OAuth2Module: AuthzModule {
         }
     }
     
+    /**
+    Returns a bolean indicating whether authorization has been granted
+    
+    :returns: true if authorized, false otherwise
+    */
     public func isAuthorized() -> Bool {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()
     }

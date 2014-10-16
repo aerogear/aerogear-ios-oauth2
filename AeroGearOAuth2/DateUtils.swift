@@ -17,6 +17,9 @@
 
 import Foundation
 
+/**
+Handy extensions to NSDate
+*/
 extension NSDate
 {
     public convenience init(dateString:String) {

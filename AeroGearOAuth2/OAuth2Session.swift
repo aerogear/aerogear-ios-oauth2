@@ -16,7 +16,11 @@
 */
 import Foundation
 
+/**
+The protocol that an Oauth2 session modules must adhere to and represent storage of oauth specific metadata. See TrustedPersistantOAuth2Session and UntrustedMemoryOAuth2Session as example implementations
+*/
 public protocol OAuth2Session {
+    
     /**
     * The account id.
     */
@@ -43,9 +47,17 @@ public protocol OAuth2Session {
     func tokenIsNotExpired() -> Bool
     
     /**
-    * Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
-    * for grant access.
+    * Clears any tokens storage
     */
     func saveAccessToken()
+    
+    /**
+    * Save tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
+    * for grant access.
+    
+    :param: accessToken the access token
+    :param: refreshToken  the refresh token
+    :param: expiration the expiration
+    */
     func saveAccessToken(accessToken: String?, refreshToken: String?, expiration: String?)
 }

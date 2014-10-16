@@ -22,6 +22,9 @@ extension String {
     }
 }
 
+/**
+An OAuth2Session implementation the stores oauth metadata in-memory
+*/
 public class UntrustedMemoryOAuth2Session: OAuth2Session {
     
     /**
@@ -63,6 +66,7 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
             self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
         }
     }
+    
     public func saveAccessToken() {
         self.accessToken = nil
         self.refreshToken = nil
