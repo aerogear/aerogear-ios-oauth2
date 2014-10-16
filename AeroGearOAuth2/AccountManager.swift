@@ -54,8 +54,8 @@ public class GoogleConfig: Config {
 }
 
 /**
- An account manager used to instantiante, store and retrieve OAuth2 modules
--*/
+ An account manager used to instantiate, store and retrieve OAuth2 modules
+*/
 public class AccountManager {
     
     var modules: [String: OAuth2Module]
