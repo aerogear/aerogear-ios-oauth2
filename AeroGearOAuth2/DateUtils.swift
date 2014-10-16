@@ -19,7 +19,7 @@ import Foundation
 
 extension NSDate
 {
-    convenience init(dateString:String) {
+    public convenience init(dateString:String) {
         let dateStringFormatter = NSDateFormatter()
         dateStringFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
         let d = dateStringFormatter.dateFromString(dateString)
@@ -29,7 +29,8 @@ extension NSDate
             self.init()
         }
     }
-    func toString() -> String {
+    
+    public func toString() -> String {
         let dateStringFormatter = NSDateFormatter()
         dateStringFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
         return dateStringFormatter.stringFromDate(self)

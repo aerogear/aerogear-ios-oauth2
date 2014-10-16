@@ -19,26 +19,6 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 
-// TODO content of DateUtils should not be duplicated in test
-extension NSDate
-{
-    convenience init(dateString:String) {
-        let dateStringFormatter = NSDateFormatter()
-        dateStringFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        let d = dateStringFormatter.dateFromString(dateString)
-        if let unwrappedDate = d {
-            self.init(timeInterval:0, sinceDate:unwrappedDate)
-        } else {
-            self.init()
-        }
-    }
-    func toString() -> String {
-        let dateStringFormatter = NSDateFormatter()
-        dateStringFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        return dateStringFormatter.stringFromDate(self)
-    }
-}
-
 class DateUtilsTest: XCTestCase {
     
     override func setUp() {
