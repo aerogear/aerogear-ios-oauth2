@@ -21,76 +21,27 @@ public class Config {
     /**
     * Applies the baseURL to the configuration.
     */
-    public let base: String
-    
-    public var baseURL:NSURL {
-        get {
-            return NSURL.URLWithString(base)
-        }
-    }
-    
-    /**
-    * Applies the "authorization endpoint" to the request token.
-    */
-    public let authzEndpoint: String
-    
-    public var authzEndpointURL: NSURL {
-        get {
-            if authzEndpoint.hasPrefix("http") {
-                return NSURL(string: authzEndpoint)
-            } else {
-                var formattedEndpoint = authzEndpoint.hasPrefix("/") ? (authzEndpoint as NSString).substringFromIndex(1) : authzEndpoint
-                return baseURL.URLByAppendingPathComponent(formattedEndpoint)
-            }
-        }
-    }
+    public let baseURL: String
     
     /**
     * Applies the "callback URL" once request token issued.
     */
     public let redirectURL: String
+
+    /**
+    * Applies the "authorization endpoint" to the request token.
+    */
+    public var authzEndpoint: String
     
     /**
     * Applies the "access token endpoint" to the exchange code for access token.
     */
-    public let accessTokenEndpoint: String
-    
-    /**
-    * Computed property to get URL by taking care of extra or missing pre or postfix '/'.
-    */
-    public var accessTokenEndpointURL: NSURL {
-        get {
-            if accessTokenEndpoint.hasPrefix("http") {
-                return NSURL(string: accessTokenEndpoint)
-            } else {
-                var formattedEndpoint = accessTokenEndpoint.hasPrefix("/") ? (accessTokenEndpoint as NSString).substringFromIndex(1) : accessTokenEndpoint
-                return baseURL.URLByAppendingPathComponent(formattedEndpoint)
-            }
-        }
-    }
-    
+    public var accessTokenEndpoint: String
+
     /**
     * Endpoint for request to invalidate both accessToken and refreshToken.
     */
     public let revokeTokenEndpoint: String?
-    
-    /**
-    * Computed property to get URL by taking care of extra or missing pre or postfix '/'.
-    */
-    public var revokeTokenEndpointURL: NSURL? {
-        get {
-            if let unwrappedRevokeTokenEndpoint = revokeTokenEndpoint {
-                if (revokeTokenEndpoint != nil && revokeTokenEndpoint!.hasPrefix("http")) {
-                    return NSURL(string: revokeTokenEndpoint!)
-                } else {
-                    var formattedEndpoint = unwrappedRevokeTokenEndpoint.hasPrefix("/") ? (unwrappedRevokeTokenEndpoint as NSString).substringFromIndex(1) : unwrappedRevokeTokenEndpoint
-                    return baseURL.URLByAppendingPathComponent(formattedEndpoint)
-                }
-            } else {
-                return nil
-            }
-        }
-    }
     
     /**
     * Endpoint for request a refreshToken.
@@ -98,28 +49,24 @@ public class Config {
     public let refreshTokenEndpoint: String?
     
     /**
-    * Computed property to get URL by taking care of extra or missing pre or postfix '/'.
-    */
-    public var refreshTokenEndpointURL: NSURL? {
-        get {
-            if let unwrappedRefreshTokenEndpoint = refreshTokenEndpoint {
-                if (refreshTokenEndpoint != nil && refreshTokenEndpoint!.hasPrefix("http")) {
-                    return NSURL(string: refreshTokenEndpoint!)
-                } else {
-                    var formattedEndpoint = unwrappedRefreshTokenEndpoint.hasPrefix("/") ? (unwrappedRefreshTokenEndpoint as NSString).substringFromIndex(1) : unwrappedRefreshTokenEndpoint
-                    return baseURL.URLByAppendingPathComponent(formattedEndpoint)
-                }
-            } else {
-                return nil
-            }
-        }
-    }
-
-    
-    /**
     * Applies the various scopes of the authorization.
     */
     public let scopes: [String]
+    
+    var scope: String {
+        get {
+            // Create a string to concatenate all scopes existing in the _scopes array.
+            var scopeString = ""
+            for scope in self.scopes {
+                scopeString += scope.urlEncode()
+                // If the current scope is other than the last one, then add the "+" sign to the string to separate the scopes.
+                if (scope != self.scopes.last) {
+                    scopeString += "+"
+                }
+            }
+            return scopeString
+        }
+    }
     
     /**
     * Applies the "client id" obtained with the client registration process.
@@ -135,10 +82,10 @@ public class Config {
     * Account id is used with AccountManager to store tokens. AccountId is defined by the end-user 
     * and can be any String. If AccountManager is not used, this field is optional.
     */
-    public let accountId: String?
+    public var accountId: String?
     
     public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
-        self.base = base
+        self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
         self.accessTokenEndpoint = accessTokenEndpoint

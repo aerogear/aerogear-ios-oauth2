@@ -30,6 +30,7 @@ import UIKit
 public enum TokenType: String {
     case AccessToken = "AccessToken"
     case RefreshToken = "RefreshToken"
+    case ExpirationDate = "ExpirationDate"
 }
 
 public class KeychainWrap {
@@ -51,10 +52,10 @@ public class KeychainWrap {
         
         // Instantiate a new default keychain query
         var keychainQuery = NSMutableDictionary()
-        keychainQuery[kSecClass] = kSecClassGenericPassword
-        keychainQuery[kSecAttrService] = self.serviceIdentifier
-        keychainQuery[kSecAttrAccount] = key + "_" + tokenType.toRaw()
-        keychainQuery[kSecAttrAccessible] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        keychainQuery[kSecClass as String] = kSecClassGenericPassword
+        keychainQuery[kSecAttrService as String] = self.serviceIdentifier
+        keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
+        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
         
         // TODO AGIOS-259 configure Swift version to get touchID access control
         // As of version beta7 kSecAccessControlUserPresence is not available in swift
@@ -76,23 +77,23 @@ public class KeychainWrap {
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
         
         // if found update
-        if (Int(statusSearch) == errSecSuccess) {
+        if (statusSearch == errSecSuccess) {
             if (dataFromString != nil) {
                 let attributesToUpdate = NSMutableDictionary()
-                attributesToUpdate[kSecValueData] = dataFromString!
+                attributesToUpdate[kSecValueData as String] = dataFromString!
             
                 var statusUpdate: OSStatus = SecItemUpdate(keychainQuery, attributesToUpdate)
-                if (Int(statusUpdate) != errSecSuccess) {
+                if (statusUpdate != errSecSuccess) {
                     println("tokens not updated")
                     return false
                 }
             } else { // revoked token or newly installed app, clear KC
                 return self.resetKeychain()
             }
-        } else if(Int(statusSearch) == errSecItemNotFound) { // if new, add
-            keychainQuery[kSecValueData] = dataFromString!
+        } else if(statusSearch == errSecItemNotFound) { // if new, add
+            keychainQuery[kSecValueData as String] = dataFromString!
             var statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
-            if(Int(statusAdd) != errSecSuccess) {
+            if(statusAdd != errSecSuccess) {
                  println("tokens not saved")
                 return false
             }
@@ -105,22 +106,22 @@ public class KeychainWrap {
     
     public func read(userAccount: String, tokenType: TokenType) -> NSString? {
         var keychainQuery = NSMutableDictionary()
-        keychainQuery[kSecClass] = kSecClassGenericPassword
-        keychainQuery[kSecAttrService] = self.serviceIdentifier
-        keychainQuery[kSecAttrAccount] = userAccount + "_" + tokenType.toRaw()
-        keychainQuery[kSecReturnData] = true
-        keychainQuery[kSecAttrAccessible] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        keychainQuery[kSecClass as String] = kSecClassGenericPassword
+        keychainQuery[kSecAttrService as String] = self.serviceIdentifier
+        keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
+        keychainQuery[kSecReturnData as String] = true
+        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
         
         var dataTypeRef: Unmanaged<AnyObject>?
         
         // Search for the keychain items
         let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
         
-        if (Int(status) == errSecItemNotFound) {
-            println("\(tokenType.toRaw()) not found")
+        if (status == errSecItemNotFound) {
+            println("\(tokenType.rawValue) not found")
             return nil
-        } else if (Int(status) != errSecSuccess) {
-            println("Error attempting to retrieve \(tokenType.toRaw()) with error code \(status) ")
+        } else if (status != errSecSuccess) {
+            println("Error attempting to retrieve \(tokenType.rawValue) with error code \(status) ")
             return nil
         }
         
@@ -151,10 +152,10 @@ public class KeychainWrap {
     
     func deleteAllKeysForSecClass(secClass: CFTypeRef) -> Bool {
         var keychainQuery = NSMutableDictionary()
-        keychainQuery[kSecClass] = secClass
+        keychainQuery[kSecClass as String] = secClass
 
         let result:OSStatus = SecItemDelete(keychainQuery)
-        if (Int(result) == errSecSuccess) {
+        if (result == errSecSuccess) {
             return true
         } else {
             return false
@@ -179,7 +180,22 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     /**
     * The access token's expiration date.
     */
-    public var accessTokenExpirationDate: NSDate?
+    public var accessTokenExpirationDate: NSDate? {
+        get {
+            var dateAsString = self.keychain.read(self.accountId, tokenType: .ExpirationDate)
+            if let unwrappedDate = dateAsString {
+                return NSDate(dateString: unwrappedDate)
+            } else {
+                return nil
+            }
+        }
+        set(value) {
+            if let unwrappedValue = value {
+                let result = self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
+            }
+        }
+    }
+
     
     public var accessToken: String? {
         get {
@@ -209,7 +225,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     * Check validity of accessToken. return true if still valid, false when expired.
     */
     public func tokenIsNotExpired() -> Bool {
-        return self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0 ;
+        return  self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0
     }
     
     /**
@@ -219,6 +235,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public func saveAccessToken(accessToken: String?, refreshToken: String?, expiration: String?) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
+        
         let now = NSDate()
         if let inter = expiration?.doubleValue {
             self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
@@ -231,7 +248,6 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     }
     
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil) {
-        self.accessTokenExpirationDate = accessTokenExpirationDate
         self.accountId = accountId
         self.keychain = KeychainWrap()
         // TODO Shoot config to reset all keychain + choose ACL type: with or without touchID
@@ -239,5 +255,6 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         //self.keychain.resetKeychain()
         self.accessToken = accessToken
         self.refreshToken = refreshToken
+        self.accessTokenExpirationDate = accessTokenExpirationDate
     }
 }

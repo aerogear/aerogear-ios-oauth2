@@ -18,34 +18,21 @@
 import UIKit
 import XCTest
 import AeroGearOAuth2
-import AGURLSessionStubs
 
-class OAuth2ModuleTests: XCTestCase {
-    
-    func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
-        var data: NSData
-        if ((params) != nil) {
-            data = NSJSONSerialization.dataWithJSONObject(params!, options: nil, error: nil)!
-        } else {
-            data = NSData()
-        }
-        return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
-    }
-    
-    func http_200_response(request: NSURLRequest!) -> StubResponse {
-        return http_200(request, params: ["key1":"value1"])
-    }
+class DateUtilsTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
     }
     
     override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-        StubsManager.removeAllStubs()
     }
     
-    func testRequestAccessSucessful() {
-        //TODO AGIOS-mock
+    func testDateFormatting() {
+        let date1 = NSDate(dateString: "2014-02-12 12:45:30 AM")
+        XCTAssert(date1.toString() == "2014-02-12 12:45:30 AM")
     }
+    
 }
