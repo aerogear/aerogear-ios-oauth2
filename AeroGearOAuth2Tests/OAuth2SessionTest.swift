@@ -38,9 +38,10 @@ class OAuth2SessionTests: XCTestCase {
     }
     
     func testInitUntrustedMemoryOAuth2SessionWithAccessToken() {
-        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS")
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessTokenExpirationDate: NSDate(), accessToken: "ACCESS")
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
         XCTAssert(session.accessToken ==  "ACCESS", "session should be with access token")
+        XCTAssert(session.accessTokenExpirationDate !=  nil, "session should be with access token expiration date")
     }
     
     func testSaveNilTokens() {
@@ -49,14 +50,16 @@ class OAuth2SessionTests: XCTestCase {
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
         XCTAssert(session.accessToken ==  nil, "session should be without access token")
         XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
+        XCTAssert(session.accessTokenExpirationDate ==  nil, "session should be without access token expiration date")
     }
     
     func testSaveTokens() {
-        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS", refreshToken: "REFRESH")
+        let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessTokenExpirationDate: NSDate(), accessToken: "ACCESS", refreshToken: "REFRESH")
         session.saveAccessToken()
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
         XCTAssert(session.accessToken ==  nil, "session should be without access token")
         XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
+        XCTAssert(session.accessTokenExpirationDate ==  nil, "session should be without access token expiration date")
     }
     
 }

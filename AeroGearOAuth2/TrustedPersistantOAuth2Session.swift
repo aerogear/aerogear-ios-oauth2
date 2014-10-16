@@ -30,6 +30,7 @@ import UIKit
 public enum TokenType: String {
     case AccessToken = "AccessToken"
     case RefreshToken = "RefreshToken"
+    case ExpirationDate = "ExpirationDate"
 }
 
 public class KeychainWrap {
@@ -179,7 +180,22 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     /**
     * The access token's expiration date.
     */
-    public var accessTokenExpirationDate: NSDate?
+    public var accessTokenExpirationDate: NSDate? {
+        get {
+            var dateAsString = self.keychain.read(self.accountId, tokenType: .ExpirationDate)
+            if let unwrappedDate = dateAsString {
+                return NSDate(dateString: unwrappedDate)
+            } else {
+                return nil
+            }
+        }
+        set(value) {
+            if let unwrappedValue = value {
+                let result = self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
+            }
+        }
+    }
+
     
     public var accessToken: String? {
         get {
@@ -209,7 +225,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     * Check validity of accessToken. return true if still valid, false when expired.
     */
     public func tokenIsNotExpired() -> Bool {
-        return self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0 ;
+        return  self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0
     }
     
     /**
@@ -219,6 +235,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public func saveAccessToken(accessToken: String?, refreshToken: String?, expiration: String?) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
+        
         let now = NSDate()
         if let inter = expiration?.doubleValue {
             self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
@@ -231,7 +248,6 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     }
     
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil) {
-        self.accessTokenExpirationDate = accessTokenExpirationDate
         self.accountId = accountId
         self.keychain = KeychainWrap()
         // TODO Shoot config to reset all keychain + choose ACL type: with or without touchID
@@ -239,5 +255,6 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         //self.keychain.resetKeychain()
         self.accessToken = accessToken
         self.refreshToken = refreshToken
+        self.accessTokenExpirationDate = accessTokenExpirationDate
     }
 }
