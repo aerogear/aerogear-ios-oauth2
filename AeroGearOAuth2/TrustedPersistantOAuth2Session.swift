@@ -33,6 +33,9 @@ public enum TokenType: String {
     case ExpirationDate = "ExpirationDate"
 }
 
+/**
+*  A handy keychain wrapper
+*/
 public class KeychainWrap {
     public var serviceIdentifier: String
     
@@ -170,6 +173,10 @@ public class KeychainWrap {
 // closure taken as init param. 
 // When passcode is not set to securely safe password we need to encrypt
 // so we need user to be prompted to enter a password
+
+/**
+An OAuth2Session implementation the permanent stores OAuth2 metadata using the keychain.
+*/
 public class TrustedPersistantOAuth2Session: OAuth2Session {
     
     /**

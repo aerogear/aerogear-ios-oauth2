@@ -17,6 +17,9 @@
 
 import Foundation
 
+/**
+*  Configuration object to setup an OAuth2 module
+*/
 public class Config {
     /**
     * Applies the baseURL to the configuration.

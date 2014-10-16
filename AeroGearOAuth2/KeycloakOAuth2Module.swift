@@ -17,6 +17,9 @@
 
 import Foundation
 
+/**
+An OAuth2Module subclass specific to 'Keycloak' authorization
+*/
 public class KeycloakOAuth2Module: OAuth2Module {
        
     public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
