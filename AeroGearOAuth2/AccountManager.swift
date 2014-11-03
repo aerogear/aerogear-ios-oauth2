@@ -53,6 +53,21 @@ public class GoogleConfig: Config {
     }
 }
 
+public class KeycloakConfig: Config {
+    public init(clientId: String, host: String, realm: String? = nil) {
+        let bundleString = NSBundle.mainBundle().bundleIdentifier!
+        let defaulRealmName = String(format: "%@-realm", clientId)
+        let realm = realm ?? defaulRealmName
+        super.init(base: String(format: "%@/auth", host),
+            authzEndpoint: String(format: "realms/%@/tokens/login", realm),
+            redirectURL: "\(bundleString)://oauth2Callback",
+            accessTokenEndpoint: String(format: "realms/%@/tokens/access/codes", realm),
+            clientId: clientId,
+            refreshTokenEndpoint: String(format: "realms/%@/tokens/refresh", realm),
+            revokeTokenEndpoint: String(format: "realms/%@/tokens/logout", realm))
+    }
+}
+
 /**
  An account manager used to instantiate, store and retrieve OAuth2 modules
 */
