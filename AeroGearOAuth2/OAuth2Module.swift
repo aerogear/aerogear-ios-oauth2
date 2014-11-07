@@ -40,7 +40,7 @@ enum AuthorizationState {
 }
 
 /**
-*  Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
+Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 public class OAuth2Module: AuthzModule {
     let config: Config

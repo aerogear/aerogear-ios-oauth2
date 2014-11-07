@@ -18,41 +18,41 @@
 import Foundation
 
 /**
-*  Configuration object to setup an OAuth2 module
+Configuration object to setup an OAuth2 module
 */
 public class Config {
     /**
-    * Applies the baseURL to the configuration.
+    Applies the baseURL to the configuration.
     */
     public let baseURL: String
     
     /**
-    * Applies the "callback URL" once request token issued.
+    Applies the "callback URL" once request token issued.
     */
     public let redirectURL: String
 
     /**
-    * Applies the "authorization endpoint" to the request token.
+    Applies the "authorization endpoint" to the request token.
     */
     public var authzEndpoint: String
     
     /**
-    * Applies the "access token endpoint" to the exchange code for access token.
+    Applies the "access token endpoint" to the exchange code for access token.
     */
     public var accessTokenEndpoint: String
 
     /**
-    * Endpoint for request to invalidate both accessToken and refreshToken.
+    Endpoint for request to invalidate both accessToken and refreshToken.
     */
     public let revokeTokenEndpoint: String?
     
     /**
-    * Endpoint for request a refreshToken.
+    Endpoint for request a refreshToken.
     */
     public let refreshTokenEndpoint: String?
     
     /**
-    * Applies the various scopes of the authorization.
+    Applies the various scopes of the authorization.
     */
     public let scopes: [String]
     
@@ -72,18 +72,18 @@ public class Config {
     }
     
     /**
-    * Applies the "client id" obtained with the client registration process.
+    Applies the "client id" obtained with the client registration process.
     */
     public let clientId: String
     
     /**
-    * Applies the "client secret" obtained with the client registration process.
+    Applies the "client secret" obtained with the client registration process.
     */
     public let clientSecret: String?
     
     /**
-    * Account id is used with AccountManager to store tokens. AccountId is defined by the end-user 
-    * and can be any String. If AccountManager is not used, this field is optional.
+    Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
+    and can be any String. If AccountManager is not used, this field is optional.
     */
     public var accountId: String?
     
