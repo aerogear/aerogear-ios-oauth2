@@ -1,0 +1,12 @@
+language: objective-c
+osx_image: xcode61
+xcode_project: AeroGearOAuth2.xcodeproj
+xcode_scheme: AeroGearOAuth2Tests
+xcode_sdk: iphonesimulator
+
+notifications:
+  irc: "irc.freenode.org#aerogear"
+
+branches:
+  only:
+    - master
