@@ -20,6 +20,9 @@
 		48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */; };
 		48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */; };
 		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
+		6F1432B61A168589003BEE5B /* AeroGearHttp.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833048B19AF28D9002F8DA9 /* AeroGearHttp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6F1432B71A16858E003BEE5B /* AGURLSessionStubs.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833048119AF28AD002F8DA9 /* AGURLSessionStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +83,22 @@
 			remoteInfo = AGURLSessionStubs;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6F1432B31A16857C003BEE5B /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */,
+				6F1432B71A16858E003BEE5B /* AGURLSessionStubs.framework in Copy Frameworks */,
+				6F1432B61A168589003BEE5B /* AeroGearHttp.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
@@ -244,6 +263,7 @@
 				4833046919AF1635002F8DA9 /* Sources */,
 				4833046A19AF1635002F8DA9 /* Frameworks */,
 				4833046B19AF1635002F8DA9 /* Resources */,
+				6F1432B31A16857C003BEE5B /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
