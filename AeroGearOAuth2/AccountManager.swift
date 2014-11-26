@@ -16,6 +16,7 @@
 */
 
 import Foundation
+import AeroGearHttp
 
 /**
 A Config object that setups facebook specific configuration parameters

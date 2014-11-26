@@ -58,8 +58,7 @@ public class FacebookOAuth2Module: OAuth2Module {
                         expiredIn = array[index+1]
                     }
                 }
-                //println("access:\(accessToken!) expires:\(expiredIn!)")
-                self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, expiration: expiredIn)
+                self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil)
                 completionHandler(accessToken, nil)
             }
         })
