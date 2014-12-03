@@ -39,6 +39,38 @@ enum AuthorizationState {
     case AuthorizationStateUnknown
 }
 
+public struct OpenIDClaim: Printable {
+    public var sub: String?
+    public var name: String?
+    public var givenName: String?
+    public var familyName: String?
+    public var middleName: String?
+    public var nickname: String?
+    public var preferredUsername: String?
+    public var profile: String?
+    public var picture: String?
+    public var website: String?
+    public var email: String?
+    public var emailVerified: Bool?
+    public var gender: String?
+    public var birthdate: String?
+    public var zoneinfo: String?
+    public var locale: String?
+    public var phoneNumber: String?
+    public var phoneNumberVerified: Bool?
+    public var address: [String: AnyObject?]?
+    public var updatedAt: Int?
+    // google specific - not in spec
+    public var kind: String?
+    public var hd: String?
+    public init() {}
+    public var description: String {
+        return  "sub: \(sub)\nname: \(name)\ngivenName: \(givenName)\nfamilyName: \(familyName)\nmiddleName: \(middleName)\n" +
+        "nickname: \(nickname)\npreferredUsername: \(preferredUsername)\nprofile: \(profile)\npicture: \(picture)\n" +
+        "website: \(website)\nemail: \(email)\nemailVerified: \(emailVerified)\ngender: \(gender)\nbirthdate: \(birthdate)\n"
+    }
+}
+
 /**
 *  Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
@@ -110,7 +142,7 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&id_token"
         UIApplication.sharedApplication().openURL(NSURL(string: http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)!)
     }
 
@@ -193,7 +225,57 @@ public class OAuth2Module: AuthzModule {
             self.requestAuthorizationCode(completionHandler)
         }
     }
+    
+    /**
+    Gateway to request authorization access
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
+    public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+        var openIDClaims = OpenIDClaim()
+        
+        self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            var paramDict: [String: String] = ["access_token": self.oauth2Session.accessToken!]
+            
+            if let userInfoEndpoint = self.config.userInfoEndpoint {
 
+                self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+                    if (error != nil) {
+                        completionHandler(nil, nil, error)
+                        return
+                    }
+                    
+                    if let unwrappedResponse = responseObject as? [String: AnyObject] {
+                        openIDClaims.kind = unwrappedResponse["sub"] as? String
+                        openIDClaims.name = unwrappedResponse["name"] as? String
+                        openIDClaims.givenName = unwrappedResponse["given_name"] as? String
+                        openIDClaims.familyName = unwrappedResponse["family_name"] as? String
+                        openIDClaims.middleName = unwrappedResponse["middle_name"] as? String
+                        openIDClaims.nickname = unwrappedResponse["nickname"] as? String
+                        openIDClaims.preferredUsername = unwrappedResponse["preferred_username"] as? String
+                        openIDClaims.profile = unwrappedResponse["profile"] as? String
+                        openIDClaims.picture = unwrappedResponse["picture"] as? String
+                        openIDClaims.website = unwrappedResponse["website"] as? String
+                        openIDClaims.email = unwrappedResponse["email"] as? String
+                        openIDClaims.emailVerified = unwrappedResponse["email_verified"] as? Bool
+                        openIDClaims.gender = unwrappedResponse["gender"] as? String
+                        openIDClaims.zoneinfo = unwrappedResponse["zoneinfo"] as? String
+                        openIDClaims.locale = unwrappedResponse["locale"] as? String
+                        openIDClaims.phoneNumber = unwrappedResponse["phone_number"] as? String
+                        openIDClaims.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
+                        openIDClaims.updatedAt = unwrappedResponse["updated_at"] as? Int
+                        completionHandler(self.oauth2Session.accessToken!, openIDClaims, nil)
+                    }
+                })
+            }
+        }
+
+    }
+    
     /**
     Request to revoke access
 

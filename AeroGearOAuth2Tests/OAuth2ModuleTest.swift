@@ -18,22 +18,21 @@
 import UIKit
 import XCTest
 import AeroGearOAuth2
+import AeroGearHttp
 import AGURLSessionStubs
 
 class OAuth2ModuleTests: XCTestCase {
     
     func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
         var data: NSData
-        if ((params) != nil) {
-            data = NSJSONSerialization.dataWithJSONObject(params!, options: nil, error: nil)!
-        } else {
-            data = NSData()
-        }
+        var stubJsonResponse = ["name": "John", "family_name": "Smith"]
+        data = NSJSONSerialization.dataWithJSONObject(stubJsonResponse, options: nil, error: nil)!
+
         return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
     }
     
-    func http_200_response(request: NSURLRequest!) -> StubResponse {
-        return http_200(request, params: ["key1":"value1"])
+    func http_200_response_john_smith(request: NSURLRequest!) -> StubResponse {
+        return http_200(request, params: ["access_token": "TOKEN"])
     }
     
     override func setUp() {
@@ -48,4 +47,32 @@ class OAuth2ModuleTests: XCTestCase {
     func testRequestAccessSucessful() {
         //TODO AGIOS-mock
     }
+    
+    class MyMockOAuth2Module: OAuth2Module {
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            var accessToken: AnyObject? = NSString(string:"TOKEN")
+            completionHandler(nil, nil)
+        }
+    }
+    /*
+    func testOpenID() {
+        var http = Http()
+        let googleConfig = GoogleConfig(
+            clientId: "302356789040-eums187utfllgetv6kmbems0pm3mfhgl.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"],
+            isOpenIDConnect: true)
+        
+
+        // set up http stub
+        StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+             return true
+        }, withStubResponse:( http_200_response_john_smith ))
+        
+        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2Module.self)//addGoogleAccount(googleConfig)
+        http.authzModule = oauth2Module
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            println(">>> Google:\n\(claims)")
+        }
+    }
+*/
 }
