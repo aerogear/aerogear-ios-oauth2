@@ -51,28 +51,32 @@ class OAuth2ModuleTests: XCTestCase {
     class MyMockOAuth2Module: OAuth2Module {
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             var accessToken: AnyObject? = NSString(string:"TOKEN")
-            completionHandler(nil, nil)
+            completionHandler(accessToken, nil)
         }
     }
-    /*
+    
     func testOpenID() {
-        var http = Http()
+        let loginExpectation = expectationWithDescription("Login");
+
         let googleConfig = GoogleConfig(
             clientId: "302356789040-eums187utfllgetv6kmbems0pm3mfhgl.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
         
-
-        // set up http stub
-        StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-             return true
-        }, withStubResponse:( http_200_response_john_smith ))
         
         var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2Module.self)//addGoogleAccount(googleConfig)
-        http.authzModule = oauth2Module
+
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            println(">>> Google:\n\(claims)")
+            println(">>> ###########Google:\n\(claims)")
+            // set up http stub
+            StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+                return true
+                }, withStubResponse:( self.http_200_response_john_smith ))
+            
+            loginExpectation.fulfill()
+            
         }
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
-*/
+
 }

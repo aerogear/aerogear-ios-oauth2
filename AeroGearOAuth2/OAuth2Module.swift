@@ -232,15 +232,18 @@ public class OAuth2Module: AuthzModule {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        var openIDClaims = OpenIDClaim()
+        var openIDClaims: OpenIDClaim?
         
         self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+            var openIDClaims = OpenIDClaim()
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
             }
-            var paramDict: [String: String] = ["access_token": self.oauth2Session.accessToken!]
-            
+            var paramDict: [String: String] = [:]
+            if response != nil {
+                paramDict = ["access_token": response! as String]
+            }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
 
                 self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
@@ -268,7 +271,7 @@ public class OAuth2Module: AuthzModule {
                         openIDClaims.phoneNumber = unwrappedResponse["phone_number"] as? String
                         openIDClaims.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
                         openIDClaims.updatedAt = unwrappedResponse["updated_at"] as? Int
-                        completionHandler(self.oauth2Session.accessToken!, openIDClaims, nil)
+                        completionHandler(response!, openIDClaims, nil)
                     }
                 })
             }
