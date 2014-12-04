@@ -22,10 +22,10 @@ import AeroGearHttp
 import AGURLSessionStubs
 
 class OAuth2ModuleTests: XCTestCase {
+    var stubJsonResponse = ["name": "John", "family_name": "Smith"]
     
     func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
         var data: NSData
-        var stubJsonResponse = ["name": "John", "family_name": "Smith"]
         data = NSJSONSerialization.dataWithJSONObject(stubJsonResponse, options: nil, error: nil)!
 
         return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
@@ -47,8 +47,11 @@ class OAuth2ModuleTests: XCTestCase {
     func testRequestAccessSucessful() {
         //TODO AGIOS-mock
     }
+    class MyMockHttp: Http {
+    }
     
     class MyMockOAuth2Module: OAuth2Module {
+       
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             var accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
@@ -63,16 +66,16 @@ class OAuth2ModuleTests: XCTestCase {
             scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
         
+        // set up http stub
+        StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+            return true
+            }, withStubResponse:( self.http_200_response_john_smith ))
         
-        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2Module.self)//addGoogleAccount(googleConfig)
-
+        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2Module.self)
+        
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            println(">>> ###########Google:\n\(claims)")
-            // set up http stub
-            StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-                return true
-                }, withStubResponse:( self.http_200_response_john_smith ))
-            
+
+            XCTAssertTrue(self.stubJsonResponse["name"] == claims?.name, "claim shoud be as mocked")
             loginExpectation.fulfill()
             
         }
