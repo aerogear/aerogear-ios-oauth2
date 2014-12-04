@@ -52,12 +52,12 @@ public class Config {
     public let refreshTokenEndpoint: String?
     
     /**
-    Endpoint for openIDConnect to get user information.
+    Endpoint for OpenID Connect to get user information.
     */
     public let userInfoEndpoint: String?
     
     /**
-    Boolean to indicate whether OpenID Connect on authori=zation code grant flow is used.
+    Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
     */
     public var isOpenIDConnect: Bool
     

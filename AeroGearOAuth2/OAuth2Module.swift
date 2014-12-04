@@ -142,7 +142,7 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&id_token"
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
         UIApplication.sharedApplication().openURL(NSURL(string: http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)!)
     }
 
@@ -227,7 +227,7 @@ public class OAuth2Module: AuthzModule {
     }
     
     /**
-    Gateway to request authorization access
+    Gateway to provide authentication using the Authorization Code Flow with OpenID Connect
     
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
