@@ -24,15 +24,25 @@ import AGURLSessionStubs
 class OAuth2ModuleTests: XCTestCase {
     var stubJsonResponse = ["name": "John", "family_name": "Smith"]
     
-    func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
-        var data: NSData
-        data = NSJSONSerialization.dataWithJSONObject(stubJsonResponse, options: nil, error: nil)!
-
-        return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
-    }
     
-    func http_200_response_john_smith(request: NSURLRequest!) -> StubResponse {
-        return http_200(request, params: ["access_token": "TOKEN"])
+    func testStubWithNSURLSessionDefaultConfiguration() {
+        // set up http stub
+        StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+            return true
+            }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+                
+                switch request.URL.path! {
+                case "/plus/v1/people/me/openIdConnect":
+                    var data: NSData
+                    data = NSJSONSerialization.dataWithJSONObject(self.stubJsonResponse, options: nil, error: nil)!
+                    return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
+                case "/v2.2/me":
+                    var string = "{\"id\":\"10204448880356292\",\"first_name\":\"Corinne\",\"gender\":\"female\",\"last_name\":\"Krych\",\"link\":\"https:\\/\\/www.facebook.com\\/app_scoped_user_id\\/10204448880356292\\/\",\"locale\":\"en_GB\",\"name\":\"Corinne Krych\",\"timezone\":1,\"updated_time\":\"2014-09-24T10:51:12+0000\",\"verified\":true}"
+                    var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                    return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+                default: return StubResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
+                }
+            }))
     }
     
     override func setUp() {
@@ -44,13 +54,7 @@ class OAuth2ModuleTests: XCTestCase {
         StubsManager.removeAllStubs()
     }
     
-    func testRequestAccessSucessful() {
-        //TODO AGIOS-mock
-    }
-    class MyMockHttp: Http {
-    }
-    
-    class MyMockOAuth2Module: OAuth2Module {
+    class MyMockOAuth2ModuleSuccess: OAuth2Module {
        
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             var accessToken: AnyObject? = NSString(string:"TOKEN")
@@ -58,7 +62,14 @@ class OAuth2ModuleTests: XCTestCase {
         }
     }
     
-    func testOpenID() {
+    class MyMockOAuth2ModuleFailure: OAuth2Module {
+        
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            completionHandler(nil, NSError())
+        }
+    }
+    
+    func testGoogleOpenIDSuccess() {
         let loginExpectation = expectationWithDescription("Login");
 
         let googleConfig = GoogleConfig(
@@ -67,11 +78,8 @@ class OAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
         
         // set up http stub
-        StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-            return true
-            }, withStubResponse:( self.http_200_response_john_smith ))
-        
-        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2Module.self)
+        testStubWithNSURLSessionDefaultConfiguration()
+        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
 
@@ -81,5 +89,145 @@ class OAuth2ModuleTests: XCTestCase {
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    func testGoogleOpenIDFailure() {
+        let loginExpectation = expectationWithDescription("Login");
+        
+        let googleConfig = GoogleConfig(
+            clientId: "302356789040-eums187utfllgetv6kmbems0pm3mfhgl.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"],
+            isOpenIDConnect: true)
+        
 
+        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
+        
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            
+            XCTAssertTrue(error != nil, "Error")
+            loginExpectation.fulfill()
+            
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
+        
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            var accessToken: AnyObject? = NSString(string:"TOKEN")
+            completionHandler(accessToken, nil)
+        }
+    }
+    
+    class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
+        
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            completionHandler(nil, NSError())
+        }
+    }
+    
+    func testFacebookOpenIDSuccess() {
+        let loginExpectation = expectationWithDescription("Login");
+        
+        let facebookConfig = FacebookConfig(
+            clientId: "YYY",
+            clientSecret: "XXX",
+            scopes:["photo_upload, publish_actions"],
+            isOpenIDConnect: true)
+        
+        // set up http stub
+        testStubWithNSURLSessionDefaultConfiguration()
+        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            
+            XCTAssertTrue("Corinne Krych" == claims?.name, "name should be filled")
+            XCTAssertTrue("Corinne" == claims?.givenName, "first name should be filled")
+            XCTAssertTrue("Krych" == claims?.familyName, "family name should be filled")
+            XCTAssertTrue("female" == claims?.gender, "gender should be filled")
+            loginExpectation.fulfill()
+            
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testFacebookOpenIDFailure() {
+        let loginExpectation = expectationWithDescription("Login");
+        
+        let facebookConfig = FacebookConfig(
+            clientId: "YYY",
+            clientSecret: "XXX",
+            scopes:["photo_upload, publish_actions"],
+            isOpenIDConnect: true)
+        
+        
+        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
+        
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            
+            XCTAssertTrue(error != nil, "Error")
+            loginExpectation.fulfill()
+            
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    class MyKeycloakMockOAuth2ModuleSuccess: KeycloakOAuth2Module {
+        
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            var accessToken: AnyObject? = NSString(string: "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE")
+            completionHandler(accessToken, nil)
+        }
+    }
+    
+    class MyKeycloakMockOAuth2ModuleFailure: KeycloakOAuth2Module {
+        
+        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+            completionHandler(nil, NSError())
+        }
+    }
+    
+    func testKeycloakOpenIDSuccess() {
+        let loginExpectation = expectationWithDescription("Login");
+        
+        let keycloakConfig = KeycloakConfig(
+            clientId: "shoot-third-party",
+            host: "http://localhost:8080",
+            realm: "shoot-realm",
+            isOpenIDConnect: true)
+        
+        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
+        // no need of http stub as Keycloak does not provide a UserInfo endpoint but decode JWT token
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            println("KC::::\(claims)")
+            XCTAssertTrue("Sample User" == claims?.name, "name claim shoud be as defined in JWT token")
+            XCTAssertTrue("User" == claims?.familyName, "family name claim shoud be as defined in JWT token")
+            XCTAssertTrue("sample-user@example" == claims?.email, "email claim shoud be as defined in JWT token")
+            XCTAssertTrue("Sample" == claims?.givenName, "given name claim shoud be as defined in JWT token")
+            loginExpectation.fulfill()
+            
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testKeycloakOpenIDFailure() {
+        let loginExpectation = expectationWithDescription("Login");
+        
+        let keycloakConfig = KeycloakConfig(
+            clientId: "shoot-third-party",
+            host: "http://localhost:8080",
+            realm: "shoot-realm",
+            isOpenIDConnect: true)
+        
+        
+        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleFailure.self)
+        
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+            
+            XCTAssertTrue(error != nil, "Error")
+            loginExpectation.fulfill()
+            
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
 }

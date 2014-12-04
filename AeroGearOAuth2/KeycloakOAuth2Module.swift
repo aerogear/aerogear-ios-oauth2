@@ -45,36 +45,39 @@ public class KeycloakOAuth2Module: OAuth2Module {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public override func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        var openIDClaims = OpenIDClaim()
+        var openIDClaims: OpenIDClaim?
         
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
             }
-            var accessToken = self.oauth2Session.accessToken!
-            var token = self.decode(accessToken)
-            if let decodedToken = token {
-                openIDClaims.kind = decodedToken["sub"] as? String
-                openIDClaims.name = decodedToken["name"] as? String
-                openIDClaims.givenName = decodedToken["given_name"] as? String
-                openIDClaims.familyName = decodedToken["family_name"] as? String
-                openIDClaims.middleName = decodedToken["middle_name"] as? String
-                openIDClaims.nickname = decodedToken["nickname"] as? String
-                openIDClaims.preferredUsername = decodedToken["preferred_username"] as? String
-                openIDClaims.profile = decodedToken["profile"] as? String
-                openIDClaims.picture = decodedToken["picture"] as? String
-                openIDClaims.website = decodedToken["website"] as? String
-                openIDClaims.email = decodedToken["email"] as? String
-                openIDClaims.emailVerified = decodedToken["email_verified"] as? Bool
-                openIDClaims.gender = decodedToken["gender"] as? String
-                openIDClaims.zoneinfo = decodedToken["zoneinfo"] as? String
-                openIDClaims.locale = decodedToken["locale"] as? String
-                openIDClaims.phoneNumber = decodedToken["phone_number"] as? String
-                openIDClaims.phoneNumberVerified = decodedToken["phone_number_verified"] as? Bool
-                openIDClaims.updatedAt = decodedToken["updated_at"] as? Int
+            var accessToken = response as? String
+            if let accessToken = accessToken {
+                var token = self.decode(accessToken)
+                if let decodedToken = token {
+                    openIDClaims = OpenIDClaim()
+                    openIDClaims?.kind = decodedToken["sub"] as? String
+                    openIDClaims?.name = decodedToken["name"] as? String
+                    openIDClaims?.givenName = decodedToken["given_name"] as? String
+                    openIDClaims?.familyName = decodedToken["family_name"] as? String
+                    openIDClaims?.middleName = decodedToken["middle_name"] as? String
+                    openIDClaims?.nickname = decodedToken["nickname"] as? String
+                    openIDClaims?.preferredUsername = decodedToken["preferred_username"] as? String
+                    openIDClaims?.profile = decodedToken["profile"] as? String
+                    openIDClaims?.picture = decodedToken["picture"] as? String
+                    openIDClaims?.website = decodedToken["website"] as? String
+                    openIDClaims?.email = decodedToken["email"] as? String
+                    openIDClaims?.emailVerified = decodedToken["email_verified"] as? Bool
+                    openIDClaims?.gender = decodedToken["gender"] as? String
+                    openIDClaims?.zoneinfo = decodedToken["zoneinfo"] as? String
+                    openIDClaims?.locale = decodedToken["locale"] as? String
+                    openIDClaims?.phoneNumber = decodedToken["phone_number"] as? String
+                    openIDClaims?.phoneNumberVerified = decodedToken["phone_number_verified"] as? Bool
+                    openIDClaims?.updatedAt = decodedToken["updated_at"] as? Int
+                }
             }
-            completionHandler(self.oauth2Session.accessToken!, openIDClaims, nil)
+            completionHandler(accessToken, openIDClaims, nil)
         }
     }
     

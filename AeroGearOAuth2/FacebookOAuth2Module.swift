@@ -89,15 +89,17 @@ public class FacebookOAuth2Module: OAuth2Module {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     override public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        var openIDClaims = OpenIDClaim()
+        var openIDClaims: OpenIDClaim?
         
         self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
             }
-            var paramDict: [String: String] = ["access_token": self.oauth2Session.accessToken!]
-            
+            var paramDict: [String: String] = [:]
+            if response != nil {
+                paramDict = ["access_token": response! as String]
+            }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
                 
                 self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
@@ -110,26 +112,27 @@ public class FacebookOAuth2Module: OAuth2Module {
                         var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: nil)
                         
                         if let unwrappedResponse = json as? [String: AnyObject] {
-                            openIDClaims.kind = unwrappedResponse["sub"] as? String
-                            openIDClaims.name = unwrappedResponse["name"] as? String
-                            openIDClaims.givenName = unwrappedResponse["first_name"] as? String
-                            openIDClaims.familyName = unwrappedResponse["last_name"] as? String
-                            openIDClaims.middleName = unwrappedResponse["middle_name"] as? String
-                            openIDClaims.nickname = unwrappedResponse["nickname"] as? String
-                            openIDClaims.preferredUsername = unwrappedResponse["preferred_username"] as? String
-                            openIDClaims.profile = unwrappedResponse["profile"] as? String
-                            openIDClaims.picture = unwrappedResponse["picture"] as? String
-                            openIDClaims.website = unwrappedResponse["website"] as? String
-                            openIDClaims.email = unwrappedResponse["email"] as? String
-                            openIDClaims.emailVerified = unwrappedResponse["email_verified"] as? Bool
-                            openIDClaims.gender = unwrappedResponse["gender"] as? String
-                            openIDClaims.zoneinfo = unwrappedResponse["timezone"] as? String
-                            openIDClaims.locale = unwrappedResponse["locale"] as? String
-                            openIDClaims.phoneNumber = unwrappedResponse["phone_number"] as? String
-                            openIDClaims.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
-                            openIDClaims.updatedAt = unwrappedResponse["updated_time"] as? Int
-                            completionHandler(self.oauth2Session.accessToken!, openIDClaims, nil)
+                            openIDClaims = OpenIDClaim()
+                            openIDClaims?.kind = unwrappedResponse["sub"] as? String
+                            openIDClaims?.name = unwrappedResponse["name"] as? String
+                            openIDClaims?.givenName = unwrappedResponse["first_name"] as? String
+                            openIDClaims?.familyName = unwrappedResponse["last_name"] as? String
+                            openIDClaims?.middleName = unwrappedResponse["middle_name"] as? String
+                            openIDClaims?.nickname = unwrappedResponse["nickname"] as? String
+                            openIDClaims?.preferredUsername = unwrappedResponse["preferred_username"] as? String
+                            openIDClaims?.profile = unwrappedResponse["profile"] as? String
+                            openIDClaims?.picture = unwrappedResponse["picture"] as? String
+                            openIDClaims?.website = unwrappedResponse["website"] as? String
+                            openIDClaims?.email = unwrappedResponse["email"] as? String
+                            openIDClaims?.emailVerified = unwrappedResponse["email_verified"] as? Bool
+                            openIDClaims?.gender = unwrappedResponse["gender"] as? String
+                            openIDClaims?.zoneinfo = unwrappedResponse["timezone"] as? String
+                            openIDClaims?.locale = unwrappedResponse["locale"] as? String
+                            openIDClaims?.phoneNumber = unwrappedResponse["phone_number"] as? String
+                            openIDClaims?.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
+                            openIDClaims?.updatedAt = unwrappedResponse["updated_time"] as? Int
                         }
+                        completionHandler(response, openIDClaims, nil)
                     }
                 })
             }

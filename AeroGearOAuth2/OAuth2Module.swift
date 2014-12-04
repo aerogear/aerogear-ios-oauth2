@@ -235,7 +235,7 @@ public class OAuth2Module: AuthzModule {
         var openIDClaims: OpenIDClaim?
         
         self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
-            var openIDClaims = OpenIDClaim()
+            
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
@@ -253,28 +253,30 @@ public class OAuth2Module: AuthzModule {
                     }
                     
                     if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                        openIDClaims.kind = unwrappedResponse["sub"] as? String
-                        openIDClaims.name = unwrappedResponse["name"] as? String
-                        openIDClaims.givenName = unwrappedResponse["given_name"] as? String
-                        openIDClaims.familyName = unwrappedResponse["family_name"] as? String
-                        openIDClaims.middleName = unwrappedResponse["middle_name"] as? String
-                        openIDClaims.nickname = unwrappedResponse["nickname"] as? String
-                        openIDClaims.preferredUsername = unwrappedResponse["preferred_username"] as? String
-                        openIDClaims.profile = unwrappedResponse["profile"] as? String
-                        openIDClaims.picture = unwrappedResponse["picture"] as? String
-                        openIDClaims.website = unwrappedResponse["website"] as? String
-                        openIDClaims.email = unwrappedResponse["email"] as? String
-                        openIDClaims.emailVerified = unwrappedResponse["email_verified"] as? Bool
-                        openIDClaims.gender = unwrappedResponse["gender"] as? String
-                        openIDClaims.zoneinfo = unwrappedResponse["zoneinfo"] as? String
-                        openIDClaims.locale = unwrappedResponse["locale"] as? String
-                        openIDClaims.phoneNumber = unwrappedResponse["phone_number"] as? String
-                        openIDClaims.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
-                        openIDClaims.updatedAt = unwrappedResponse["updated_at"] as? Int
-                        completionHandler(response!, openIDClaims, nil)
+                        openIDClaims = OpenIDClaim()
+                        openIDClaims?.kind = unwrappedResponse["sub"] as? String
+                        openIDClaims?.name = unwrappedResponse["name"] as? String
+                        openIDClaims?.givenName = unwrappedResponse["given_name"] as? String
+                        openIDClaims?.familyName = unwrappedResponse["family_name"] as? String
+                        openIDClaims?.middleName = unwrappedResponse["middle_name"] as? String
+                        openIDClaims?.nickname = unwrappedResponse["nickname"] as? String
+                        openIDClaims?.preferredUsername = unwrappedResponse["preferred_username"] as? String
+                        openIDClaims?.profile = unwrappedResponse["profile"] as? String
+                        openIDClaims?.picture = unwrappedResponse["picture"] as? String
+                        openIDClaims?.website = unwrappedResponse["website"] as? String
+                        openIDClaims?.email = unwrappedResponse["email"] as? String
+                        openIDClaims?.emailVerified = unwrappedResponse["email_verified"] as? Bool
+                        openIDClaims?.gender = unwrappedResponse["gender"] as? String
+                        openIDClaims?.zoneinfo = unwrappedResponse["zoneinfo"] as? String
+                        openIDClaims?.locale = unwrappedResponse["locale"] as? String
+                        openIDClaims?.phoneNumber = unwrappedResponse["phone_number"] as? String
+                        openIDClaims?.phoneNumberVerified = unwrappedResponse["phone_number_verified"] as? Bool
+                        openIDClaims?.updatedAt = unwrappedResponse["updated_at"] as? Int
                     }
+                    completionHandler(response, openIDClaims, nil)
                 })
             }
+            
         }
 
     }
