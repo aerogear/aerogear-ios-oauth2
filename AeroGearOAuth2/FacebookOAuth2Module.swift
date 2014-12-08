@@ -89,8 +89,6 @@ public class FacebookOAuth2Module: OAuth2Module {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     override public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        
-        
         self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
