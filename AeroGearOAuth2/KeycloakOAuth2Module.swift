@@ -56,25 +56,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
             if let accessToken = accessToken {
                 var token = self.decode(accessToken)
                 if let decodedToken = token {
-                    openIDClaims = OpenIDClaim()
-                    openIDClaims?.kind = decodedToken["sub"] as? String
-                    openIDClaims?.name = decodedToken["name"] as? String
-                    openIDClaims?.givenName = decodedToken["given_name"] as? String
-                    openIDClaims?.familyName = decodedToken["family_name"] as? String
-                    openIDClaims?.middleName = decodedToken["middle_name"] as? String
-                    openIDClaims?.nickname = decodedToken["nickname"] as? String
-                    openIDClaims?.preferredUsername = decodedToken["preferred_username"] as? String
-                    openIDClaims?.profile = decodedToken["profile"] as? String
-                    openIDClaims?.picture = decodedToken["picture"] as? String
-                    openIDClaims?.website = decodedToken["website"] as? String
-                    openIDClaims?.email = decodedToken["email"] as? String
-                    openIDClaims?.emailVerified = decodedToken["email_verified"] as? Bool
-                    openIDClaims?.gender = decodedToken["gender"] as? String
-                    openIDClaims?.zoneinfo = decodedToken["zoneinfo"] as? String
-                    openIDClaims?.locale = decodedToken["locale"] as? String
-                    openIDClaims?.phoneNumber = decodedToken["phone_number"] as? String
-                    openIDClaims?.phoneNumberVerified = decodedToken["phone_number_verified"] as? Bool
-                    openIDClaims?.updatedAt = decodedToken["updated_at"] as? Int
+                    openIDClaims = OpenIDClaim(fromDict: decodedToken)
                 }
             }
             completionHandler(accessToken, openIDClaims, nil)
