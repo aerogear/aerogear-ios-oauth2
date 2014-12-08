@@ -8,16 +8,51 @@ Taking care of:
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 sepcific providers. Existing extensions: [Facebook]() etc...
+* adaptable to OAuth2 sepcific providers. Existing extensions: Google, Facebook, Keycloak etc...
 
 100% Swift.
 
 ## Example Usage
 
+#### OAuth2 grant for GET with a predefined config like Facebook
 ```swift
-// TODO
+var Http = Http() 						// [1]
+let facebookConfig = FacebookConfig(	// [2]
+    clientId: "YYY",
+    clientSecret: "XXX",
+    scopes:["photo_upload, publish_actions"])
+var oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
+http.authzModule = oauth2Module			// [4]
+http.GET("/get", completionHandler: {(response, error) in	// [5]
+	// handle response
 })
 ```
+Create an instance of Http [1] from [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) a thin layer on top of NSURLSession.
+
+Fill-in the OAuth2 configuration in [2], here we use a predefined Config with all Facebook endpoint filled-in for us.
+
+Create an OAuth2Module from AccountManager's factory method in [3].
+
+Inject OAuth2Module into http object in [4] and uses the http object to GET/POST etc...
+
+See full description in [aerogear.org](https://aerogear.org/docs/guides/aerogear-ios-2.X/Authorization/)
+
+#### OpenID Connect 
+```swift
+var Http = Http()
+let keycloakConfig = KeycloakConfig(
+    clientId: "sharedshoot-third-party",
+    host: "http://localhost:8080",
+    realm: "shoot-realm",
+    isOpenIDConnect: true)
+var oauth2Module = AccountManager.addKeycloakAccount(keycloakConfig)
+http.authzModule = oauth2Module
+oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in // [1]
+    // Do your own stuff here
+}
+
+```
+Similar approach for configuration, here we want to login as Keyclaok user, using ```login``` method we get some user information back in OpenIDClaim object.
 
 ## Building & Running tests
 
