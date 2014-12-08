@@ -18,24 +18,32 @@
 import UIKit
 import XCTest
 import AeroGearOAuth2
+import AeroGearHttp
 import AGURLSessionStubs
 
+func setupStubWithNSURLSessionDefaultConfiguration() {
+    // set up http stub
+    StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+        return true
+        }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+            var stubJsonResponse = ["name": "John", "family_name": "Smith"]
+            switch request.URL.path! {
+            case "/plus/v1/people/me/openIdConnect":
+                var data: NSData
+                data = NSJSONSerialization.dataWithJSONObject(stubJsonResponse, options: nil, error: nil)!
+                return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            case "/v2.2/me":
+                var string = "{\"id\":\"10204448880356292\",\"first_name\":\"Corinne\",\"gender\":\"female\",\"last_name\":\"Krych\",\"link\":\"https:\\/\\/www.facebook.com\\/app_scoped_user_id\\/10204448880356292\\/\",\"locale\":\"en_GB\",\"name\":\"Corinne Krych\",\"timezone\":1,\"updated_time\":\"2014-09-24T10:51:12+0000\",\"verified\":true}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            default: return StubResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
+            }
+        }))
+}
+
+// TODO add more unit test for requestAccess...
 class OAuth2ModuleTests: XCTestCase {
-    
-    func http_200(request: NSURLRequest!, params:[String: String]?) -> StubResponse {
-        var data: NSData
-        if ((params) != nil) {
-            data = NSJSONSerialization.dataWithJSONObject(params!, options: nil, error: nil)!
-        } else {
-            data = NSData()
-        }
-        return StubResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
-    }
-    
-    func http_200_response(request: NSURLRequest!) -> StubResponse {
-        return http_200(request, params: ["key1":"value1"])
-    }
-    
+   
     override func setUp() {
         super.setUp()
     }
@@ -44,8 +52,6 @@ class OAuth2ModuleTests: XCTestCase {
         super.tearDown()
         StubsManager.removeAllStubs()
     }
+
     
-    func testRequestAccessSucessful() {
-        //TODO AGIOS-mock
-    }
 }

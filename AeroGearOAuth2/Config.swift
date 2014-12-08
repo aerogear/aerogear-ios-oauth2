@@ -52,9 +52,19 @@ public class Config {
     public let refreshTokenEndpoint: String?
     
     /**
+    Endpoint for OpenID Connect to get user information.
+    */
+    public let userInfoEndpoint: String?
+    
+    /**
+    Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
+    */
+    public var isOpenIDConnect: Bool
+    
+    /**
     Applies the various scopes of the authorization.
     */
-    public let scopes: [String]
+    public var scopes: [String]
     
     var scope: String {
         get {
@@ -87,13 +97,15 @@ public class Config {
     */
     public var accountId: String?
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool? = nil, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
         self.accessTokenEndpoint = accessTokenEndpoint
         self.refreshTokenEndpoint = refreshTokenEndpoint
         self.revokeTokenEndpoint = revokeTokenEndpoint
+        self.isOpenIDConnect = isOpenIDConnect ?? false
+        self.userInfoEndpoint = userInfoEndpoint
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret

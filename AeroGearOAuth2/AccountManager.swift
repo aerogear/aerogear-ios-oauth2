@@ -16,13 +16,12 @@
 */
 
 import Foundation
-import AeroGearHttp
 
 /**
 A Config object that setups facebook specific configuration parameters
 */
 public class FacebookConfig: Config {
-    public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil) {
+    public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
         super.init(base: "",
             authzEndpoint: "https://www.facebook.com/dialog/oauth",
             redirectURL: "fb\(clientId)://authorize/",
@@ -31,8 +30,16 @@ public class FacebookConfig: Config {
             refreshTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
             clientSecret: clientSecret,
             revokeTokenEndpoint: "https://www.facebook.com/me/permissions",
+            isOpenIDConnect: isOpenIDConnect,
+            userInfoEndpoint: isOpenIDConnect ? "https://graph.facebook.com/v2.2/me" : nil,
             scopes: scopes,
             accountId: accountId)
+        // Add openIdConnect scope
+        if self.isOpenIDConnect {
+            if self.scopes[0].rangeOfString("public_profile") == nil {
+                self.scopes[0] = self.scopes[0] + ", public_profile"
+            }
+        }
     }
 }
 
@@ -40,8 +47,8 @@ public class FacebookConfig: Config {
 A Config object that setups Google specific configuration parameters
 */
 public class GoogleConfig: Config {
-    public init(clientId: String, scopes: [String], accountId: String? = nil) {
-        let bundleString = NSBundle.mainBundle().bundleIdentifier!
+    public init(clientId: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
+        let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/auth",
             redirectURL: "\(bundleString):/oauth2Callback",
@@ -49,14 +56,20 @@ public class GoogleConfig: Config {
             clientId: clientId,
             refreshTokenEndpoint: "o/oauth2/token",
             revokeTokenEndpoint: "rest/revoke",
+            isOpenIDConnect: isOpenIDConnect,
+            userInfoEndpoint: isOpenIDConnect ? "https://www.googleapis.com/plus/v1/people/me/openIdConnect" : nil,
             scopes: scopes,
             accountId: accountId)
+        // Add openIdConnect scope
+        if self.isOpenIDConnect {
+            self.scopes += ["openid", "email", "profile"]
+        }
     }
 }
 
 public class KeycloakConfig: Config {
-    public init(clientId: String, host: String, realm: String? = nil) {
-        let bundleString = NSBundle.mainBundle().bundleIdentifier!
+    public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
+        let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
         super.init(base: String(format: "%@/auth", host),
@@ -65,12 +78,17 @@ public class KeycloakConfig: Config {
             accessTokenEndpoint: String(format: "realms/%@/tokens/access/codes", realm),
             clientId: clientId,
             refreshTokenEndpoint: String(format: "realms/%@/tokens/refresh", realm),
-            revokeTokenEndpoint: String(format: "realms/%@/tokens/logout", realm))
+            revokeTokenEndpoint: String(format: "realms/%@/tokens/logout", realm),
+            isOpenIDConnect: isOpenIDConnect)
+        // Add openIdConnect scope
+        if self.isOpenIDConnect {
+            self.scopes += ["openid", "email", "profile"]
+        }
     }
 }
 
 /**
- An account manager used to instantiate, store and retrieve OAuth2 modules
+An account manager used to instantiate, store and retrieve OAuth2 modules
 */
 public class AccountManager {
     

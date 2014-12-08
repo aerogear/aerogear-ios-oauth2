@@ -40,7 +40,7 @@ enum AuthorizationState {
 }
 
 /**
-*  Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
+Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 public class OAuth2Module: AuthzModule {
     let config: Config
@@ -193,7 +193,46 @@ public class OAuth2Module: AuthzModule {
             self.requestAuthorizationCode(completionHandler)
         }
     }
+    
+    /**
+    Gateway to provide authentication using the Authorization Code Flow with OpenID Connect
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
+    public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+        
+        self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+            
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            var paramDict: [String: String] = [:]
+            if response != nil {
+                paramDict = ["access_token": response! as String]
+            }
+            if let userInfoEndpoint = self.config.userInfoEndpoint {
 
+                self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+                    if (error != nil) {
+                        completionHandler(nil, nil, error)
+                        return
+                    }
+                    var openIDClaims: OpenIDClaim?
+                    if let unwrappedResponse = responseObject as? [String: AnyObject] {
+                        openIDClaims = OpenIDClaim(fromDict: unwrappedResponse)
+                    }
+                    completionHandler(response, openIDClaims, nil)
+                })
+            } else {
+                completionHandler(nil, nil, NSError(domain: "OAuth2Module", code: 0, userInfo: ["OpenID Connect" : "No UserInfo endpoint available in config"]))
+                return
+            }
+            
+        }
+
+    }
+    
     /**
     Request to revoke access
 

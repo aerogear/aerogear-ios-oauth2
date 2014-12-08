@@ -39,6 +39,30 @@ public class KeycloakOAuth2Module: OAuth2Module {
         })
     }
     
+    /**
+    Gateway to login with OpenIDConnect
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
+    public override func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+        var openIDClaims: OpenIDClaim?
+        
+        self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            var accessToken = response as? String
+            if let accessToken = accessToken {
+                var token = self.decode(accessToken)
+                if let decodedToken = token {
+                    openIDClaims = OpenIDClaim(fromDict: decodedToken)
+                }
+            }
+            completionHandler(accessToken, openIDClaims, nil)
+        }
+    }
+    
     public override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]

@@ -22,7 +22,7 @@ import AeroGearHttp
 An OAuth2Module subclass specific to 'Facebook' authorization
 */
 public class FacebookOAuth2Module: OAuth2Module {
-
+    
     public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer, responseSerializer: ResponseSerializer) {
         super.init(config: config, session: session, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
     }
@@ -70,7 +70,7 @@ public class FacebookOAuth2Module: OAuth2Module {
             return;
         }
         let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
-
+        
         http.DELETE(config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             
             if (error != nil) {
@@ -81,5 +81,44 @@ public class FacebookOAuth2Module: OAuth2Module {
             self.oauth2Session.saveAccessToken()
             completionHandler(response!, nil)
         })
+    }
+    
+    /**
+    Gateway to request authorization access
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
+    override public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+        self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            var paramDict: [String: String] = [:]
+            if response != nil {
+                paramDict = ["access_token": response! as String]
+            }
+            if let userInfoEndpoint = self.config.userInfoEndpoint {
+                
+                self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+                    if (error != nil) {
+                        completionHandler(nil, nil, error)
+                        return
+                    }
+                    if let unwrappedResponse = responseObject as? String {
+                        var data = unwrappedResponse.dataUsingEncoding(NSUTF8StringEncoding)
+                        var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: nil)
+                        var openIDClaims: FacebookOpenIDClaim?
+                        if let unwrappedResponse = json as? [String: AnyObject] {
+                            openIDClaims = FacebookOpenIDClaim(fromDict: unwrappedResponse)
+                        }
+                        completionHandler(response, openIDClaims, nil)
+                    }
+                })
+            } else {
+                completionHandler(nil, nil, NSError(domain: "OAuth2Module", code: 0, userInfo: ["OpenID Connect" : "No UserInfo endpoint available in config"]))
+                return
+            }
+        }
     }
 }
