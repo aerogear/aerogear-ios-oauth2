@@ -14,9 +14,11 @@
 		483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
 		483304A519AF44DF002F8DA9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
 		48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48432BE81A2F727C00F7A0FF /* ConfigTest.swift */; };
-		485D737B1A35B6240007D9EC /* FacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73781A35B6240007D9EC /* FacebookOAuth2ModuleTest.swift */; };
-		485D737C1A35B6240007D9EC /* GoogleOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73791A35B6240007D9EC /* GoogleOAuth2ModuleTest.swift */; };
-		485D737D1A35B6240007D9EC /* KeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D737A1A35B6240007D9EC /* KeycloakOAuth2ModuleTest.swift */; };
+		485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */; };
+		485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */; };
+		485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */; };
+		485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */; };
+		485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */; };
 		485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */; };
 		4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71519EFE7D100F3FDE8 /* DateUtils.swift */; };
 		4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */; };
@@ -119,9 +121,11 @@
 		4833049F19AF327D002F8DA9 /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		483304A419AF44DF002F8DA9 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		48432BE81A2F727C00F7A0FF /* ConfigTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTest.swift; sourceTree = "<group>"; };
-		485D73781A35B6240007D9EC /* FacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D73791A35B6240007D9EC /* GoogleOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D737A1A35B6240007D9EC /* KeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
+		485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
+		485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
+		485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectFacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
+		485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectGoogleOAuth2ModuleTest.swift; sourceTree = "<group>"; };
+		485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectKeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
 		485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDClaim.swift; sourceTree = "<group>"; };
 		4872F71519EFE7D100F3FDE8 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilsTest.swift; sourceTree = "<group>"; };
@@ -199,12 +203,14 @@
 		4833046E19AF1635002F8DA9 /* AeroGearOAuth2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				485D73781A35B6240007D9EC /* FacebookOAuth2ModuleTest.swift */,
-				485D73791A35B6240007D9EC /* GoogleOAuth2ModuleTest.swift */,
-				485D737A1A35B6240007D9EC /* KeycloakOAuth2ModuleTest.swift */,
+				485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */,
+				485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */,
+				485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */,
 				48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */,
 				4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */,
 				48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */,
+				485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */,
+				485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */,
 				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
 			);
@@ -408,12 +414,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
-				485D737B1A35B6240007D9EC /* FacebookOAuth2ModuleTest.swift in Sources */,
+				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
 				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,
-				485D737D1A35B6240007D9EC /* KeycloakOAuth2ModuleTest.swift in Sources */,
+				485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */,
+				485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */,
+				485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */,
 				48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */,
-				485D737C1A35B6240007D9EC /* GoogleOAuth2ModuleTest.swift in Sources */,
+				485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
