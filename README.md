@@ -8,7 +8,7 @@ Taking care of:
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 sepcific providers. Existing extensions: Google, Facebook, Keycloak etc...
+* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, Keycloak etc...
 
 100% Swift.
 
@@ -52,7 +52,7 @@ oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSErr
 }
 
 ```
-Similar approach for configuration, here we want to login as Keyclaok user, using ```login``` method we get some user information back in OpenIDClaim object.
+Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIDClaim object.
 
 ## Building & Running tests
 
