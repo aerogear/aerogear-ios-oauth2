@@ -21,8 +21,31 @@ import AeroGearOAuth2
 import AeroGearHttp
 import AGURLSessionStubs
 
+let KEYCLOAK_TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE"
+
+func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
+    // set up http stub
+    StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+        return true
+        }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+            var stubJsonResponse = ["name": "John", "family_name": "Smith"]
+            switch request.URL.path! {
+
+            case "/auth/realms/shoot-realm/tokens/refresh":
+                var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"\(KEYCLOAK_TOKEN)\",\"expires_in\":23}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            case "/auth/realms/shoot-realm/tokens/logout":
+                var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            default: return StubResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            }
+        }))
+}
+
 class KeycloakOAuth2ModuleTests: XCTestCase {
-    
+   
     override func setUp() {
         super.setUp()
     }
@@ -31,63 +54,39 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
         super.tearDown()
         StubsManager.removeAllStubs()
     }
-
-    class MyKeycloakMockOAuth2ModuleSuccess: KeycloakOAuth2Module {
-        
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            var accessToken: AnyObject? = NSString(string: "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE")
-            completionHandler(accessToken, nil)
-        }
-    }
-    
-    class MyKeycloakMockOAuth2ModuleFailure: KeycloakOAuth2Module {
-        
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            completionHandler(nil, NSError())
-        }
-    }
-    
-    func testKeycloakOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+ 
+    func testRefreshAccessWithKeycloak() {
+        setupStubKeycloakWithNSURLSessionDefaultConfiguration()
+        let expectation = expectationWithDescription("KeycloakRefresh");
         let keycloakConfig = KeycloakConfig(
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
-            realm: "shoot-realm",
-            isOpenIDConnect: true)
+            realm: "shoot-realm")
         
-        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
-        // no need of http stub as Keycloak does not provide a UserInfo endpoint but decode JWT token
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            println("KC::::\(claims)")
-            XCTAssertTrue("Sample User" == claims?.name, "name claim shoud be as defined in JWT token")
-            XCTAssertTrue("User" == claims?.familyName, "family name claim shoud be as defined in JWT token")
-            XCTAssertTrue("sample-user@example" == claims?.email, "email claim shoud be as defined in JWT token")
-            XCTAssertTrue("Sample" == claims?.givenName, "given name claim shoud be as defined in JWT token")
-            loginExpectation.fulfill()
-            
+        var mockedSession = MockOAuth2SessionWithRefreshToken()
+        var oauth2Module = KeycloakOAuth2Module(config: keycloakConfig, session: mockedSession)
+        oauth2Module.refreshAccessToken { (response: AnyObject?, error:NSError?) -> Void in
+            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as String, "If access token not valid but refresh token present and still valid")
+        XCTAssertTrue(KEYCLOAK_TOKEN == mockedSession.savedRefreshedToken, "Saved newly issued refresh token")
+            expectation.fulfill()            
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testKeycloakOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+    func testRevokeAccess() {
+        setupStubKeycloakWithNSURLSessionDefaultConfiguration()
+        let expectation = expectationWithDescription("KeycloakRevoke");
         let keycloakConfig = KeycloakConfig(
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
-            realm: "shoot-realm",
-            isOpenIDConnect: true)
+            realm: "shoot-realm")
         
-        
-        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleFailure.self)
-        
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            
-            XCTAssertTrue(error != nil, "Error")
-            loginExpectation.fulfill()
-            
-        }
+        var mockedSession = MockOAuth2SessionWithRefreshToken()
+        var oauth2Module = KeycloakOAuth2Module(config: keycloakConfig, session: mockedSession)
+        oauth2Module.revokeAccess({(response: AnyObject?, error:NSError?) -> Void in
+            XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
+            expectation.fulfill()
+        })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     

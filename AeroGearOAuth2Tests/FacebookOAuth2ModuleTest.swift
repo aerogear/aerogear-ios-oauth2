@@ -21,103 +21,68 @@ import AeroGearOAuth2
 import AeroGearHttp
 import AGURLSessionStubs
 
+func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
+    // set up http stub
+    StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+        return true
+        }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+            var stubJsonResponse = ["name": "John", "family_name": "Smith"]
+            switch request.URL.path! {
+            case "/me/permissions":
+                var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            case "/oauth/access_token":
+                var string = "access_token=CAAK4k&expires=5183999"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
+            default: return StubResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            }
+        }))
+}
+
 class FacebookOAuth2ModuleTests: XCTestCase {
-    
+   
     override func setUp() {
         super.setUp()
+        setupStubFacebookWithNSURLSessionDefaultConfiguration()
     }
     
     override func tearDown() {
         super.tearDown()
         StubsManager.removeAllStubs()
     }
-    
-    class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
-        
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            var accessToken: AnyObject? = NSString(string:"TOKEN")
-            completionHandler(accessToken, nil)
-        }
-    }
-    
-    class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
-        
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            completionHandler(nil, NSError())
-        }
-    }
-    
-    func testFacebookOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+ 
+    func testExchangeAuthorizationCodeForAccessToken() {
+        let expectation = expectationWithDescription("ExchangeAccessToken");
         let facebookConfig = FacebookConfig(
-            clientId: "YYY",
-            clientSecret: "XXX",
-            scopes:["photo_upload, publish_actions"],
-            isOpenIDConnect: true)
+            clientId: "xxx",
+            clientSecret: "yyy",
+            scopes:["photo_upload, publish_actions"])
         
-        // set up http stub
-        setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
-        
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            
-            XCTAssertTrue("Corinne Krych" == claims?.name, "name should be filled")
-            XCTAssertTrue("Corinne" == claims?.givenName, "first name should be filled")
-            XCTAssertTrue("Krych" == claims?.familyName, "family name should be filled")
-            XCTAssertTrue("female" == claims?.gender, "gender should be filled")
-            loginExpectation.fulfill()
-            
-        }
+        var mockedSession = MockOAuth2SessionWithRefreshToken()
+        var oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
+        oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
+            XCTAssertTrue(response as String == "CAAK4k" , "Check access token is return to callback")
+            expectation.fulfill()            
+        })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testFacebookOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login");
-        
-        let fbConfig = Config(base: "https://fb",
-            authzEndpoint: "o/oauth2/auth",
-            redirectURL: "google:/oauth2Callback",
-            accessTokenEndpoint: "o/oauth2/token",
-            clientId: "302356789040-eums187utfllgetv6kmbems0pm3mfhgl.apps.googleusercontent.com",
-            refreshTokenEndpoint: "o/oauth2/token",
-            revokeTokenEndpoint: "rest/revoke",
-            isOpenIDConnect: true,
-            userInfoEndpoint: nil,
-            scopes: ["openid", "email", "profile"],
-            accountId: "acc")
-        // set up http stub
-        setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
-        
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            var erroDict = (error?.userInfo)!
-            var value = erroDict["OpenID Connect"] as String
-            XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
-            loginExpectation.fulfill()
-            
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testFacebookOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+    func testRevokeAccess() {
+        let expectation = expectationWithDescription("Revoke");
         let facebookConfig = FacebookConfig(
-            clientId: "YYY",
-            clientSecret: "XXX",
-            scopes:["photo_upload, publish_actions"],
-            isOpenIDConnect: true)
+            clientId: "xxx",
+            clientSecret: "yyy",
+            scopes:["photo_upload, publish_actions"])
         
-        
-        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
-        
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            
-            XCTAssertTrue(error != nil, "Error")
-            loginExpectation.fulfill()
-            
-        }
+        var mockedSession = MockOAuth2SessionWithRefreshToken()
+        var oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
+        oauth2Module.revokeAccess({(response: AnyObject?, error:NSError?) -> Void in
+            XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
+            expectation.fulfill()
+        })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
 }
