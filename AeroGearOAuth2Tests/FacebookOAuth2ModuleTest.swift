@@ -45,6 +45,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
    
     override func setUp() {
         super.setUp()
+        setupStubFacebookWithNSURLSessionDefaultConfiguration()
     }
     
     override func tearDown() {
@@ -53,8 +54,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
     }
  
     func testExchangeAuthorizationCodeForAccessToken() {
-        setupStubFacebookWithNSURLSessionDefaultConfiguration()
-        let expectation = expectationWithDescription("Revoke");
+        let expectation = expectationWithDescription("ExchangeAccessToken");
         let facebookConfig = FacebookConfig(
             clientId: "xxx",
             clientSecret: "yyy",
@@ -63,14 +63,13 @@ class FacebookOAuth2ModuleTests: XCTestCase {
         var mockedSession = MockOAuth2SessionWithRefreshToken()
         var oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
         oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue(response as String == "CAAK4k" , "revoke token reset session")
+            XCTAssertTrue(response as String == "CAAK4k" , "Check access token is return to callback")
             expectation.fulfill()            
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testRevokeAccess() {
-        setupStubFacebookWithNSURLSessionDefaultConfiguration()
         let expectation = expectationWithDescription("Revoke");
         let facebookConfig = FacebookConfig(
             clientId: "xxx",

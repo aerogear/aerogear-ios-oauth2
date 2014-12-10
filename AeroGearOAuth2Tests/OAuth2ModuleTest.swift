@@ -40,84 +40,11 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23}"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
-            case "/auth/realms/shoot-realm/tokens/refresh":
-                var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE\",\"expires_in\":23}"
-                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
-                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             default: return StubResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
             }
         }))
 }
 
-public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
-    public var accountId: String {
-        get {
-            return "account"
-        }
-    }
-    public var accessToken: String? {
-        get {
-            return "TOKEN"
-        }
-        set(data) {}
-    }
-    public var accessTokenExpirationDate: NSDate?
-    public var refreshTokenExpirationDate: NSDate?
-    public var refreshToken: String?
-    public func tokenIsNotExpired() -> Bool {
-        return true
-    }
-    
-    public func refreshTokenIsNotExpired() -> Bool {
-        return true
-    }
-    
-    public func saveAccessToken() {}
-    
-    public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {}
-    public init() {}
-}
-
-public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccessTokenStored {
-    public var savedRefreshedToken: String?
-    public var initCalled = 0
-    public override var refreshToken: String? {
-        get {
-            return "REFRESH_TOKEN"
-        }
-        set(data) {}
-    }
-    public override func tokenIsNotExpired() -> Bool {
-        return false
-    }
-    public override func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
-        savedRefreshedToken = refreshToken
-    }
-    public override func saveAccessToken() {initCalled = 1}
-    public override init() {}
-}
-
-public class MockOAuth2SessionWithAuthzCode: MockOAuth2SessionWithValidAccessTokenStored {
-    public override var refreshToken: String? {
-        get {
-            return nil
-        }
-        set(data) {}
-    }
-    public override func tokenIsNotExpired() -> Bool {
-        return false
-    }
-    
-}
-
-class OAuth2ModulePartialMock: OAuth2Module {
-    override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
-        completionHandler("NEW_ACCESS_TOKEN", nil)
-    }
-    override func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
-        completionHandler("ACCESS_TOKEN", nil)
-    }
-}
 
 class OAuth2ModuleTests: XCTestCase {
    
