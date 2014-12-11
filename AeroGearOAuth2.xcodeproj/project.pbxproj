@@ -10,23 +10,103 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
-		<key>0D00BD1062AAB99FF48EFD7D</key>
+		<key>09E5C3E9BF21978F6317B217</key>
 		<dict>
-			<key>children</key>
-			<array>
-				<string>323129D83DB3055570213ED5</string>
-				<string>28AC3861B7CE6CAE67F9ABA0</string>
-				<string>1AFD96BBE27C9D105401FFC8</string>
-				<string>CF33DE24B5FDBC75AF6FD2FD</string>
-			</array>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXGroup</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
 			<key>name</key>
-			<string>Pods</string>
+			<string>Pods-AeroGearOAuth2Tests.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>16B99DAFF0E34CBCF64A5038</key>
+		<key>117651896C6099169FF40CAA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>2B94E9362344D1BD2EF7D943</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3F4BA5A03E90C75CC2866ABF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Weak</string>
+				</array>
+			</dict>
+		</dict>
+		<key>30038E87B86C6C0BB52B42DD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>31897CDB95B69D233A342D2D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3F4BA5A03E90C75CC2866ABF</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods_AeroGearOAuth2Tests.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>43077EF0E9B8CD33A80E7B9F</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -46,88 +126,6 @@
 			<string>/bin/sh</string>
 			<key>shellScript</key>
 			<string>"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>1AFD96BBE27C9D105401FFC8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>1D689BF97C81CFED32182136</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>28AC3861B7CE6CAE67F9ABA0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>323129D83DB3055570213ED5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4764A47DC9DCAEF09CA0F349</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
@@ -199,8 +197,8 @@
 				<string>4833046419AF1635002F8DA9</string>
 				<string>4833046E19AF1635002F8DA9</string>
 				<string>4833046319AF1635002F8DA9</string>
-				<string>0D00BD1062AAB99FF48EFD7D</string>
-				<string>C6F46B0C1D3D584AED46D7A5</string>
+				<string>EDC1B5EA330BE6809642E3C9</string>
+				<string>6DA531836D4D42D3E1904E78</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -250,20 +248,7 @@
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
-			<array>
-				<dict>
-					<key>ProductGroup</key>
-					<string>4833048519AF28D9002F8DA9</string>
-					<key>ProjectRef</key>
-					<string>4833048419AF28D9002F8DA9</string>
-				</dict>
-				<dict>
-					<key>ProductGroup</key>
-					<string>4833047C19AF28AD002F8DA9</string>
-					<key>ProjectRef</key>
-					<string>4833047B19AF28AD002F8DA9</string>
-				</dict>
-			</array>
+			<array/>
 			<key>projectRoot</key>
 			<string></string>
 			<key>targets</key>
@@ -314,7 +299,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>D9F8DBF2C5CF6F363442591D</string>
+				<string>516C2B389D203ECEBD9E0815</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -351,20 +336,18 @@
 			<string>4833047519AF1635002F8DA9</string>
 			<key>buildPhases</key>
 			<array>
-				<string>8F41368FD63EF85C030B543F</string>
+				<string>AC859C314229F66700908186</string>
 				<string>4833045D19AF1635002F8DA9</string>
 				<string>4833045E19AF1635002F8DA9</string>
 				<string>4833045F19AF1635002F8DA9</string>
 				<string>4833046019AF1635002F8DA9</string>
-				<string>C392C06548BF356268E265C5</string>
-				<string>4764A47DC9DCAEF09CA0F349</string>
+				<string>8B9986C9E48F8BCC06A26222</string>
+				<string>E0642692721FE27851FB502F</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
 			<key>dependencies</key>
-			<array>
-				<string>6FC65AED19D16BB4001B59B4</string>
-			</array>
+			<array/>
 			<key>isa</key>
 			<string>PBXNativeTarget</string>
 			<key>name</key>
@@ -431,7 +414,6 @@
 		<dict>
 			<key>children</key>
 			<array>
-				<string>4833048419AF28D9002F8DA9</string>
 				<string>4833046619AF1635002F8DA9</string>
 			</array>
 			<key>isa</key>
@@ -505,7 +487,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>F300687672D2C1B555A7FF0C</string>
+				<string>2B94E9362344D1BD2EF7D943</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -529,20 +511,18 @@
 			<string>4833047819AF1635002F8DA9</string>
 			<key>buildPhases</key>
 			<array>
-				<string>5C16B9CC97AACF542EE23E78</string>
+				<string>93450CEB2BAFED8F7B381800</string>
 				<string>4833046919AF1635002F8DA9</string>
 				<string>4833046A19AF1635002F8DA9</string>
 				<string>4833046B19AF1635002F8DA9</string>
 				<string>6F1432B31A16857C003BEE5B</string>
-				<string>9D49C45BF0768F302FE30331</string>
-				<string>16B99DAFF0E34CBCF64A5038</string>
+				<string>117651896C6099169FF40CAA</string>
+				<string>43077EF0E9B8CD33A80E7B9F</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
 			<key>dependencies</key>
 			<array>
-				<string>6FC65AF319D16BD6001B59B4</string>
-				<string>6FC65AF119D16BD3001B59B4</string>
 				<string>6FC65AEF19D16BCE001B59B4</string>
 			</array>
 			<key>isa</key>
@@ -596,7 +576,6 @@
 		<dict>
 			<key>children</key>
 			<array>
-				<string>4833047B19AF28AD002F8DA9</string>
 				<string>4833047019AF1635002F8DA9</string>
 			</array>
 			<key>isa</key>
@@ -797,7 +776,7 @@
 		<key>4833047619AF1635002F8DA9</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>323129D83DB3055570213ED5</string>
+			<string>31897CDB95B69D233A342D2D</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CLANG_ENABLE_MODULES</key>
@@ -831,7 +810,7 @@
 		<key>4833047719AF1635002F8DA9</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>28AC3861B7CE6CAE67F9ABA0</string>
+			<string>30038E87B86C6C0BB52B42DD</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CLANG_ENABLE_MODULES</key>
@@ -877,7 +856,7 @@
 		<key>4833047919AF1635002F8DA9</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>1AFD96BBE27C9D105401FFC8</string>
+			<string>B8AABF38B64CDFEB481203C1</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
@@ -905,7 +884,7 @@
 		<key>4833047A19AF1635002F8DA9</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>CF33DE24B5FDBC75AF6FD2FD</string>
+			<string>09E5C3E9BF21978F6317B217</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
@@ -924,164 +903,6 @@
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
 			<string>Release</string>
-		</dict>
-		<key>4833047B19AF28AD002F8DA9</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.pb-project</string>
-			<key>name</key>
-			<string>AGURLSessionStubs.xcodeproj</string>
-			<key>path</key>
-			<string>aerogear-ios-httpstub/AGURLSessionStubs.xcodeproj</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4833047C19AF28AD002F8DA9</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>4833048119AF28AD002F8DA9</string>
-				<string>4833048319AF28AD002F8DA9</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4833048019AF28AD002F8DA9</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833047B19AF28AD002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>2</string>
-			<key>remoteGlobalIDString</key>
-			<string>6F3C40A1197BCCD80072D66A</string>
-			<key>remoteInfo</key>
-			<string>AGURLSessionStubs</string>
-		</dict>
-		<key>4833048119AF28AD002F8DA9</key>
-		<dict>
-			<key>fileType</key>
-			<string>wrapper.framework</string>
-			<key>isa</key>
-			<string>PBXReferenceProxy</string>
-			<key>path</key>
-			<string>AGURLSessionStubs.framework</string>
-			<key>remoteRef</key>
-			<string>4833048019AF28AD002F8DA9</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>4833048219AF28AD002F8DA9</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833047B19AF28AD002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>2</string>
-			<key>remoteGlobalIDString</key>
-			<string>6F3C40AC197BCCD80072D66A</string>
-			<key>remoteInfo</key>
-			<string>AGURLSessionStubsTests</string>
-		</dict>
-		<key>4833048319AF28AD002F8DA9</key>
-		<dict>
-			<key>fileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>isa</key>
-			<string>PBXReferenceProxy</string>
-			<key>path</key>
-			<string>AGURLSessionStubsTests.xctest</string>
-			<key>remoteRef</key>
-			<string>4833048219AF28AD002F8DA9</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>4833048419AF28D9002F8DA9</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.pb-project</string>
-			<key>name</key>
-			<string>AeroGearHttp.xcodeproj</string>
-			<key>path</key>
-			<string>aerogear-ios-http/AeroGearHttp.xcodeproj</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4833048519AF28D9002F8DA9</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>4833048B19AF28D9002F8DA9</string>
-				<string>4833048D19AF28D9002F8DA9</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4833048A19AF28D9002F8DA9</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833048419AF28D9002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>2</string>
-			<key>remoteGlobalIDString</key>
-			<string>488B6B5C196B19BC000297C9</string>
-			<key>remoteInfo</key>
-			<string>AeroGearHttp</string>
-		</dict>
-		<key>4833048B19AF28D9002F8DA9</key>
-		<dict>
-			<key>fileType</key>
-			<string>wrapper.framework</string>
-			<key>isa</key>
-			<string>PBXReferenceProxy</string>
-			<key>path</key>
-			<string>AeroGearHttp.framework</string>
-			<key>remoteRef</key>
-			<string>4833048A19AF28D9002F8DA9</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>4833048C19AF28D9002F8DA9</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833048419AF28D9002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>2</string>
-			<key>remoteGlobalIDString</key>
-			<string>488B6B67196B19BC000297C9</string>
-			<key>remoteInfo</key>
-			<string>AeroGearHttpTests</string>
-		</dict>
-		<key>4833048D19AF28D9002F8DA9</key>
-		<dict>
-			<key>fileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>isa</key>
-			<string>PBXReferenceProxy</string>
-			<key>path</key>
-			<string>AeroGearHttpTests.xctest</string>
-			<key>remoteRef</key>
-			<string>4833048C19AF28D9002F8DA9</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>4833049F19AF327D002F8DA9</key>
 		<dict>
@@ -1436,35 +1257,33 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>5C16B9CC97AACF542EE23E78</key>
+		<key>516C2B389D203ECEBD9E0815</key>
 		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
+			<key>fileRef</key>
+			<string>9ADB5FF0CB048392A40B2D60</string>
 			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Weak</string>
+				</array>
+			</dict>
+		</dict>
+		<key>6DA531836D4D42D3E1904E78</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>9ADB5FF0CB048392A40B2D60</string>
+				<string>3F4BA5A03E90C75CC2866ABF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
 			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>6F1432B31A16857C003BEE5B</key>
 		<dict>
@@ -1500,28 +1319,6 @@ fi
 				</array>
 			</dict>
 		</dict>
-		<key>6FC65AEC19D16BB4001B59B4</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833048419AF28D9002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>488B6B5B196B19BC000297C9</string>
-			<key>remoteInfo</key>
-			<string>AeroGearHttp</string>
-		</dict>
-		<key>6FC65AED19D16BB4001B59B4</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>AeroGearHttp</string>
-			<key>targetProxy</key>
-			<string>6FC65AEC19D16BB4001B59B4</string>
-		</dict>
 		<key>6FC65AEE19D16BCE001B59B4</key>
 		<dict>
 			<key>containerPortal</key>
@@ -1544,51 +1341,31 @@ fi
 			<key>targetProxy</key>
 			<string>6FC65AEE19D16BCE001B59B4</string>
 		</dict>
-		<key>6FC65AF019D16BD3001B59B4</key>
+		<key>8B9986C9E48F8BCC06A26222</key>
 		<dict>
-			<key>containerPortal</key>
-			<string>4833048419AF28D9002F8DA9</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
 			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>488B6B5B196B19BC000297C9</string>
-			<key>remoteInfo</key>
-			<string>AeroGearHttp</string>
-		</dict>
-		<key>6FC65AF119D16BD3001B59B4</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
+			<string>PBXShellScriptBuildPhase</string>
 			<key>name</key>
-			<string>AeroGearHttp</string>
-			<key>targetProxy</key>
-			<string>6FC65AF019D16BD3001B59B4</string>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
-		<key>6FC65AF219D16BD6001B59B4</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>4833047B19AF28AD002F8DA9</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>6F3C40A0197BCCD80072D66A</string>
-			<key>remoteInfo</key>
-			<string>AGURLSessionStubs</string>
-		</dict>
-		<key>6FC65AF319D16BD6001B59B4</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>AGURLSessionStubs</string>
-			<key>targetProxy</key>
-			<string>6FC65AF219D16BD6001B59B4</string>
-		</dict>
-		<key>8F41368FD63EF85C030B543F</key>
+		<key>93450CEB2BAFED8F7B381800</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -1618,69 +1395,7 @@ fi
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
-		<key>9D49C45BF0768F302FE30331</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>C392C06548BF356268E265C5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>C6F46B0C1D3D584AED46D7A5</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>1D689BF97C81CFED32182136</string>
-				<string>CC9041B89CCC02A2D08109AE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CC9041B89CCC02A2D08109AE</key>
+		<key>9ADB5FF0CB048392A40B2D60</key>
 		<dict>
 			<key>explicitFileType</key>
 			<string>wrapper.framework</string>
@@ -1689,11 +1404,41 @@ fi
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>path</key>
-			<string>Pods_AeroGearOAuth2Tests.framework</string>
+			<string>Pods.framework</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
-		<key>CF33DE24B5FDBC75AF6FD2FD</key>
+		<key>AC859C314229F66700908186</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>B8AABF38B64CDFEB481203C1</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1702,39 +1447,51 @@ fi
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>name</key>
-			<string>Pods-AeroGearOAuth2Tests.release.xcconfig</string>
+			<string>Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
 			<key>path</key>
-			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.release.xcconfig</string>
+			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>D9F8DBF2C5CF6F363442591D</key>
+		<key>E0642692721FE27851FB502F</key>
 		<dict>
-			<key>fileRef</key>
-			<string>1D689BF97C81CFED32182136</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Weak</string>
-				</array>
-			</dict>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
-		<key>F300687672D2C1B555A7FF0C</key>
+		<key>EDC1B5EA330BE6809642E3C9</key>
 		<dict>
-			<key>fileRef</key>
-			<string>CC9041B89CCC02A2D08109AE</string>
+			<key>children</key>
+			<array>
+				<string>31897CDB95B69D233A342D2D</string>
+				<string>30038E87B86C6C0BB52B42DD</string>
+				<string>B8AABF38B64CDFEB481203C1</string>
+				<string>09E5C3E9BF21978F6317B217</string>
+			</array>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>ATTRIBUTES</key>
-				<array>
-					<string>Weak</string>
-				</array>
-			</dict>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
