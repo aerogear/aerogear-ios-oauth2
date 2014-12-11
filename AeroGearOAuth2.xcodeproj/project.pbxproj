@@ -1,643 +1,1743 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
-		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
-		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
-		4833046819AF1635002F8DA9 /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
-		483304A519AF44DF002F8DA9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
-		48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48432BE81A2F727C00F7A0FF /* ConfigTest.swift */; };
-		485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */; };
-		485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */; };
-		485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB931A383FB500ABEBB2 /* OAuth2ModuleMock.swift */; };
-		485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */; };
-		485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */; };
-		485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */; };
-		485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */; };
-		4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71519EFE7D100F3FDE8 /* DateUtils.swift */; };
-		4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */; };
-		48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */; };
-		48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */; };
-		48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */; };
-		48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */; };
-		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
-		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4833048019AF28AD002F8DA9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6F3C40A1197BCCD80072D66A;
-			remoteInfo = AGURLSessionStubs;
-		};
-		4833048219AF28AD002F8DA9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6F3C40AC197BCCD80072D66A;
-			remoteInfo = AGURLSessionStubsTests;
-		};
-		4833048A19AF28D9002F8DA9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 488B6B5C196B19BC000297C9;
-			remoteInfo = AeroGearHttp;
-		};
-		4833048C19AF28D9002F8DA9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 488B6B67196B19BC000297C9;
-			remoteInfo = AeroGearHttpTests;
-		};
-		6FC65AEC19D16BB4001B59B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 488B6B5B196B19BC000297C9;
-			remoteInfo = AeroGearHttp;
-		};
-		6FC65AEE19D16BCE001B59B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833045919AF1635002F8DA9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4833046119AF1635002F8DA9;
-			remoteInfo = AeroGearOAuth2;
-		};
-		6FC65AF019D16BD3001B59B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 488B6B5B196B19BC000297C9;
-			remoteInfo = AeroGearHttp;
-		};
-		6FC65AF219D16BD6001B59B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6F3C40A0197BCCD80072D66A;
-			remoteInfo = AGURLSessionStubs;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6F1432B31A16857C003BEE5B /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
-		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
-		4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2Module.swift; sourceTree = "<group>"; };
-		4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4833046619AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AeroGearOAuth2.h; sourceTree = "<group>"; };
-		4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroGearOAuth2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4833047019AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AGURLSessionStubs.xcodeproj; path = "aerogear-ios-httpstub/AGURLSessionStubs.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AeroGearHttp.xcodeproj; path = "aerogear-ios-http/AeroGearHttp.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4833049F19AF327D002F8DA9 /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
-		483304A419AF44DF002F8DA9 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		48432BE81A2F727C00F7A0FF /* ConfigTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTest.swift; sourceTree = "<group>"; };
-		485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485AAB931A383FB500ABEBB2 /* OAuth2ModuleMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2ModuleMock.swift; sourceTree = "<group>"; };
-		485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectFacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectGoogleOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectKeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDClaim.swift; sourceTree = "<group>"; };
-		4872F71519EFE7D100F3FDE8 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
-		4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilsTest.swift; sourceTree = "<group>"; };
-		48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Module.swift; sourceTree = "<group>"; };
-		48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Session.swift; sourceTree = "<group>"; };
-		48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2SessionTest.swift; sourceTree = "<group>"; };
-		48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2Module.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		4833045E19AF1635002F8DA9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4833046A19AF1635002F8DA9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		4833045819AF1635002F8DA9 = {
-			isa = PBXGroup;
-			children = (
-				4833046419AF1635002F8DA9 /* AeroGearOAuth2 */,
-				4833046E19AF1635002F8DA9 /* AeroGearOAuth2Tests */,
-				4833046319AF1635002F8DA9 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		4833046319AF1635002F8DA9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */,
-				4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4833046419AF1635002F8DA9 /* AeroGearOAuth2 */ = {
-			isa = PBXGroup;
-			children = (
-				4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */,
-				4833046519AF1635002F8DA9 /* Supporting Files */,
-				4833049F19AF327D002F8DA9 /* AccountManager.swift */,
-				483304A419AF44DF002F8DA9 /* Config.swift */,
-				48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */,
-				485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */,
-				48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */,
-				4872F71519EFE7D100F3FDE8 /* DateUtils.swift */,
-				4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */,
-				4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */,
-				4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */,
-				48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */,
-			);
-			path = AeroGearOAuth2;
-			sourceTree = "<group>";
-		};
-		4833046519AF1635002F8DA9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */,
-				4833046619AF1635002F8DA9 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4833046E19AF1635002F8DA9 /* AeroGearOAuth2Tests */ = {
-			isa = PBXGroup;
-			children = (
-				485AAB901A383F9900ABEBB2 /* Mock */,
-				485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */,
-				485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */,
-				485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */,
-				48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */,
-				4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */,
-				48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */,
-				485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */,
-				485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */,
-				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
-				4833046F19AF1635002F8DA9 /* Supporting Files */,
-			);
-			path = AeroGearOAuth2Tests;
-			sourceTree = "<group>";
-		};
-		4833046F19AF1635002F8DA9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */,
-				4833047019AF1635002F8DA9 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4833047C19AF28AD002F8DA9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4833048119AF28AD002F8DA9 /* AGURLSessionStubs.framework */,
-				4833048319AF28AD002F8DA9 /* AGURLSessionStubsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4833048519AF28D9002F8DA9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4833048B19AF28D9002F8DA9 /* AeroGearHttp.framework */,
-				4833048D19AF28D9002F8DA9 /* AeroGearHttpTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		485AAB901A383F9900ABEBB2 /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				485AAB931A383FB500ABEBB2 /* OAuth2ModuleMock.swift */,
-			);
-			name = Mock;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		4833045F19AF1635002F8DA9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4833046819AF1635002F8DA9 /* AeroGearOAuth2.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
-/* Begin PBXNativeTarget section */
-		4833046119AF1635002F8DA9 /* AeroGearOAuth2 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */;
-			buildPhases = (
-				4833045D19AF1635002F8DA9 /* Sources */,
-				4833045E19AF1635002F8DA9 /* Frameworks */,
-				4833045F19AF1635002F8DA9 /* Headers */,
-				4833046019AF1635002F8DA9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6FC65AED19D16BB4001B59B4 /* PBXTargetDependency */,
-			);
-			name = AeroGearOAuth2;
-			productName = AeroGearOAuth2;
-			productReference = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4833046C19AF1635002F8DA9 /* AeroGearOAuth2Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2Tests" */;
-			buildPhases = (
-				4833046919AF1635002F8DA9 /* Sources */,
-				4833046A19AF1635002F8DA9 /* Frameworks */,
-				4833046B19AF1635002F8DA9 /* Resources */,
-				6F1432B31A16857C003BEE5B /* Copy Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6FC65AF319D16BD6001B59B4 /* PBXTargetDependency */,
-				6FC65AF119D16BD3001B59B4 /* PBXTargetDependency */,
-				6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */,
-			);
-			name = AeroGearOAuth2Tests;
-			productName = AeroGearOAuth2Tests;
-			productReference = 4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		4833045919AF1635002F8DA9 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0600;
-				ORGANIZATIONNAME = aerogear;
-				TargetAttributes = {
-					4833046119AF1635002F8DA9 = {
-						CreatedOnToolsVersion = 6.0;
-					};
-					4833046C19AF1635002F8DA9 = {
-						CreatedOnToolsVersion = 6.0;
-					};
-				};
-			};
-			buildConfigurationList = 4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "AeroGearOAuth2" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = 4833045819AF1635002F8DA9;
-			productRefGroup = 4833046319AF1635002F8DA9 /* Products */;
-			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4833048519AF28D9002F8DA9 /* Products */;
-					ProjectRef = 4833048419AF28D9002F8DA9 /* AeroGearHttp.xcodeproj */;
-				},
-				{
-					ProductGroup = 4833047C19AF28AD002F8DA9 /* Products */;
-					ProjectRef = 4833047B19AF28AD002F8DA9 /* AGURLSessionStubs.xcodeproj */;
-				},
-			);
-			projectRoot = "";
-			targets = (
-				4833046119AF1635002F8DA9 /* AeroGearOAuth2 */,
-				4833046C19AF1635002F8DA9 /* AeroGearOAuth2Tests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		4833048119AF28AD002F8DA9 /* AGURLSessionStubs.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AGURLSessionStubs.framework;
-			remoteRef = 4833048019AF28AD002F8DA9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4833048319AF28AD002F8DA9 /* AGURLSessionStubsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AGURLSessionStubsTests.xctest;
-			remoteRef = 4833048219AF28AD002F8DA9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4833048B19AF28D9002F8DA9 /* AeroGearHttp.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AeroGearHttp.framework;
-			remoteRef = 4833048A19AF28D9002F8DA9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4833048D19AF28D9002F8DA9 /* AeroGearHttpTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AeroGearHttpTests.xctest;
-			remoteRef = 4833048C19AF28D9002F8DA9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		4833046019AF1635002F8DA9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4833046B19AF1635002F8DA9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		4833045D19AF1635002F8DA9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
-				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
-				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
-				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
-				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
-				4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */,
-				4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */,
-				4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */,
-				483304A519AF44DF002F8DA9 /* Config.swift in Sources */,
-				4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4833046919AF1635002F8DA9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
-				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
-				485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */,
-				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
-				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,
-				485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */,
-				485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */,
-				485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */,
-				48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */,
-				485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6FC65AED19D16BB4001B59B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AeroGearHttp;
-			targetProxy = 6FC65AEC19D16BB4001B59B4 /* PBXContainerItemProxy */;
-		};
-		6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4833046119AF1635002F8DA9 /* AeroGearOAuth2 */;
-			targetProxy = 6FC65AEE19D16BCE001B59B4 /* PBXContainerItemProxy */;
-		};
-		6FC65AF119D16BD3001B59B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AeroGearHttp;
-			targetProxy = 6FC65AF019D16BD3001B59B4 /* PBXContainerItemProxy */;
-		};
-		6FC65AF319D16BD6001B59B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AGURLSessionStubs;
-			targetProxy = 6FC65AF219D16BD6001B59B4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin XCBuildConfiguration section */
-		4833047319AF1635002F8DA9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4833047419AF1635002F8DA9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		4833047619AF1635002F8DA9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AeroGearOAuth2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		4833047719AF1635002F8DA9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AeroGearOAuth2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		4833047919AF1635002F8DA9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		4833047A19AF1635002F8DA9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "AeroGearOAuth2" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4833047319AF1635002F8DA9 /* Debug */,
-				4833047419AF1635002F8DA9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4833047619AF1635002F8DA9 /* Debug */,
-				4833047719AF1635002F8DA9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4833047919AF1635002F8DA9 /* Debug */,
-				4833047A19AF1635002F8DA9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 4833045919AF1635002F8DA9 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0D00BD1062AAB99FF48EFD7D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>323129D83DB3055570213ED5</string>
+				<string>28AC3861B7CE6CAE67F9ABA0</string>
+				<string>1AFD96BBE27C9D105401FFC8</string>
+				<string>CF33DE24B5FDBC75AF6FD2FD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>16B99DAFF0E34CBCF64A5038</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>1AFD96BBE27C9D105401FFC8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1D689BF97C81CFED32182136</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>28AC3861B7CE6CAE67F9ABA0</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>323129D83DB3055570213ED5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4764A47DC9DCAEF09CA0F349</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>4814EF4919C1C0FA008BAC4D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>TrustedPersistantOAuth2Session.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4814EF4A19C1C0FA008BAC4D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>UntrustedMemoryOAuth2Session.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4814EF4B19C1C0FA008BAC4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4814EF4919C1C0FA008BAC4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4814EF4C19C1C0FA008BAC4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4814EF4A19C1C0FA008BAC4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4814EF4D19C1C10C008BAC4D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>FacebookOAuth2Module.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4814EF4E19C1C10C008BAC4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4814EF4D19C1C10C008BAC4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4833045819AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833046419AF1635002F8DA9</string>
+				<string>4833046E19AF1635002F8DA9</string>
+				<string>4833046319AF1635002F8DA9</string>
+				<string>0D00BD1062AAB99FF48EFD7D</string>
+				<string>C6F46B0C1D3D584AED46D7A5</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833045919AF1635002F8DA9</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0600</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>aerogear</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>4833046119AF1635002F8DA9</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>6.0</string>
+					</dict>
+					<key>4833046C19AF1635002F8DA9</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>6.0</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>4833045C19AF1635002F8DA9</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>4833045819AF1635002F8DA9</string>
+			<key>productRefGroup</key>
+			<string>4833046319AF1635002F8DA9</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array>
+				<dict>
+					<key>ProductGroup</key>
+					<string>4833048519AF28D9002F8DA9</string>
+					<key>ProjectRef</key>
+					<string>4833048419AF28D9002F8DA9</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>4833047C19AF28AD002F8DA9</string>
+					<key>ProjectRef</key>
+					<string>4833047B19AF28AD002F8DA9</string>
+				</dict>
+			</array>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>4833046119AF1635002F8DA9</string>
+				<string>4833046C19AF1635002F8DA9</string>
+			</array>
+		</dict>
+		<key>4833045C19AF1635002F8DA9</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>4833047319AF1635002F8DA9</string>
+				<string>4833047419AF1635002F8DA9</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>4833045D19AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>483304A019AF327D002F8DA9</string>
+				<string>485D73811A35BCBC0007D9EC</string>
+				<string>48DE90A619CDEAEE007F9B21</string>
+				<string>48CD52DD19B0C22A008D0694</string>
+				<string>48CD52D719B0C1CB008D0694</string>
+				<string>4872F71619EFE7D100F3FDE8</string>
+				<string>4814EF4B19C1C0FA008BAC4D</string>
+				<string>4814EF4E19C1C10C008BAC4D</string>
+				<string>483304A519AF44DF002F8DA9</string>
+				<string>4814EF4C19C1C0FA008BAC4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833045E19AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D9F8DBF2C5CF6F363442591D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833045F19AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>4833046819AF1635002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833046019AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833046119AF1635002F8DA9</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>4833047519AF1635002F8DA9</string>
+			<key>buildPhases</key>
+			<array>
+				<string>8F41368FD63EF85C030B543F</string>
+				<string>4833045D19AF1635002F8DA9</string>
+				<string>4833045E19AF1635002F8DA9</string>
+				<string>4833045F19AF1635002F8DA9</string>
+				<string>4833046019AF1635002F8DA9</string>
+				<string>C392C06548BF356268E265C5</string>
+				<string>4764A47DC9DCAEF09CA0F349</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>6FC65AED19D16BB4001B59B4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>AeroGearOAuth2</string>
+			<key>productName</key>
+			<string>AeroGearOAuth2</string>
+			<key>productReference</key>
+			<string>4833046219AF1635002F8DA9</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>4833046219AF1635002F8DA9</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>AeroGearOAuth2.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833046319AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833046219AF1635002F8DA9</string>
+				<string>4833046D19AF1635002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046419AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833046719AF1635002F8DA9</string>
+				<string>4833046519AF1635002F8DA9</string>
+				<string>4833049F19AF327D002F8DA9</string>
+				<string>483304A419AF44DF002F8DA9</string>
+				<string>48CD52D619B0C1CB008D0694</string>
+				<string>485D73801A35BCBC0007D9EC</string>
+				<string>48CD52DC19B0C22A008D0694</string>
+				<string>4872F71519EFE7D100F3FDE8</string>
+				<string>4814EF4919C1C0FA008BAC4D</string>
+				<string>4814EF4A19C1C0FA008BAC4D</string>
+				<string>4814EF4D19C1C10C008BAC4D</string>
+				<string>48DE90A519CDEAEE007F9B21</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>AeroGearOAuth2</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046519AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833048419AF28D9002F8DA9</string>
+				<string>4833046619AF1635002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046619AF1635002F8DA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046719AF1635002F8DA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>AeroGearOAuth2.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046819AF1635002F8DA9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4833046719AF1635002F8DA9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>4833046919AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>4872F71A19EFE80F00F3FDE8</string>
+				<string>485D737B1A35B6240007D9EC</string>
+				<string>485AAB941A383FB500ABEBB2</string>
+				<string>48432BE91A2F727C00F7A0FF</string>
+				<string>48C94D8019C1F0970000ABBB</string>
+				<string>485D737D1A35B6240007D9EC</string>
+				<string>485AAB831A37259E00ABEBB2</string>
+				<string>485AAB851A372CB000ABEBB2</string>
+				<string>48CD52DF19B0CB5A008D0694</string>
+				<string>485D737C1A35B6240007D9EC</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833046A19AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>F300687672D2C1B555A7FF0C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833046B19AF1635002F8DA9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4833046C19AF1635002F8DA9</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>4833047819AF1635002F8DA9</string>
+			<key>buildPhases</key>
+			<array>
+				<string>5C16B9CC97AACF542EE23E78</string>
+				<string>4833046919AF1635002F8DA9</string>
+				<string>4833046A19AF1635002F8DA9</string>
+				<string>4833046B19AF1635002F8DA9</string>
+				<string>6F1432B31A16857C003BEE5B</string>
+				<string>9D49C45BF0768F302FE30331</string>
+				<string>16B99DAFF0E34CBCF64A5038</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>6FC65AF319D16BD6001B59B4</string>
+				<string>6FC65AF119D16BD3001B59B4</string>
+				<string>6FC65AEF19D16BCE001B59B4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>AeroGearOAuth2Tests</string>
+			<key>productName</key>
+			<string>AeroGearOAuth2Tests</string>
+			<key>productReference</key>
+			<string>4833046D19AF1635002F8DA9</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>4833046D19AF1635002F8DA9</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>AeroGearOAuth2Tests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833046E19AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>485AAB901A383F9900ABEBB2</string>
+				<string>485D73781A35B6240007D9EC</string>
+				<string>485D73791A35B6240007D9EC</string>
+				<string>485D737A1A35B6240007D9EC</string>
+				<string>48CD52DE19B0CB5A008D0694</string>
+				<string>4872F71919EFE80F00F3FDE8</string>
+				<string>48C94D7F19C1F0970000ABBB</string>
+				<string>485AAB821A37259E00ABEBB2</string>
+				<string>485AAB841A372CB000ABEBB2</string>
+				<string>48432BE81A2F727C00F7A0FF</string>
+				<string>4833046F19AF1635002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>AeroGearOAuth2Tests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833046F19AF1635002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833047B19AF28AD002F8DA9</string>
+				<string>4833047019AF1635002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833047019AF1635002F8DA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833047319AF1635002F8DA9</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>4833047419AF1635002F8DA9</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>4833047519AF1635002F8DA9</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>4833047619AF1635002F8DA9</string>
+				<string>4833047719AF1635002F8DA9</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>4833047619AF1635002F8DA9</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>323129D83DB3055570213ED5</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>INFOPLIST_FILE</key>
+				<string>AeroGearOAuth2/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>4833047719AF1635002F8DA9</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>28AC3861B7CE6CAE67F9ABA0</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>INFOPLIST_FILE</key>
+				<string>AeroGearOAuth2/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>4833047819AF1635002F8DA9</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>4833047919AF1635002F8DA9</string>
+				<string>4833047A19AF1635002F8DA9</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>4833047919AF1635002F8DA9</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>1AFD96BBE27C9D105401FFC8</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>AeroGearOAuth2Tests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>4833047A19AF1635002F8DA9</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>CF33DE24B5FDBC75AF6FD2FD</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>AeroGearOAuth2Tests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>4833047B19AF28AD002F8DA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>AGURLSessionStubs.xcodeproj</string>
+			<key>path</key>
+			<string>aerogear-ios-httpstub/AGURLSessionStubs.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>4833047C19AF28AD002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833048119AF28AD002F8DA9</string>
+				<string>4833048319AF28AD002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833048019AF28AD002F8DA9</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833047B19AF28AD002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>6F3C40A1197BCCD80072D66A</string>
+			<key>remoteInfo</key>
+			<string>AGURLSessionStubs</string>
+		</dict>
+		<key>4833048119AF28AD002F8DA9</key>
+		<dict>
+			<key>fileType</key>
+			<string>wrapper.framework</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>AGURLSessionStubs.framework</string>
+			<key>remoteRef</key>
+			<string>4833048019AF28AD002F8DA9</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833048219AF28AD002F8DA9</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833047B19AF28AD002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>6F3C40AC197BCCD80072D66A</string>
+			<key>remoteInfo</key>
+			<string>AGURLSessionStubsTests</string>
+		</dict>
+		<key>4833048319AF28AD002F8DA9</key>
+		<dict>
+			<key>fileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>AGURLSessionStubsTests.xctest</string>
+			<key>remoteRef</key>
+			<string>4833048219AF28AD002F8DA9</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833048419AF28D9002F8DA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>AeroGearHttp.xcodeproj</string>
+			<key>path</key>
+			<string>aerogear-ios-http/AeroGearHttp.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>4833048519AF28D9002F8DA9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>4833048B19AF28D9002F8DA9</string>
+				<string>4833048D19AF28D9002F8DA9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4833048A19AF28D9002F8DA9</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833048419AF28D9002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>488B6B5C196B19BC000297C9</string>
+			<key>remoteInfo</key>
+			<string>AeroGearHttp</string>
+		</dict>
+		<key>4833048B19AF28D9002F8DA9</key>
+		<dict>
+			<key>fileType</key>
+			<string>wrapper.framework</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>AeroGearHttp.framework</string>
+			<key>remoteRef</key>
+			<string>4833048A19AF28D9002F8DA9</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833048C19AF28D9002F8DA9</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833048419AF28D9002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>488B6B67196B19BC000297C9</string>
+			<key>remoteInfo</key>
+			<string>AeroGearHttpTests</string>
+		</dict>
+		<key>4833048D19AF28D9002F8DA9</key>
+		<dict>
+			<key>fileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>AeroGearHttpTests.xctest</string>
+			<key>remoteRef</key>
+			<string>4833048C19AF28D9002F8DA9</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>4833049F19AF327D002F8DA9</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>AccountManager.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>483304A019AF327D002F8DA9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4833049F19AF327D002F8DA9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>483304A419AF44DF002F8DA9</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>Config.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>483304A519AF44DF002F8DA9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>483304A419AF44DF002F8DA9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48432BE81A2F727C00F7A0FF</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ConfigTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48432BE91A2F727C00F7A0FF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48432BE81A2F727C00F7A0FF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485AAB821A37259E00ABEBB2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>KeycloakOAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485AAB831A37259E00ABEBB2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485AAB821A37259E00ABEBB2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485AAB841A372CB000ABEBB2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>FacebookOAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485AAB851A372CB000ABEBB2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485AAB841A372CB000ABEBB2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485AAB901A383F9900ABEBB2</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>485AAB931A383FB500ABEBB2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Mock</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485AAB931A383FB500ABEBB2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OAuth2ModuleMock.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485AAB941A383FB500ABEBB2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485AAB931A383FB500ABEBB2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485D73781A35B6240007D9EC</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OpenIDConnectFacebookOAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485D73791A35B6240007D9EC</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OpenIDConnectGoogleOAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485D737A1A35B6240007D9EC</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OpenIDConnectKeycloakOAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485D737B1A35B6240007D9EC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485D73781A35B6240007D9EC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485D737C1A35B6240007D9EC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485D73791A35B6240007D9EC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485D737D1A35B6240007D9EC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485D737A1A35B6240007D9EC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>485D73801A35BCBC0007D9EC</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OpenIDClaim.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>485D73811A35BCBC0007D9EC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>485D73801A35BCBC0007D9EC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4872F71519EFE7D100F3FDE8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>DateUtils.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4872F71619EFE7D100F3FDE8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4872F71519EFE7D100F3FDE8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4872F71919EFE80F00F3FDE8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>DateUtilsTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4872F71A19EFE80F00F3FDE8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4872F71919EFE80F00F3FDE8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48C94D7F19C1F0970000ABBB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OAuth2ModuleTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48C94D8019C1F0970000ABBB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48C94D7F19C1F0970000ABBB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48CD52D619B0C1CB008D0694</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OAuth2Module.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48CD52D719B0C1CB008D0694</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48CD52D619B0C1CB008D0694</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48CD52DC19B0C22A008D0694</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OAuth2Session.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48CD52DD19B0C22A008D0694</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48CD52DC19B0C22A008D0694</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48CD52DE19B0CB5A008D0694</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>OAuth2SessionTest.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48CD52DF19B0CB5A008D0694</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48CD52DE19B0CB5A008D0694</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48DE90A519CDEAEE007F9B21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>KeycloakOAuth2Module.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48DE90A619CDEAEE007F9B21</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48DE90A519CDEAEE007F9B21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5C16B9CC97AACF542EE23E78</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>6F1432B31A16857C003BEE5B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string></string>
+			<key>dstSubfolderSpec</key>
+			<string>10</string>
+			<key>files</key>
+			<array>
+				<string>6F1432B81A168594003BEE5B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Copy Frameworks</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>6F1432B81A168594003BEE5B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4833046219AF1635002F8DA9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>CodeSignOnCopy</string>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>6FC65AEC19D16BB4001B59B4</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833048419AF28D9002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>488B6B5B196B19BC000297C9</string>
+			<key>remoteInfo</key>
+			<string>AeroGearHttp</string>
+		</dict>
+		<key>6FC65AED19D16BB4001B59B4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>AeroGearHttp</string>
+			<key>targetProxy</key>
+			<string>6FC65AEC19D16BB4001B59B4</string>
+		</dict>
+		<key>6FC65AEE19D16BCE001B59B4</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833045919AF1635002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>4833046119AF1635002F8DA9</string>
+			<key>remoteInfo</key>
+			<string>AeroGearOAuth2</string>
+		</dict>
+		<key>6FC65AEF19D16BCE001B59B4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>4833046119AF1635002F8DA9</string>
+			<key>targetProxy</key>
+			<string>6FC65AEE19D16BCE001B59B4</string>
+		</dict>
+		<key>6FC65AF019D16BD3001B59B4</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833048419AF28D9002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>488B6B5B196B19BC000297C9</string>
+			<key>remoteInfo</key>
+			<string>AeroGearHttp</string>
+		</dict>
+		<key>6FC65AF119D16BD3001B59B4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>AeroGearHttp</string>
+			<key>targetProxy</key>
+			<string>6FC65AF019D16BD3001B59B4</string>
+		</dict>
+		<key>6FC65AF219D16BD6001B59B4</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>4833047B19AF28AD002F8DA9</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>6F3C40A0197BCCD80072D66A</string>
+			<key>remoteInfo</key>
+			<string>AGURLSessionStubs</string>
+		</dict>
+		<key>6FC65AF319D16BD6001B59B4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>AGURLSessionStubs</string>
+			<key>targetProxy</key>
+			<string>6FC65AF219D16BD6001B59B4</string>
+		</dict>
+		<key>8F41368FD63EF85C030B543F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>9D49C45BF0768F302FE30331</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>C392C06548BF356268E265C5</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>C6F46B0C1D3D584AED46D7A5</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1D689BF97C81CFED32182136</string>
+				<string>CC9041B89CCC02A2D08109AE</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CC9041B89CCC02A2D08109AE</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods_AeroGearOAuth2Tests.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>CF33DE24B5FDBC75AF6FD2FD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-AeroGearOAuth2Tests.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D9F8DBF2C5CF6F363442591D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1D689BF97C81CFED32182136</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Weak</string>
+				</array>
+			</dict>
+		</dict>
+		<key>F300687672D2C1B555A7FF0C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CC9041B89CCC02A2D08109AE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Weak</string>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>4833045919AF1635002F8DA9</string>
+</dict>
+</plist>
