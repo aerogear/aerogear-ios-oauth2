@@ -40,6 +40,11 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23}"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+            case "/rest/revoke":
+                var string = "{}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+
             default: return StubResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
             }
         }))
