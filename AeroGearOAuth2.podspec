@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/cvasilak/aerogear-ios-oauth2.git', :branch => 'podspec' }
   s.platform     = :ios, 8.0
   s.source_files = 'AeroGearOAuth2/*.{swift}'
-
+  s.framework     = 'Security'
+  
   s.dependency 'AeroGearHttp'
 end
