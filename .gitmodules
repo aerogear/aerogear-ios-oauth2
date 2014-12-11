@@ -1,6 +1,0 @@
-[submodule "aerogear-ios-http"]
-	path = aerogear-ios-http
-	url = https://github.com/aerogear/aerogear-ios-http.git
-[submodule "aerogear-ios-httpstub"]
-	path = aerogear-ios-httpstub
-	url = https://github.com/aerogear/aerogear-ios-httpstub.git
