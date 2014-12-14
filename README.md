@@ -81,7 +81,9 @@ bundle install
 bundle exec pod install
 ```
 
-to install your dependencies
+to install your dependencies.
+
+> **NOTE:**  Currently, there is a Swift compiler bug that causes abnormal behavior when  building with optimization level set to ```-Fastest```  . Therefore, it is advised a ```-None``` optimization level is used, when importing the library. To do so, include the [following block](https://github.com/aerogear/aerogear-ios-cookbook/blob/podspec/Shoot/Podfile#L9-L24) in your ```Podfile```
 
 ### Drag the library in your project
 
