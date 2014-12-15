@@ -56,7 +56,7 @@ Similar approach for configuration, here we want to login as Keycloak user, usin
 
 ## Building & Running tests
 
-The project uses [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) framework for its http calls, and [aerogear-ios-httpstub](https://github.com/aerogear/aerogear-ios-httpstub) framework for stubbing its http network requests.  To handle these depedencies, it uses [Cocoapods](http://cocoapods.org). On the root directory of the project run:
+The project uses [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) framework for its http calls, and [aerogear-ios-httpstub](https://github.com/aerogear/aerogear-ios-httpstub) framework for stubbing its http network requests.  To handle these dependencies, it uses [Cocoapods](http://cocoapods.org). On the root directory of the project run:
 
 ```bash
 bundle install
@@ -69,7 +69,7 @@ You are now ready to run the tests.
 To add the library in your project, you can either use [Cocoapods](http://cocoapods.org) or simply drag the library in your project. See the respective sections below for instructions
 
 ### Using [Cocoapods](http://cocoapods.org)
-At this time, Cocoapods support for Swift frameworks is supported in a preview [branch](https://github.com/CocoaPods/CocoaPods/tree/swift) but tests shown that it's pretty stable to use. Simply [include a Gemfile](http://swiftwala.com/cocoapods-is-ready-for-swift/) in your project pointing to that branch and in your ```Podfile``` add:
+At this time, Cocoapods support for Swift frameworks is supported in a preview [branch](https://github.com/CocoaPods/CocoaPods/tree/swift). Simply [include a Gemfile](http://swiftwala.com/cocoapods-is-ready-for-swift/) in your project pointing to that branch and in your ```Podfile``` add:
 
 ```
 pod 'AeroGearOAuth2'
