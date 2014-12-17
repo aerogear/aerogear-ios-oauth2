@@ -278,7 +278,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
             self.refreshTokenExpirationDate = now.dateByAddingTimeInterval(inter)
         }
     }
-    public func saveAccessToken() {
+    public func clearTokens() {
         self.accessToken = nil
         self.refreshToken = nil
         self.accessTokenExpirationDate = nil

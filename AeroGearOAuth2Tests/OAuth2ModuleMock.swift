@@ -41,7 +41,7 @@ public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
         return true
     }
     
-    public func saveAccessToken() {}
+    public func clearTokens() {}
     
     public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {}
     public init() {}
@@ -62,7 +62,7 @@ public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccess
     public override func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
         savedRefreshedToken = refreshToken
     }
-    public override func saveAccessToken() {initCalled = 1}
+    public override func clearTokens() {initCalled = 1}
     public override init() {}
 }
 

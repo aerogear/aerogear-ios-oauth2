@@ -82,7 +82,7 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
         }
     }
     
-    public func saveAccessToken() {
+    public func clearTokens() {
         self.accessToken = nil
         self.refreshToken = nil
         self.accessTokenExpirationDate = nil

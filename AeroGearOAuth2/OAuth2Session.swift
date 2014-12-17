@@ -60,7 +60,7 @@ public protocol OAuth2Session {
     /**
     Clears any tokens storage
     */
-    func saveAccessToken()
+    func clearTokens()
     
     /**
     Save tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
