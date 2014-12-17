@@ -80,8 +80,6 @@ public class KeychainWrap {
         // Instantiate a new default keychain query
         var keychainQuery = NSMutableDictionary()
         if let groupId = self.groupId {
-            var acc = key + "_" + tokenType.rawValue
-            println("group::\(groupId)::serviceId::\(self.serviceIdentifier)::acc\(acc)")
             keychainQuery[kSecAttrAccessGroup as String] = groupId
         }
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
@@ -129,8 +127,6 @@ public class KeychainWrap {
     public func read(userAccount: String, tokenType: TokenType) -> NSString? {
         var keychainQuery = NSMutableDictionary()
         if let groupId = self.groupId {
-            var acc = userAccount + "_" + tokenType.rawValue
-            println("group::\(groupId)::serviceId::\(self.serviceIdentifier)::acc\(acc)")
             keychainQuery[kSecAttrAccessGroup as String] = groupId
         }
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
