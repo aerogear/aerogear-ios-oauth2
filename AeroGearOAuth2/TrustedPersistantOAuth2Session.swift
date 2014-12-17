@@ -40,19 +40,28 @@ A handy Keychain wrapper. It saves your OAuth2 tokens using WhenPasscodeSet ACL.
 public class KeychainWrap {
     
     /**
-    The serivce id. By default set to apple bundle id.
+    The service id. By default set to apple bundle id.
     */
     public var serviceIdentifier: String
     
     /**
-    Initialize KeychainWrapper setting default values.
+    The group id is Keychain access group which is used for sharing keychain content accross multiple apps issued from same developer. By default there is no access group.
     */
-    public init() {
-        if let bundle = NSBundle.mainBundle().bundleIdentifier {
-            self.serviceIdentifier = bundle
-        } else {
+    public var groupId: String?
+    
+    /**
+    Initialize KeychainWrapper setting default values.
+    
+    :param: serviceId   unique service, defulated to bundleId
+    :param: groupId     used for SSO between app issued from same developer certificate.
+    */
+    public init(serviceId: String? =  NSBundle.mainBundle().bundleIdentifier, groupId: String? = nil) {
+        if serviceId == nil {
             self.serviceIdentifier = "unkown"
+        } else {
+            self.serviceIdentifier = serviceId!
         }
+        self.groupId = groupId
     }
     
     /**
@@ -70,6 +79,11 @@ public class KeychainWrap {
         
         // Instantiate a new default keychain query
         var keychainQuery = NSMutableDictionary()
+        if let groupId = self.groupId {
+            var acc = key + "_" + tokenType.rawValue
+            println("group::\(groupId)::serviceId::\(self.serviceIdentifier)::acc\(acc)")
+            keychainQuery[kSecAttrAccessGroup as String] = groupId
+        }
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
@@ -114,6 +128,11 @@ public class KeychainWrap {
     */
     public func read(userAccount: String, tokenType: TokenType) -> NSString? {
         var keychainQuery = NSMutableDictionary()
+        if let groupId = self.groupId {
+            var acc = userAccount + "_" + tokenType.rawValue
+            println("group::\(groupId)::serviceId::\(self.serviceIdentifier)::acc\(acc)")
+            keychainQuery[kSecAttrAccessGroup as String] = groupId
+        }
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
@@ -290,17 +309,21 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     Initialize TrustedPersistantOAuth2Session using account id. Account id is the service id used for keychain storage.
     
     :param: accountId uniqueId to identify the oauth2module
+    :param: groupId used for SSO between app issued from same developer certificate.
     :param: accessToken optional parameter to initilaize the storage with initial values
     :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values
     :param: refreshToken optional parameter to initilaize the storage with initial values
     :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values
     */
-    public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: NSDate? = nil) {
+    public init(accountId: String, groupId: String? = nil, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: NSDate? = nil) {
         self.accountId = accountId
-        self.keychain = KeychainWrap()
+        if groupId != nil {
+            self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
+        } else {
+            self.keychain = KeychainWrap()
+        }
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         self.accessTokenExpirationDate = accessTokenExpirationDate
         self.refreshTokenExpirationDate = refreshTokenExpirationDate
-    }
-}
+    }}
