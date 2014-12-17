@@ -78,7 +78,7 @@ public class FacebookOAuth2Module: OAuth2Module {
                 return
             }
             
-            self.oauth2Session.saveAccessToken()
+            self.oauth2Session.clearTokens()
             completionHandler(response!, nil)
         })
     }

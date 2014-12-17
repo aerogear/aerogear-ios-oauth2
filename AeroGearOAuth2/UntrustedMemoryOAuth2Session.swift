@@ -67,8 +67,7 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
     }
     
     /**
-    Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
-    for grant access.
+    Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
     */
     public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
         self.accessToken = accessToken
@@ -82,13 +81,25 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
         }
     }
     
-    public func saveAccessToken() {
+    /**
+    Clear all tokens. Method used when doing logout or revoke.
+    */
+    public func clearTokens() {
         self.accessToken = nil
         self.refreshToken = nil
         self.accessTokenExpirationDate = nil
         self.refreshTokenExpirationDate = nil
     }
     
+    /**
+    Initialize session using account id. 
+    
+    :param: accountId uniqueId to identify the oauth2module
+    :param: accessToken optional parameter to initilaize the storage with initial values
+    :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values
+    :param: refreshToken optional parameter to initilaize the storage with initial values
+    :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values
+    */
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: NSDate? = nil) {
         self.accessToken = accessToken
         self.accessTokenExpirationDate = accessTokenExpirationDate

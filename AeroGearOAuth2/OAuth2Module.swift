@@ -251,7 +251,7 @@ public class OAuth2Module: AuthzModule {
                 return
             }
 
-            self.oauth2Session.saveAccessToken()
+            self.oauth2Session.clearTokens()
             completionHandler(response, nil)
         })
     }
