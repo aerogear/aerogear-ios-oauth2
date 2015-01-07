@@ -9,6 +9,7 @@ Taking care of:
 * revoke tokens,
 * permanent secure storage,
 * adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, Keycloak etc...
+* openID Connect login
 
 100% Swift.
 
@@ -59,8 +60,7 @@ Similar approach for configuration, here we want to login as Keycloak user, usin
 The project uses [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) framework for its http calls, and [aerogear-ios-httpstub](https://github.com/aerogear/aerogear-ios-httpstub) framework for stubbing its http network requests.  To handle these dependencies, it uses [Cocoapods](http://cocoapods.org). On the root directory of the project run:
 
 ```bash
-bundle install
-bundle exec pod install
+pod install
 ```
 
 You are now ready to run the tests.
