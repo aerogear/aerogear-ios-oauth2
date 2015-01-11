@@ -8,7 +8,7 @@ before_install:
     - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
 
 script:
-    - set -o pipefail && xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -sdk iphonesimulator -configuration Release clean test
+    - set -o pipefail && xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -sdk iphonesimulator -configuration Release clean test
 
 notifications:
   irc: "irc.freenode.org#aerogear"
