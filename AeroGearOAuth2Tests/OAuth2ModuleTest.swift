@@ -19,7 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AGURLSessionStubs
+import AeroGearHttpStub
 
 func setupStubWithNSURLSessionDefaultConfiguration() {
     // set up http stub

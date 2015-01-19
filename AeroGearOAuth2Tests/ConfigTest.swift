@@ -19,7 +19,6 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 
-
 class ConfigTests: XCTestCase {
     
     override func setUp() {
