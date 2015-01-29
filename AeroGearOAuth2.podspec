@@ -5,10 +5,10 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/aerogear/aerogear-ios-oauth2"
   s.license      = 'Apache License, Version 2.0'
   s.author       = "Red Hat, Inc."
-  s.source       = { :git => 'https://github.com/aerogear/aerogear-ios-oauth2.git', :branch => 'master' }
+  s.source       = { :git => 'https://github.com/aerogear/aerogear-ios-oauth2.git', :tag => s.version }
   s.platform     = :ios, 8.0
   s.source_files = 'AeroGearOAuth2/*.{swift}'
-  s.framework     = 'Security'
-  
-  s.dependency 'AeroGearHttp'
+  s.requires_arc = true
+  s.framework = 'Security'
+  s.dependency 'AeroGearHttp', '0.2.0'
 end
