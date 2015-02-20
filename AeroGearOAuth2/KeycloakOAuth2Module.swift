@@ -21,7 +21,7 @@ import Foundation
 An OAuth2Module subclass specific to 'Keycloak' authorization
 */
 public class KeycloakOAuth2Module: OAuth2Module {
-       
+    
     public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
@@ -33,7 +33,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
                 completionHandler(nil, error)
                 return
             }
-
+            
             self.oauth2Session.clearTokens()
             completionHandler(response, nil)
         })
@@ -81,26 +81,18 @@ public class KeycloakOAuth2Module: OAuth2Module {
                     let refreshToken: String = unwrappedResponse["refresh_token"] as String
                     let expiration = unwrappedResponse["expires_in"] as NSNumber
                     let exp: String = expiration.stringValue
-
-                    let base64Decoded = self.decode(refreshToken)
-                    var refreshExp: String?
-                    if let refreshtokenDecoded = base64Decoded {
-                        let refresh_iat = refreshtokenDecoded["iat"] as Int
-                        let refresh_exp = refreshtokenDecoded["exp"] as Int
-                        let timeLeft = (refresh_exp - refresh_iat as NSNumber)
-                        refreshExp = timeLeft.stringValue
-                    }
+                    let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
+                    let expRefresh = expirationRefresh?.stringValue
                     
                     // in Keycloak refresh token get refreshed every time you use them
-                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: refreshExp)
+                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
                     completionHandler(accessToken, nil);
                 }
             })
         }
     }
     
-    // TODO: Once https://issues.jboss.org/browse/KEYCLOAK-760 is implemented
-    // decoding refresh token to get expiration date should not be needed.
+    
     func decode(token: String) -> [String: AnyObject]? {
         let string = token.componentsSeparatedByString(".")
         let toDecode = string[1] as String
