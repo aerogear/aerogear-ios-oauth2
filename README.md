@@ -8,10 +8,12 @@ Taking care of:
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, Keycloak etc...
+* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.1.0.Final](http://keycloak.jboss.org/) etc...
 * openID Connect login
 
 100% Swift.
+
+> **NOTE:**  The library has been tested with Xcode 6.1.1
 
 |                 | Project Info  |
 | --------------- | ------------- |
