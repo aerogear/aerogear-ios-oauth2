@@ -1,4 +1,7 @@
 # aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
+
+> **NOTE:**  The library has been tested with Xcode 6.1.1
+
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
 Taking care of: 
 
@@ -12,8 +15,6 @@ Taking care of:
 * openID Connect login
 
 100% Swift.
-
-> **NOTE:**  The library has been tested with Xcode 6.1.1
 
 |                 | Project Info  |
 | --------------- | ------------- |
