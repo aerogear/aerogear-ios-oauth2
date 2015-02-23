@@ -51,7 +51,7 @@ Inject OAuth2Module into http object in [4] and uses the http object to GET/POST
 
 See full description in [aerogear.org](https://aerogear.org/docs/guides/aerogear-ios-2.X/Authorization/)
 
-#### OpenID Connect 
+#### OpenID Connect with Keycloak
 ```swift
 var Http = Http()
 let keycloakConfig = KeycloakConfig(
@@ -68,7 +68,9 @@ oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSErr
 ```
 Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIDClaim object.
 
-### Build, test and play with aerogear-ios-jsonsz
+> **NOTE:**  The latest version of the library works with Keycloak 1.1.0.Final. Previous version of Keycloak 1.0.x will work except for the transparent refresh of tokens (ie: after access token expires you will have to go through grant process).
+
+### Build, test and play with aerogear-ios-oauth2
 
 1. Clone this project
 
