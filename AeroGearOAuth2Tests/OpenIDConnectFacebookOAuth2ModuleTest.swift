@@ -19,6 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
+import OHHTTPStubs
 
 class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
     
