@@ -19,13 +19,12 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AeroGearHttpStub
 
 func setupStubWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
         return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             var stubJsonResponse = ["name": "John", "family_name": "Smith"]
             switch request.URL.path! {
             case "/plus/v1/people/me/openIdConnect":
@@ -45,7 +44,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
 
-            default: return StubResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
+            default: return OHHTTPStubsResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
             }
         }))
 }
@@ -59,7 +58,7 @@ class OAuth2ModuleTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        StubsManager.removeAllStubs()
+        OHHTTPStubs.removeAllStubs()
     }
     
     func testRequestAccessWithAccessTokenAlreadyStored() {
