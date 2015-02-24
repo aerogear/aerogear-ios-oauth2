@@ -19,6 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
+import OHHTTPStubs
 
 class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
     
