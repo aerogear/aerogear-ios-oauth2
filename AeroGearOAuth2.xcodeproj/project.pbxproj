@@ -65,7 +65,6 @@
 		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2Module.swift; sourceTree = "<group>"; };
-		4815BE681A9CBC73005A09AF /* AeroGearOAuth2Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AeroGearOAuth2Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833046619AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AeroGearOAuth2.h; sourceTree = "<group>"; };
@@ -180,7 +179,6 @@
 		4833046F19AF1635002F8DA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4815BE681A9CBC73005A09AF /* AeroGearOAuth2Tests-Bridging-Header.h */,
 				4833047019AF1635002F8DA9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -599,7 +597,7 @@
 				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "AeroGearOAuth2Tests/AeroGearOAuth2Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -616,7 +614,7 @@
 				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "AeroGearOAuth2Tests/AeroGearOAuth2Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
