@@ -19,7 +19,6 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AeroGearHttpStub
 
 class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
     
@@ -29,7 +28,7 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        StubsManager.removeAllStubs()
+        OHHTTPStubs.removeAllStubs()
     }
 
     class MyKeycloakMockOAuth2ModuleSuccess: KeycloakOAuth2Module {
@@ -59,7 +58,6 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
         var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
         // no need of http stub as Keycloak does not provide a UserInfo endpoint but decode JWT token
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            println("KC::::\(claims)")
             XCTAssertTrue("Sample User" == claims?.name, "name claim shoud be as defined in JWT token")
             XCTAssertTrue("User" == claims?.familyName, "family name claim shoud be as defined in JWT token")
             XCTAssertTrue("sample-user@example" == claims?.email, "email claim shoud be as defined in JWT token")

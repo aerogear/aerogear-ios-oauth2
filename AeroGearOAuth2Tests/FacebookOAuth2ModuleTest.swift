@@ -19,13 +19,12 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AeroGearHttpStub
 
 func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    StubsManager.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
         return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> StubResponse in
+        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             var stubJsonResponse = ["name": "John", "family_name": "Smith"]
             switch request.URL.path! {
             case "/me/permissions":
@@ -36,7 +35,7 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
                 var string = "access_token=CAAK4k&expires=5183999"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
-            default: return StubResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            default: return OHHTTPStubsResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
             }
         }))
 }
@@ -50,7 +49,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        StubsManager.removeAllStubs()
+        OHHTTPStubs.removeAllStubs()
     }
  
     func testExchangeAuthorizationCodeForAccessToken() {
