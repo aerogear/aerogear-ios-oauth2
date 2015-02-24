@@ -19,6 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
+import OHHTTPStubs
 
 func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
     // set up http stub
@@ -30,11 +31,11 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
             case "/me/permissions":
                 var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
-                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+                return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/oauth/access_token":
                 var string = "access_token=CAAK4k&expires=5183999"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
-                return StubResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
+                return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
             }
         }))
