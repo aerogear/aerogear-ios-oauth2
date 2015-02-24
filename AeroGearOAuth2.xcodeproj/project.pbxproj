@@ -173,7 +173,6 @@
 				485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */,
 				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
-				4815BE681A9CBC73005A09AF /* AeroGearOAuth2Tests-Bridging-Header.h */,
 			);
 			path = AeroGearOAuth2Tests;
 			sourceTree = "<group>";
@@ -181,6 +180,7 @@
 		4833046F19AF1635002F8DA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4815BE681A9CBC73005A09AF /* AeroGearOAuth2Tests-Bridging-Header.h */,
 				4833047019AF1635002F8DA9 /* Info.plist */,
 			);
 			name = "Supporting Files";
