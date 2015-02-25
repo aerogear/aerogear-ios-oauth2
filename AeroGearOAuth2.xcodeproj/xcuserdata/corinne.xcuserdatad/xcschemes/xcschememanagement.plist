@@ -11,11 +11,6 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>AeroGearOAuth2Tests 2.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>AeroGearOAuth2Tests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
