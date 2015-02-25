@@ -19,7 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AeroGearHttpStub
+import OHHTTPStubs
 
 class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
     
@@ -29,7 +29,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        StubsManager.removeAllStubs()
+        OHHTTPStubs.removeAllStubs()
     }
     
     class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {

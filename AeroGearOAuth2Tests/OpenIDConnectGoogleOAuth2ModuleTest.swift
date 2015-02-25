@@ -19,7 +19,7 @@ import UIKit
 import XCTest
 import AeroGearOAuth2
 import AeroGearHttp
-import AeroGearHttpStub
+import OHHTTPStubs
 
 class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
     
@@ -29,7 +29,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        StubsManager.removeAllStubs()
+        OHHTTPStubs.removeAllStubs()
     }
     
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
