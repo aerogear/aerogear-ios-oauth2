@@ -50,7 +50,7 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-
+    var webView: WebViewController?
     /**
     Initialize an OAuth2 module
 
@@ -72,7 +72,9 @@ public class OAuth2Module: AuthzModule {
         }
 
         self.config = config
-        // TODO use timeout config paramter
+        if config.isWebView {
+            self.webView = WebViewController()
+        }
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .AuthorizationStateUnknown
     }
@@ -110,8 +112,16 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        UIApplication.sharedApplication().openURL(NSURL(string: http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)!)
+        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)
+        if let url = url {
+            if self.webView != nil {
+                self.webView!.targetURL = url
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+            } else {
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }
     }
 
     /**
