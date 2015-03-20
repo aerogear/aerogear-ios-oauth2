@@ -92,6 +92,9 @@ public class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
+            if ( self.webView != nil ) {
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, nil)
+            }
         })
 
         // register to receive notification when the application becomes active so we
