@@ -264,7 +264,7 @@ public class OAuth2Module: AuthzModule {
 
     :returns:  a dictionary filled with the authorization fields
     */
-    public func authorizationFields() -> [String: String]? {
+    public func authorizationFields(endpoint: String?, parameters: [String: AnyObject]?) -> [String: String]? {
         if (self.oauth2Session.accessToken == nil) {
             return nil
         } else {
