@@ -26,10 +26,14 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     override internal func viewDidLoad() {
         super.viewDidLoad()
         webView.frame = UIScreen.mainScreen().applicationFrame
-        webView.scalesPageToFit = true
         webView.delegate = self
         self.view.addSubview(webView)
         loadAddressURL()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.webView.frame = self.view.bounds
     }
     
     override internal func didReceiveMemoryWarning() {
