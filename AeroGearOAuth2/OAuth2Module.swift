@@ -50,7 +50,7 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-
+    var webView: OAuth2WebViewController?
     /**
     Initialize an OAuth2 module
 
@@ -72,7 +72,9 @@ public class OAuth2Module: AuthzModule {
         }
 
         self.config = config
-        // TODO use timeout config paramter
+        if config.isWebView {
+            self.webView = OAuth2WebViewController()
+        }
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .AuthorizationStateUnknown
     }
@@ -90,6 +92,9 @@ public class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
+            if ( self.webView != nil ) {
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, nil)
+            }
         })
 
         // register to receive notification when the application becomes active so we
@@ -110,8 +115,16 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        UIApplication.sharedApplication().openURL(NSURL(string: http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)!)
+        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)
+        if let url = url {
+            if self.webView != nil {
+                self.webView!.targetURL = url
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+            } else {
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }
     }
 
     /**
