@@ -50,7 +50,7 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var webView: WebViewController?
+    var webView: OAuth2WebViewController?
     /**
     Initialize an OAuth2 module
 
@@ -73,7 +73,7 @@ public class OAuth2Module: AuthzModule {
 
         self.config = config
         if config.isWebView {
-            self.webView = WebViewController()
+            self.webView = OAuth2WebViewController()
         }
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .AuthorizationStateUnknown

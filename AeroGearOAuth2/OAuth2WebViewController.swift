@@ -19,7 +19,7 @@ import Foundation
 
 import UIKit
 
-class WebViewController: UIViewController, UIWebViewDelegate {
+class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     var targetURL : NSURL = NSURL()
     var webView : UIWebView = UIWebView()
       
