@@ -93,7 +93,7 @@ public class OAuth2Module: AuthzModule {
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
             if ( self.webView != nil ) {
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, nil)
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
         })
 
