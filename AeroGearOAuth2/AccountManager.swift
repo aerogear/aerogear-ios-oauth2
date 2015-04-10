@@ -187,7 +187,7 @@ public class AccountManager {
     :returns: a Facebook OAuth2 module
     */
     public class func addFacebookAccount(config: FacebookConfig) -> FacebookOAuth2Module {
-        return addAccount(config, moduleClass: FacebookOAuth2Module.self) as FacebookOAuth2Module
+        return addAccount(config, moduleClass: FacebookOAuth2Module.self) as! FacebookOAuth2Module
     }
     
     /**
@@ -209,7 +209,7 @@ public class AccountManager {
     :returns: a Keycloak OAuth2 module
     */
     public class func addKeycloakAccount(config: KeycloakConfig) -> KeycloakOAuth2Module {
-        return addAccount(config, moduleClass: KeycloakOAuth2Module.self) as KeycloakOAuth2Module
+        return addAccount(config, moduleClass: KeycloakOAuth2Module.self) as! KeycloakOAuth2Module
     }
 
 }

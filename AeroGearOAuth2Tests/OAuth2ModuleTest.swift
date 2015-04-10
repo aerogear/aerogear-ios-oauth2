@@ -27,7 +27,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
         return true
         }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             var stubJsonResponse = ["name": "John", "family_name": "Smith"]
-            switch request.URL.path! {
+            switch request.URL!.path! {
             case "/plus/v1/people/me/openIdConnect":
                 var data: NSData
                 data = NSJSONSerialization.dataWithJSONObject(stubJsonResponse, options: nil, error: nil)!
@@ -70,7 +70,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         var partialMock = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithValidAccessTokenStored())
         partialMock.requestAccess { (response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("TOKEN" == response as String, "If access token present and still valid")
+            XCTAssertTrue("TOKEN" == response as! String, "If access token present and still valid")
             expectation.fulfill()            
         }
         waitForExpectationsWithTimeout(10, handler: nil)
@@ -84,7 +84,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         var partialMock = OAuth2ModulePartialMock(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
         partialMock.requestAccess { (response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("NEW_ACCESS_TOKEN" == response as String, "If access token not valid but refresh token present and still valid")
+            XCTAssertTrue("NEW_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(10, handler: nil)
@@ -98,7 +98,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         var partialMock = OAuth2ModulePartialMock(config: googleConfig, session: MockOAuth2SessionWithAuthzCode())
         partialMock.requestAccess { (response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("ACCESS_TOKEN" == response as String, "If access token not valid and no refresh token present")
+            XCTAssertTrue("ACCESS_TOKEN" == response as! String, "If access token not valid and no refresh token present")
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(10, handler: nil)
@@ -114,7 +114,7 @@ class OAuth2ModuleTests: XCTestCase {
         var mockedSession = MockOAuth2SessionWithRefreshToken()
         var oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
         oauth2Module.refreshAccessToken { (response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as String, "If access token not valid but refresh token present and still valid")
+            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             XCTAssertTrue("REFRESH_TOKEN" == mockedSession.savedRefreshedToken, "Saved newly issued refresh token")
             expectation.fulfill()
         }
@@ -130,7 +130,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         var oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
         oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as String, "If access token not valid but refresh token present and still valid")
+            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler: nil)

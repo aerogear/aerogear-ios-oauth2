@@ -27,7 +27,7 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
         return true
         }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             var stubJsonResponse = ["name": "John", "family_name": "Smith"]
-            switch request.URL.path! {
+            switch request.URL!.path! {
             case "/me/permissions":
                 var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
                 var data = string.dataUsingEncoding(NSUTF8StringEncoding)
@@ -63,7 +63,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
         var mockedSession = MockOAuth2SessionWithRefreshToken()
         var oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
         oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue(response as String == "CAAK4k" , "Check access token is return to callback")
+            XCTAssertTrue(response as! String == "CAAK4k" , "Check access token is return to callback")
             expectation.fulfill()            
         })
         waitForExpectationsWithTimeout(10, handler: nil)

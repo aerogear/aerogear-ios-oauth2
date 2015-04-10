@@ -29,7 +29,7 @@ func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
         return true
         }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             var stubJsonResponse = ["name": "John", "family_name": "Smith"]
-            switch request.URL.path! {
+            switch request.URL!.path! {
 
             case "/auth/realms/shoot-realm/tokens/refresh":
                 var string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"\(KEYCLOAK_TOKEN)\",\"expires_in\":23}"
@@ -66,7 +66,7 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
         var mockedSession = MockOAuth2SessionWithRefreshToken()
         var oauth2Module = KeycloakOAuth2Module(config: keycloakConfig, session: mockedSession)
         oauth2Module.refreshAccessToken { (response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as String, "If access token not valid but refresh token present and still valid")
+            XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
         XCTAssertTrue(KEYCLOAK_TOKEN == mockedSession.savedRefreshedToken, "Saved newly issued refresh token")
             expectation.fulfill()            
         }

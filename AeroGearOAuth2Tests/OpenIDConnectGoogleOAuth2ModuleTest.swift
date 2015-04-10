@@ -88,7 +88,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
-            var value = erroDict["OpenID Connect"] as String
+            var value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
             

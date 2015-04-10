@@ -77,9 +77,9 @@ public class KeycloakOAuth2Module: OAuth2Module {
                 }
                 
                 if let unwrappedResponse = response as? [String: AnyObject] {
-                    let accessToken: String = unwrappedResponse["access_token"] as String
-                    let refreshToken: String = unwrappedResponse["refresh_token"] as String
-                    let expiration = unwrappedResponse["expires_in"] as NSNumber
+                    let accessToken: String = unwrappedResponse["access_token"] as! String
+                    let refreshToken: String = unwrappedResponse["refresh_token"] as! String
+                    let expiration = unwrappedResponse["expires_in"] as! NSNumber
                     let exp: String = expiration.stringValue
                     let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
                     let expRefresh = expirationRefresh?.stringValue
@@ -100,7 +100,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
         
         var stringtoDecode: String = toDecode.stringByReplacingOccurrencesOfString("-", withString: "+") // 62nd char of encoding
         stringtoDecode = stringtoDecode.stringByReplacingOccurrencesOfString("_", withString: "/") // 63rd char of encoding
-        switch (stringtoDecode.utf16Count % 4) {
+        switch (count(stringtoDecode.utf16) % 4) {
         case 2: stringtoDecode = "\(stringtoDecode)=="
         case 3: stringtoDecode = "\(stringtoDecode)="
         default: // nothing to do stringtoDecode can stay the same

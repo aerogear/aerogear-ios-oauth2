@@ -124,7 +124,7 @@ public class KeychainWrap {
     :param: userAccount     key of the keychain entry, usually accountId for oauth2 module
     :param: tokenType       type of token: access, refresh
     */
-    public func read(userAccount: String, tokenType: TokenType) -> NSString? {
+    public func read(userAccount: String, tokenType: TokenType) -> String? {
         var keychainQuery = NSMutableDictionary()
         if let groupId = self.groupId {
             keychainQuery[kSecAttrAccessGroup as String] = groupId
@@ -147,12 +147,12 @@ public class KeychainWrap {
         }
         
         let opaque = dataTypeRef?.toOpaque()
-        var contentsOfKeychain: NSString?
-        if let op = opaque? {
+        var contentsOfKeychain: String?
+        if let op = opaque {
             let retrievedData = Unmanaged<NSData>.fromOpaque(op).takeUnretainedValue()
             
             // Convert the data retrieved from the keychain into a string
-            contentsOfKeychain = NSString(data: retrievedData, encoding: NSUTF8StringEncoding)
+            contentsOfKeychain = NSString(data: retrievedData, encoding: NSUTF8StringEncoding) as? String
         } else {
             println("Nothing was retrieved from the keychain. Status code \(status)")
         }
@@ -199,7 +199,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public var accessTokenExpirationDate: NSDate? {
         get {
             var dateAsString = self.keychain.read(self.accountId, tokenType: .ExpirationDate)
-            if let unwrappedDate = dateAsString {
+            if let unwrappedDate:String = dateAsString {
                 return NSDate(dateString: unwrappedDate)
             } else {
                 return nil
@@ -246,7 +246,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public var refreshTokenExpirationDate: NSDate? {
         get {
             var dateAsString = self.keychain.read(self.accountId, tokenType: .RefreshExpirationDate)
-            if let unwrappedDate = dateAsString {
+            if let unwrappedDate:String = dateAsString {
                 return NSDate(dateString: unwrappedDate)
             } else {
                 return nil

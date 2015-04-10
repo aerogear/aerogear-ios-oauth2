@@ -96,7 +96,7 @@ public class FacebookOAuth2Module: OAuth2Module {
             }
             var paramDict: [String: String] = [:]
             if response != nil {
-                paramDict = ["access_token": response! as String]
+                paramDict = ["access_token": response! as! String]
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
                 

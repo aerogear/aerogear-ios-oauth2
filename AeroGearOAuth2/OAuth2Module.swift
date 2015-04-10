@@ -146,8 +146,8 @@ public class OAuth2Module: AuthzModule {
                 }
 
                 if let unwrappedResponse = response as? [String: AnyObject] {
-                    let accessToken: String = unwrappedResponse["access_token"] as NSString
-                    let expiration = unwrappedResponse["expires_in"] as NSNumber
+                    let accessToken: String = unwrappedResponse["access_token"] as! String
+                    let expiration = unwrappedResponse["expires_in"] as! NSNumber
                     let exp: String = expiration.stringValue
                     
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
@@ -178,9 +178,9 @@ public class OAuth2Module: AuthzModule {
             }
             
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                let accessToken: String = unwrappedResponse["access_token"] as NSString
-                let refreshToken: String = unwrappedResponse["refresh_token"] as NSString
-                let expiration = unwrappedResponse["expires_in"] as NSNumber
+                let accessToken: String = unwrappedResponse["access_token"] as! String
+                let refreshToken: String = unwrappedResponse["refresh_token"] as! String
+                let expiration = unwrappedResponse["expires_in"] as! NSNumber
                 let exp: String = expiration.stringValue
                 // expiration for refresh token is used in Keycloak
                 let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
@@ -225,7 +225,7 @@ public class OAuth2Module: AuthzModule {
             }
             var paramDict: [String: String] = [:]
             if response != nil {
-                paramDict = ["access_token": response! as String]
+                paramDict = ["access_token": response! as! String]
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
 
@@ -297,7 +297,7 @@ public class OAuth2Module: AuthzModule {
     // MARK: Internal Methods
 
     func extractCode(notification: NSNotification, completionHandler: (AnyObject?, NSError?) -> Void) {
-        let url: NSURL? = (notification.userInfo as [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
+        let url: NSURL? = (notification.userInfo as! [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
 
         // extract the code from the URL
         let code = self.parametersFromQueryString(url?.query)["code"]
