@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode611
+osx_image: xcode63
 xcode_workspace: AeroGearOAuth2.xcworkspace
 xcode_scheme: AeroGearOAuth2Tests
 xcode_sdk: iphonesimulator
