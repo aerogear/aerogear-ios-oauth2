@@ -52,8 +52,8 @@ public class KeychainWrap {
     /**
     Initialize KeychainWrapper setting default values.
     
-    :param: serviceId   unique service, defulated to bundleId
-    :param: groupId     used for SSO between app issued from same developer certificate.
+    :param: serviceId unique service, defulated to bundleId
+    :param: groupId used for SSO between app issued from same developer certificate.
     */
     public init(serviceId: String? =  NSBundle.mainBundle().bundleIdentifier, groupId: String? = nil) {
         if serviceId == nil {
@@ -67,9 +67,9 @@ public class KeychainWrap {
     /**
     Save tokens information in Keychain.
     
-    :param: key         usually use accountId for oauth2 module, any unique string
-    :param: tokenType   type of token: access, refresh
-    :param: value       string value of the token
+    :param: key usually use accountId for oauth2 module, any unique string.
+    :param: tokenType type of token: access, refresh.
+    :param: value string value of the token.
     */
     public func save(key: String, tokenType: TokenType, value: String) -> Bool {
         var dataFromString: NSData? = value.dataUsingEncoding(NSUTF8StringEncoding)
@@ -121,8 +121,8 @@ public class KeychainWrap {
     /**
     Read tokens information in Keychain. If the entry is not found return nil.
     
-    :param: userAccount     key of the keychain entry, usually accountId for oauth2 module
-    :param: tokenType       type of token: access, refresh
+    :param: userAccount key of the keychain entry, usually accountId for oauth2 module.
+    :param: tokenType type of token: access, refresh.
     */
     public func read(userAccount: String, tokenType: TokenType) -> String? {
         var keychainQuery = NSMutableDictionary()

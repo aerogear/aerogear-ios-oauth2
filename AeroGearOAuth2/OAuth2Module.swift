@@ -20,18 +20,18 @@ import UIKit
 import AeroGearHttp
 
 /**
-Notification constants emitted during oauth authorization flow
+Notification constants emitted during oauth authorization flow.
 */
 public let AGAppLaunchedWithURLNotification = "AGAppLaunchedWithURLNotification"
 public let AGAppDidBecomeActiveNotification = "AGAppDidBecomeActiveNotification"
 public let AGAuthzErrorDomain = "AGAuthzErrorDomain"
 
 /**
-The current state that this module is in
+The current state that this module is in.
 
-- AuthorizationStatePendingExternalApproval:  the module is waiting external approval
-- AuthorizationStateApproved:                the oauth flow has been approved
-- AuthorizationStateUnknown:                the oauth flow is in unknown state (e.g. user clicked cancel)
+- AuthorizationStatePendingExternalApproval: the module is waiting external approval.
+- AuthorizationStateApproved: the oauth flow has been approved.
+- AuthorizationStateUnknown: the oauth flow is in unknown state (e.g. user clicked cancel).
 */
 enum AuthorizationState {
     case AuthorizationStatePendingExternalApproval
@@ -40,7 +40,7 @@ enum AuthorizationState {
 }
 
 /**
-Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
+Parent class of any OAuth2 module implementing generic OAuth2 authorization flow.
 */
 public class OAuth2Module: AuthzModule {
     let config: Config
@@ -52,14 +52,14 @@ public class OAuth2Module: AuthzModule {
     var state: AuthorizationState
     var webView: OAuth2WebViewController?
     /**
-    Initialize an OAuth2 module
+    Initialize an OAuth2 module.
 
-    :param: config                   the configuration object that setups the module
-    :param: session                 the session that that module will be bound to
-    :param: requestSerializer   the actual request serializer to use when performing requests
-    :param: responseSerializer the actual response serializer to use upon receiving a response
+    :param: config the configuration object that setups the module.
+    :param: session the session that that module will be bound to.
+    :param: requestSerializer the actual request serializer to use when performing requests.
+    :param: responseSerializer the actual response serializer to use upon receiving a response.
 
-    :returns: the newly initialized OAuth2Module
+    :returns: the newly initialized OAuth2Module.
     */
     public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializer()) {
         if (config.accountId == nil) {
@@ -82,7 +82,7 @@ public class OAuth2Module: AuthzModule {
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
 
     /**
-    Request an authorization code
+    Request an authorization code.
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
@@ -128,7 +128,7 @@ public class OAuth2Module: AuthzModule {
     }
 
     /**
-    Request to refresh an access token
+    Request to refresh an access token.
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
@@ -159,9 +159,9 @@ public class OAuth2Module: AuthzModule {
     }
 
     /**
-    Exchange an authorization code for an access token
+    Exchange an authorization code for an access token.
 
-    :param: code              the 'authorization' code to exchange for an access token
+    :param: code the 'authorization' code to exchange for an access token.
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
@@ -193,7 +193,7 @@ public class OAuth2Module: AuthzModule {
     }
 
     /**
-    Gateway to request authorization access
+    Gateway to request authorization access.
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
@@ -211,7 +211,7 @@ public class OAuth2Module: AuthzModule {
     }
     
     /**
-    Gateway to provide authentication using the Authorization Code Flow with OpenID Connect
+    Gateway to provide authentication using the Authorization Code Flow with OpenID Connect.
     
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
@@ -250,7 +250,7 @@ public class OAuth2Module: AuthzModule {
     }
     
     /**
-    Request to revoke access
+    Request to revoke access.
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
@@ -273,9 +273,9 @@ public class OAuth2Module: AuthzModule {
     }
 
     /**
-    Return any authorization fields
+    Return any authorization fields.
 
-    :returns:  a dictionary filled with the authorization fields
+    :returns:  a dictionary filled with the authorization fields.
     */
     public func authorizationFields() -> [String: String]? {
         if (self.oauth2Session.accessToken == nil) {
@@ -286,9 +286,9 @@ public class OAuth2Module: AuthzModule {
     }
 
     /**
-    Returns a boolean indicating whether authorization has been granted
+    Returns a boolean indicating whether authorization has been granted.
 
-    :returns: true if authorized, false otherwise
+    :returns: true if authorized, false otherwise.
     */
     public func isAuthorized() -> Bool {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()

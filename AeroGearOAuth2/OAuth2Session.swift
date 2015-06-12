@@ -66,10 +66,10 @@ public protocol OAuth2Session {
     Save tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
     for grant access.
     
-    :param: accessToken the access token
-    :param: refreshToken  the refresh token
-    :param: accessTokenExpiration the expiration for the access token
-    :param: refreshTokenExpiration the expiration for the refresh token
+    :param: accessToken the access token.
+    :param: refreshToken the refresh token.
+    :param: accessTokenExpiration the expiration for the access token.
+    :param: refreshTokenExpiration the expiration for the refresh token.
     */
     func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
 }

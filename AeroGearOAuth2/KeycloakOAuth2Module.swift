@@ -63,6 +63,11 @@ public class KeycloakOAuth2Module: OAuth2Module {
         }
     }
     
+    /**
+    Request to refresh an access token.
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     public override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
