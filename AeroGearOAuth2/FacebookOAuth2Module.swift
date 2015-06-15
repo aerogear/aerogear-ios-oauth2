@@ -27,6 +27,12 @@ public class FacebookOAuth2Module: OAuth2Module {
         super.init(config: config, session: session, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
     }
     
+    /**
+    Exchange an authorization code for an access token.
+    
+    :param: code the 'authorization' code to exchange for an access token.
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     override public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
         
@@ -64,6 +70,11 @@ public class FacebookOAuth2Module: OAuth2Module {
         })
     }
     
+    /**
+    Request to revoke access.
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
     override public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {

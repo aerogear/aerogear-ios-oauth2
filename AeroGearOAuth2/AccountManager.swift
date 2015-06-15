@@ -18,9 +18,17 @@
 import Foundation
 
 /**
-A Config object that setups facebook specific configuration parameters
+A Config object that setups facebook specific configuration parameters.
 */
 public class FacebookConfig: Config {
+    /**
+    Init a Facebook configuration.
+    :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
+    :param: clientSecret OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
+    :param: scopes an array of scopes the app is asking access to.
+    :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
+    :paream: isOpenIDConnect to identify if fetching id information is required.
+    */
     public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
         super.init(base: "",
             authzEndpoint: "https://www.facebook.com/dialog/oauth",
@@ -44,9 +52,16 @@ public class FacebookConfig: Config {
 }
 
 /**
-A Config object that setups Google specific configuration parameters
+A Config object that setups Google specific configuration parameters.
 */
 public class GoogleConfig: Config {
+    /**
+    Init a Google configuration.
+    :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
+    :param: scopes an array of scopes the app is asking access to.
+    :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
+    :paream: isOpenIDConnect to identify if fetching id information is required.
+    */
     public init(clientId: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
         let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
@@ -66,8 +81,17 @@ public class GoogleConfig: Config {
         }
     }
 }
-
+/**
+A Config object that setups Keycloak specific configuration parameters.
+*/
 public class KeycloakConfig: Config {
+    /**
+    Init a Keycloak configuration.
+    :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
+    :param: host to identify where is the keycloak server located.
+    :param: realm to identify which realm to use. A realm grup a set of application/oauth2 client together.
+    :paream: isOpenIDConnect to identify if fetching id information is required.
+    */
     public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
         let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
@@ -88,10 +112,10 @@ public class KeycloakConfig: Config {
 }
 
 /**
-An account manager used to instantiate, store and retrieve OAuth2 modules
+An account manager used to instantiate, store and retrieve OAuth2 modules.
 */
 public class AccountManager {
-    
+    /// List of OAuth2 modules available for a given app. Each module is linked to an OAuht2Session which securely store the tokens.
     var modules: [String: OAuth2Module]
     
     init() {
@@ -109,8 +133,8 @@ public class AccountManager {
     /**
     Instantiate an OAuth2 Module using the configuration object passed in and adds it to the account manager. It uses the OAuth2Session account_id as the name that this module will be stored in.
     
-    :param: config      the configuration object to use to setup an OAuth2 module
-    :param: moduleClass the type of the OAuth2 module to instantiate
+    :param: config  the configuration object to use to setup an OAuth2 module.
+    :param: moduleClass the type of the OAuth2 module to instantiate.
     
     :returns: the OAuth2 module
     */
@@ -125,9 +149,9 @@ public class AccountManager {
     /**
     Removes an OAuth2 module
     
-    :param: name       the name that the OAuth2 module was bound to.
-    :param: config      the configuration object to use to setup an OAuth2 module
-    :param: moduleClass the type of the OAuth2 module to instantiate
+    :param: name  the name that the OAuth2 module was bound to.
+    :param: config the configuration object to use to setup an OAuth2 module.
+    :param: moduleClass the type of the OAuth2 module to instantiate.
     
     :returns: the OAuth2module or nil if not found
     */
@@ -138,20 +162,20 @@ public class AccountManager {
     /**
     Retrieves an OAuth2 module by a name
     
-    :param: name        the name that the OAuth2 module was bound to.
+    :param: name the name that the OAuth2 module was bound to.
     
-    :returns: the OAuth2module or nil if not found
+    :returns: the OAuth2module or nil if not found.
     */
     public class func getAccountByName(name: String) -> OAuth2Module? {
         return sharedInstance.modules[name]
     }
     
     /**
-    Retrieves a list of OAuth2 modules bound to specific clientId
+    Retrieves a list of OAuth2 modules bound to specific clientId.
     
-    :param: clientId        the client it that the oauth2 module was bound to
+    :param: clientId  the client it that the oauth2 module was bound to.
     
-    :returns: the OAuth2module or nil if not found
+    :returns: the OAuth2module or nil if not found.
     */
     public class func getAccountsByClienId(clientId: String) -> [OAuth2Module] {
         let modules: [OAuth2Module] = [OAuth2Module](sharedInstance.modules.values)
@@ -160,11 +184,11 @@ public class AccountManager {
 
     
     /**
-    Retrieves an OAuth2 module by using a configuration object
+    Retrieves an OAuth2 module by using a configuration object.
     
-    :param: config        the Config object that this oauth2 module was used to instantiate
+    :param: config the Config object that this oauth2 module was used to instantiate.
     
-    :returns: the OAuth2module or nil if not found
+    :returns: the OAuth2module or nil if not found.
     */
     public class func getAccountByConfig(config: Config) -> OAuth2Module? {
         if config.accountId != nil {
@@ -180,33 +204,33 @@ public class AccountManager {
     }
 
     /**
-    convenient method to retrieve a faccebook oauth2 module
+    Convenient method to retrieve a Facebook oauth2 module.
     
-    :param: config a Facebook configuration object. See FacebookConfig
+    :param: config a Facebook configuration object. See FacebookConfig.
     
-    :returns: a Facebook OAuth2 module
+    :returns: a Facebook OAuth2 module.
     */
     public class func addFacebookAccount(config: FacebookConfig) -> FacebookOAuth2Module {
         return addAccount(config, moduleClass: FacebookOAuth2Module.self) as! FacebookOAuth2Module
     }
     
     /**
-    convenient method to retrieve a google oauth2 module ready to be used
+    Convenient method to retrieve a Google oauth2 module ready to be used.
     
-    :param: config a google configuration object. See GoogleConfig
+    :param: config a google configuration object. See GoogleConfig.
     
-    :returns: a google OAuth2 module
+    :returns: a google OAuth2 module.
     */
     public class func addGoogleAccount(config: GoogleConfig) -> OAuth2Module {
         return addAccount(config, moduleClass: OAuth2Module.self)
     }
     
     /**
-    convenient method to retrieve a Keycloak oauth2 module ready to be used
+    Convenient method to retrieve a Keycloak oauth2 module ready to be used.
     
-    :param: config a Keycloak configuration object. See KeycloakConfig
+    :param: config a Keycloak configuration object. See KeycloakConfig.
     
-    :returns: a Keycloak OAuth2 module
+    :returns: a Keycloak OAuth2 module.
     */
     public class func addKeycloakAccount(config: KeycloakConfig) -> KeycloakOAuth2Module {
         return addAccount(config, moduleClass: KeycloakOAuth2Module.self) as! KeycloakOAuth2Module

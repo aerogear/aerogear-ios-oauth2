@@ -94,11 +94,11 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
     /**
     Initialize session using account id. 
     
-    :param: accountId uniqueId to identify the oauth2module
-    :param: accessToken optional parameter to initilaize the storage with initial values
-    :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values
-    :param: refreshToken optional parameter to initilaize the storage with initial values
-    :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values
+    :param: accountId uniqueId to identify the oauth2module.
+    :param: accessToken optional parameter to initilaize the storage with initial values.
+    :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values.
+    :param: refreshToken optional parameter to initilaize the storage with initial values.
+    :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values.
     */
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: NSDate? = nil) {
         self.accessToken = accessToken
