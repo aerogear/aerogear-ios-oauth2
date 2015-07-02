@@ -86,9 +86,9 @@ public class KeychainWrap {
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
         //TODO with Xcode7/swift2/ios9 use @available new feature
-        if NSString.respondsToSelector(Selector("containsString:")) {
+        if "".respondsToSelector(Selector("containsString:")) == true { // iOS8
             keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-        } else {
+        } else { //iOS7
             keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         }
         
@@ -139,9 +139,9 @@ public class KeychainWrap {
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
         keychainQuery[kSecReturnData as String] = true
         //TODO with Xcode7/swift2/ios9 use @available new feature
-        if NSString.respondsToSelector(Selector("containsString:")) {
+        if "".respondsToSelector(Selector("containsString:")) == true { // iOS8
             keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-        } else {
+        } else { //iOS7
             keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         }
         
