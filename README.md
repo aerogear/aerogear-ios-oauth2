@@ -15,6 +15,7 @@ Taking care of:
 * openID Connect login
 
 100% Swift.
+Supported platforms: iOS7, iOS8.
 
 |                 | Project Info  |
 | --------------- | ------------- |
@@ -24,7 +25,6 @@ Taking care of:
 | Issue tracker:  | https://issues.jboss.org/browse/AGIOS  |
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
-
 
 ## Example Usage
 
