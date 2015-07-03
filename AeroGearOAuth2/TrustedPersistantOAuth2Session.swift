@@ -85,7 +85,12 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        //TODO with Xcode7/swift2/ios9 use @available new feature
+        if "".respondsToSelector(Selector("containsString:")) == true { // iOS8
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        } else { //iOS7
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        }
         
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
@@ -95,7 +100,7 @@ public class KeychainWrap {
             if (dataFromString != nil) {
                 let attributesToUpdate = NSMutableDictionary()
                 attributesToUpdate[kSecValueData as String] = dataFromString!
-            
+                
                 var statusUpdate: OSStatus = SecItemUpdate(keychainQuery, attributesToUpdate)
                 if (statusUpdate != errSecSuccess) {
                     println("tokens not updated")
@@ -108,7 +113,7 @@ public class KeychainWrap {
             keychainQuery[kSecValueData as String] = dataFromString!
             var statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
             if(statusAdd != errSecSuccess) {
-                 println("tokens not saved")
+                println("tokens not saved")
                 return false
             }
         } else { // error case
@@ -133,7 +138,12 @@ public class KeychainWrap {
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
         keychainQuery[kSecReturnData as String] = true
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        //TODO with Xcode7/swift2/ios9 use @available new feature
+        if "".respondsToSelector(Selector("containsString:")) == true { // iOS8
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        } else { //iOS7
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        }
         
         var dataTypeRef: Unmanaged<AnyObject>?
         // Search for the keychain items
@@ -165,10 +175,10 @@ public class KeychainWrap {
     */
     public func resetKeychain() -> Bool {
         return self.deleteAllKeysForSecClass(kSecClassGenericPassword) &&
-        self.deleteAllKeysForSecClass(kSecClassInternetPassword) &&
-        self.deleteAllKeysForSecClass(kSecClassCertificate) &&
-        self.deleteAllKeysForSecClass(kSecClassKey) &&
-        self.deleteAllKeysForSecClass(kSecClassIdentity)
+            self.deleteAllKeysForSecClass(kSecClassInternetPassword) &&
+            self.deleteAllKeysForSecClass(kSecClassCertificate) &&
+            self.deleteAllKeysForSecClass(kSecClassKey) &&
+            self.deleteAllKeysForSecClass(kSecClassIdentity)
     }
     
     func deleteAllKeysForSecClass(secClass: CFTypeRef) -> Bool {
@@ -211,7 +221,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
             }
         }
     }
-
+    
     /**
     The access token. The information is read securely from Keychain.
     */
@@ -225,7 +235,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
             }
         }
     }
-
+    
     /**
     The refresh token. The information is read securely from Keychain.
     */
@@ -311,7 +321,12 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     :param: refreshToken optional parameter to initilaize the storage with initial values
     :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values
     */
-    public init(accountId: String, groupId: String? = nil, accessToken: String? = nil, accessTokenExpirationDate: NSDate? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: NSDate? = nil) {
+    public init(accountId: String,
+        groupId: String? = nil,
+        accessToken: String? = nil,
+        accessTokenExpirationDate: NSDate? = nil,
+        refreshToken: String? = nil,
+        refreshTokenExpirationDate: NSDate? = nil) {
         self.accountId = accountId
         if groupId != nil {
             self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
@@ -322,4 +337,5 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         self.refreshToken = refreshToken
         self.accessTokenExpirationDate = accessTokenExpirationDate
         self.refreshTokenExpirationDate = refreshTokenExpirationDate
-    }}
+    }
+}
