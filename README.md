@@ -15,7 +15,8 @@ Taking care of:
 * openID Connect login
 
 100% Swift.
-Supported platforms: iOS7, iOS8.
+
+**Supported platforms:** iOS7, iOS8.
 
 |                 | Project Info  |
 | --------------- | ------------- |
