@@ -52,9 +52,9 @@ public class KeycloakOAuth2Module: OAuth2Module {
                 completionHandler(nil, nil, error)
                 return
             }
-            var accessToken = response as? String
+            let accessToken = response as? String
             if let accessToken = accessToken {
-                var token = self.decode(accessToken)
+                let token = self.decode(accessToken)
                 if let decodedToken = token {
                     openIDClaims = OpenIDClaim(fromDict: decodedToken)
                 }
@@ -105,19 +105,19 @@ public class KeycloakOAuth2Module: OAuth2Module {
         
         var stringtoDecode: String = toDecode.stringByReplacingOccurrencesOfString("-", withString: "+") // 62nd char of encoding
         stringtoDecode = stringtoDecode.stringByReplacingOccurrencesOfString("_", withString: "/") // 63rd char of encoding
-        switch (count(stringtoDecode.utf16) % 4) {
+        switch (stringtoDecode.utf16.count % 4) {
         case 2: stringtoDecode = "\(stringtoDecode)=="
         case 3: stringtoDecode = "\(stringtoDecode)="
         default: // nothing to do stringtoDecode can stay the same
-            println()
+            print("")
         }
-        let dataToDecode = NSData(base64EncodedString: stringtoDecode, options: .allZeros)
+        let dataToDecode = NSData(base64EncodedString: stringtoDecode, options: [])
         let base64DecodedString = NSString(data: dataToDecode!, encoding: NSUTF8StringEncoding)
         
         var values: [String: AnyObject]?
         if let string = base64DecodedString {
             if let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                values = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as? [String : AnyObject]
+                values = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject]
             }
         }
         return values

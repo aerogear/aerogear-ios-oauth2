@@ -34,7 +34,7 @@ public protocol OAuth2Session {
     /**
     The access token's expiration date.
     */
-    var accessTokenExpirationDate: NSDate? {get set}
+     var accessTokenExpirationDate: NSDate? {get set}
     
     /**
     The refresh token's expiration date.

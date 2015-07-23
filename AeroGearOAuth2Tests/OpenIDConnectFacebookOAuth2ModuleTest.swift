@@ -35,7 +35,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
     class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            var accessToken: AnyObject? = NSString(string:"TOKEN")
+            let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
     }
@@ -43,7 +43,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
     class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            completionHandler(nil, NSError())
+            completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
     
@@ -58,7 +58,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             
@@ -88,11 +88,11 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
-            var value = erroDict["OpenID Connect"] as! String
+            let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
             
@@ -110,7 +110,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
         
         
-        var oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             

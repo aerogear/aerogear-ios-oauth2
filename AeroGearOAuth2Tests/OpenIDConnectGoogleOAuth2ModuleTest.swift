@@ -35,7 +35,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
        
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            var accessToken: AnyObject? = NSString(string:"TOKEN")
+            let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
     }
@@ -43,7 +43,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
     class MyMockOAuth2ModuleFailure: OAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            completionHandler(nil, NSError())
+            completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
     
@@ -57,7 +57,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
         
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
 
@@ -84,11 +84,11 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
-            var value = erroDict["OpenID Connect"] as! String
+            let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
             
@@ -105,7 +105,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
         
 
-        var oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             
