@@ -35,7 +35,7 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
     class MyKeycloakMockOAuth2ModuleSuccess: KeycloakOAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            var accessToken: AnyObject? = NSString(string: "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE")
+            let accessToken: AnyObject? = NSString(string: "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpbCI6InNhbXBsZS11c2VyQGV4YW1wbGUiLCJqdGkiOiI5MTEwNjAwZS1mYTdiLTRmOWItOWEwOC0xZGJlMGY1YTY5YzEiLCJleHAiOjE0MTc2ODg1OTgsIm5iZiI6MCwiaWF0IjoxNDE3Njg4Mjk4LCJpc3MiOiJzaG9vdC1yZWFsbSIsImF1ZCI6InNob290LXJlYWxtIiwic3ViIjoiNzJhN2Q0NGYtZDcxNy00MDk3LWExMWYtN2FhOWIyMmM5ZmU3IiwiYXpwIjoic2hhcmVkc2hvb3QtdGhpcmQtcGFydHkiLCJnaXZlbl9uYW1lIjoiU2FtcGxlIiwiZmFtaWx5X25hbWUiOiJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2Vzc2lvbl9zdGF0ZSI6Ijg4MTJlN2U2LWQ1ZGYtNDc4Yi1iNDcyLTNlYWU5YTI2ZDdhYSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9fQ.ZcNu8C4yeo1ALqnLvEOK3NxnaKm2BR818B4FfqN3WQd3sc6jvtGmTPB1C0MxF6ku_ELVs2l_HJMjNdPT9daUoau5LkdCjSiTwS5KA-18M5AUjzZnVo044-jHr_JsjNrYEfKmJXX0A_Zdly7el2tC1uPjGoeBqLgW9GowRl3i4wE")
             completionHandler(accessToken, nil)
         }
     }
@@ -43,7 +43,7 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
     class MyKeycloakMockOAuth2ModuleFailure: KeycloakOAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
-            completionHandler(nil, NSError())
+            completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
     
@@ -56,7 +56,7 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
             realm: "shoot-realm",
             isOpenIDConnect: true)
         
-        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
         // no need of http stub as Keycloak does not provide a UserInfo endpoint but decode JWT token
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             XCTAssertTrue("Sample User" == claims?.name, "name claim shoud be as defined in JWT token")
@@ -79,7 +79,7 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
         
         
-        var oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccount(keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleFailure.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             

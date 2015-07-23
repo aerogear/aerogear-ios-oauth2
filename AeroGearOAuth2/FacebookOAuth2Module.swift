@@ -51,15 +51,15 @@ public class FacebookOAuth2Module: OAuth2Module {
                 var accessToken: String? = nil
                 var expiredIn: String? = nil
                 
-                var charSet: NSMutableCharacterSet = NSMutableCharacterSet()
+                let charSet: NSMutableCharacterSet = NSMutableCharacterSet()
                 charSet.addCharactersInString("&=")
                 let array = unwrappedResponse.componentsSeparatedByCharactersInSet(charSet)
-                for (index, elt) in enumerate(array) {
+                for (index, elt) in array.enumerate() {
                     if elt == "access_token" {
                         accessToken = array[index+1]
                     }
                 }
-                for (index, elt) in enumerate(array) {
+                for (index, elt) in array.enumerate() {
                     if elt == "expires" {
                         expiredIn = array[index+1]
                     }
@@ -117,8 +117,8 @@ public class FacebookOAuth2Module: OAuth2Module {
                         return
                     }
                     if let unwrappedResponse = responseObject as? String {
-                        var data = unwrappedResponse.dataUsingEncoding(NSUTF8StringEncoding)
-                        var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: nil)
+                        let data = unwrappedResponse.dataUsingEncoding(NSUTF8StringEncoding)
+                        let json: AnyObject? = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
                         var openIDClaims: FacebookOpenIDClaim?
                         if let unwrappedResponse = json as? [String: AnyObject] {
                             openIDClaims = FacebookOpenIDClaim(fromDict: unwrappedResponse)

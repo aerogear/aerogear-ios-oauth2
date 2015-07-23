@@ -56,6 +56,19 @@ public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccess
         }
         set(data) {}
     }
+    override public var accessTokenExpirationDate: NSDate? {
+        get {
+            return NSDate()
+        }
+        set(value) {}
+    }
+    override public var refreshTokenExpirationDate: NSDate? {
+        get {
+            return NSDate()
+        }
+        set(value) {}
+    }
+    
     public override func tokenIsNotExpired() -> Bool {
         return false
     }
