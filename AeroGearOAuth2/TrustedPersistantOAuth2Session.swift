@@ -146,7 +146,8 @@ public class KeychainWrap {
         
         var dataTypeRef: Unmanaged<AnyObject>?
         // Search for the keychain items
-        let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
+        let status: OSStatus = withUnsafeMutablePointer(&dataTypeRef) { SecItemCopyMatching(keychainQuery as CFDictionaryRef, UnsafeMutablePointer($0)) }
+
         if (status == errSecItemNotFound) {
             print("\(tokenType.rawValue) not found")
             return nil
@@ -216,7 +217,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         }
         set(value) {
             if let unwrappedValue = value {
-                _ = self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
+                self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
             }
         }
     }
@@ -230,7 +231,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         }
         set(value) {
             if let unwrappedValue = value {
-                _ = self.keychain.save(self.accountId, tokenType: .AccessToken, value: unwrappedValue)
+                self.keychain.save(self.accountId, tokenType: .AccessToken, value: unwrappedValue)
             }
         }
     }
