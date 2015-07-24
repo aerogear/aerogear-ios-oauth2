@@ -56,9 +56,8 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
     }
-
+ /* TODO AGIOS-476
     func testRefreshAccessWithKeycloak() {
-        
         let expectation = expectationWithDescription("KeycloakRefresh");
         let keycloakConfig = KeycloakConfig(
             clientId: "shoot-third-party",
@@ -74,7 +73,7 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-/*
+
     func testRevokeAccess() {
         setupStubKeycloakWithNSURLSessionDefaultConfiguration()
         let expectation = expectationWithDescription("KeycloakRevoke");
