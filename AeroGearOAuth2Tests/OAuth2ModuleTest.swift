@@ -54,11 +54,10 @@ func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
     OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
         return true
         }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
-            var stubJsonResponse = ["name": "John", "family_name": "Smith"]
             switch request.URL!.path! {
             case "/o/oauth2/token":
-                var string = "{\"access_token\":\"ACCESS_TOKEN\"}"
-                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                let string = "{\"access_token\":\"ACCESS_TOKEN\"}"
+                let data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
                 
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
@@ -159,7 +158,7 @@ class OAuth2ModuleTests: XCTestCase {
             clientId: "xxx.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"])
         
-        var oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
+        let oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
         oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
             XCTAssertTrue("ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
