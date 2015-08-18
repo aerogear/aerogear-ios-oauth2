@@ -56,14 +56,14 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
     Check validity of accessToken. return true if still valid, false when expired.
     */
     public func tokenIsNotExpired() -> Bool {
-        return self.accessTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0
+        return self.accessTokenExpirationDate != nil ? (self.accessTokenExpirationDate!.timeIntervalSinceDate(NSDate()) > 0) : true
     }
     
     /**
     Check validity of refreshToken. return true if still valid, false when expired.
     */
     public func refreshTokenIsNotExpired() -> Bool {
-        return self.refreshTokenExpirationDate?.timeIntervalSinceDate(NSDate()) > 0
+        return self.refreshTokenExpirationDate != nil ? (self.refreshTokenExpirationDate!.timeIntervalSinceDate(NSDate()) > 0) : true
     }
     
     /**

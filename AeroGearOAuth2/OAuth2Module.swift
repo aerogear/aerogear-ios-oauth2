@@ -179,9 +179,9 @@ public class OAuth2Module: AuthzModule {
             
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
                 let accessToken: String = unwrappedResponse["access_token"] as! String
-                let refreshToken: String = unwrappedResponse["refresh_token"] as! String
-                let expiration = unwrappedResponse["expires_in"] as! NSNumber
-                let exp: String = expiration.stringValue
+                let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
+                let expiration = unwrappedResponse["expires_in"] as? NSNumber
+                let exp: String? = expiration?.stringValue
                 // expiration for refresh token is used in Keycloak
                 let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
                 let expRefresh = expirationRefresh?.stringValue
