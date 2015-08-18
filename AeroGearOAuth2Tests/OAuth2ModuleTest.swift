@@ -50,6 +50,23 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
         }))
 }
 
+func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
+    // set up http stub
+    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
+        return true
+        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+            var stubJsonResponse = ["name": "John", "family_name": "Smith"]
+            switch request.URL!.path! {
+            case "/o/oauth2/token":
+                var string = "{\"access_token\":\"ACCESS_TOKEN\"}"
+                var data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
+                
+            default: return OHHTTPStubsResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
+            }
+        }))
+}
+
 
 class OAuth2ModuleTests: XCTestCase {
    
@@ -131,6 +148,21 @@ class OAuth2ModuleTests: XCTestCase {
         var oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
         oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
             XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testExchangeAuthorizationCodeForAccessTokenwithoutRefreshTokenIssued() {
+        setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued()
+        let expectation = expectationWithDescription("AccessRequest");
+        let googleConfig = GoogleConfig(
+            clientId: "xxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"])
+        
+        var oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
+        oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
+            XCTAssertTrue("ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler: nil)
