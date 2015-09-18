@@ -43,6 +43,8 @@ config = Config(
 
 ```
 
+* Improved token clear logic
+
 ## Example Usage
 
 #### OAuth2 grant for GET with a predefined config like Facebook
