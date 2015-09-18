@@ -27,6 +27,22 @@ Taking care of:
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
 
+## Additions (branch openstack)
+* OpenStack OAuth2 module 
+* Added client credentials login to base oauth2 module
+```swift
+config = Config(
+    base: "https://baseurl.com",
+    authzEndpoint: "oauth2/auth",
+    accessTokenEndpoint: "oauth2/token",
+    revokeTokenEndpoint: "oauth2/token/revoke",
+    isServiceAccount: true, // will use client credential flow when this is true
+    clientId: "clientid",
+    clientSecret: "appsecret"
+)
+
+```
+
 ## Example Usage
 
 #### OAuth2 grant for GET with a predefined config like Facebook
