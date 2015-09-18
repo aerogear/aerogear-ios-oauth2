@@ -1,5 +1,4 @@
 # aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
-
 > This module currently build with Xcode 6.4 and supports iOS7, iOS8.
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
@@ -26,6 +25,23 @@ Taking care of:
 | Issue tracker:  | https://issues.jboss.org/browse/AGIOS  |
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
+
+## Additions (branch openstack)
+* OpenStack OAuth2 module 
+* Added client credentials login to base oauth2 module
+```swift
+config = Config(
+    base: "https://baseurl.com",
+    authzEndpoint: "oauth2/auth",
+    accessTokenEndpoint: "oauth2/token",
+    revokeTokenEndpoint: "oauth2/token/revoke",
+    isServiceAccount: true, // will use client credential flow when this is true
+    clientId: "clientid",
+    clientSecret: "appsecret"
+)
+
+```
+* Improved token clear logic
 
 ## Example Usage
 
@@ -90,7 +106,7 @@ To add the library in your project, you can either use [Cocoapods](http://cocoap
 Support for Swift frameworks is supported from [CocoaPods-0.36 release](http://blog.cocoapods.org/CocoaPods-0.36/) upwards. In your ```Podfile``` add:
 
 ```
-pod 'AeroGearOAuth2'
+pod 'AeroGearOAuth2', :git => 'https://github.com/claudioredi/aerogear-ios-oauth2.git', :branch => 'openstack'
 ```
 
 and then:
@@ -106,7 +122,7 @@ Follow these steps to add the library in your Swift project:
 
 1. Add AeroGearOAuth2 as a [submodule](http://git-scm.com/docs/git-submodule) in your project. Open a terminal and navigate to your project directory. Then enter:
 ```bash
-git submodule add https://github.com/aerogear/aerogear-ios-oauth2.git
+git submodule add https://github.com/claudioredi/aerogear-ios-oauth2.git
 ```
 2. Open the `aerogear-ios-oauth2` folder, and drag the `AeroGearOAuth2.xcodeproj` into the file navigator in Xcode.
 3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearOAuth2.framework (Currently set to 8.0).
