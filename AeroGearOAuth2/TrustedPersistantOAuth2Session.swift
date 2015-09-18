@@ -71,12 +71,7 @@ public class KeychainWrap {
     :param: tokenType type of token: access, refresh.
     :param: value string value of the token.
     */
-    public func save(key: String, tokenType: TokenType, value: String) -> Bool {
-        let dataFromString: NSData? = value.dataUsingEncoding(NSUTF8StringEncoding)
-        if (dataFromString == nil) {
-            return false
-        }
-        
+    public func save(key: String, tokenType: TokenType, value: String?) -> Bool {
         // Instantiate a new default keychain query
         let keychainQuery = NSMutableDictionary()
         if let groupId = self.groupId {
@@ -85,13 +80,27 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-
-        if #available(iOS 8.0, *) {
-                keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-        } else { //ios7
-                keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        
+        if (value == nil) {
+            let result:OSStatus = SecItemDelete(keychainQuery)
+            if (result == errSecSuccess) {
+                return true
+            } else {
+                return false
+            }
         }
-
+        
+        let dataFromString: NSData? = value!.dataUsingEncoding(NSUTF8StringEncoding)
+        if (dataFromString == nil) {
+            return false
+        }
+        
+        if #available(iOS 8.0, *) {
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        } else { //ios7
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        }
+        
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
         
@@ -147,7 +156,7 @@ public class KeychainWrap {
         var dataTypeRef: Unmanaged<AnyObject>?
         // Search for the keychain items
         let status: OSStatus = withUnsafeMutablePointer(&dataTypeRef) { SecItemCopyMatching(keychainQuery as CFDictionaryRef, UnsafeMutablePointer($0)) }
-
+        
         if (status == errSecItemNotFound) {
             print("\(tokenType.rawValue) not found")
             return nil
@@ -305,10 +314,10 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     Clear all tokens. Method used when doing logout or revoke.
     */
     public func clearTokens() {
-        self.accessToken = nil
-        self.refreshToken = nil
-        self.accessTokenExpirationDate = nil
-        self.refreshTokenExpirationDate = nil
+        self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: nil)
+        self.keychain.save(self.accountId, tokenType: .AccessToken, value: nil)
+        self.keychain.save(self.accountId, tokenType: .RefreshToken, value: nil)
+        self.keychain.save(self.accountId, tokenType: .RefreshExpirationDate, value: nil)
     }
     
     /**
@@ -327,15 +336,15 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         accessTokenExpirationDate: NSDate? = nil,
         refreshToken: String? = nil,
         refreshTokenExpirationDate: NSDate? = nil) {
-        self.accountId = accountId
-        if groupId != nil {
-            self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
-        } else {
-            self.keychain = KeychainWrap()
-        }
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        self.accessTokenExpirationDate = accessTokenExpirationDate
-        self.refreshTokenExpirationDate = refreshTokenExpirationDate
+            self.accountId = accountId
+            if groupId != nil {
+                self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
+            } else {
+                self.keychain = KeychainWrap()
+            }
+            self.accessToken = accessToken
+            self.refreshToken = refreshToken
+            self.accessTokenExpirationDate = accessTokenExpirationDate
+            self.refreshTokenExpirationDate = refreshTokenExpirationDate
     }
 }

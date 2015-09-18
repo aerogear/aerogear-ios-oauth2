@@ -30,7 +30,7 @@ public class Config {
     Applies the "callback URL" once request token issued.
     */
     public let redirectURL: String
-
+    
     /**
     Applies the "authorization endpoint" to the request token.
     */
@@ -40,7 +40,7 @@ public class Config {
     Applies the "access token endpoint" to the exchange code for access token.
     */
     public var accessTokenEndpoint: String
-
+    
     /**
     Endpoint for request to invalidate both accessToken and refreshToken.
     */
@@ -55,6 +55,11 @@ public class Config {
     Endpoint for OpenID Connect to get user information.
     */
     public let userInfoEndpoint: String?
+    
+    /**
+    Boolean to indicate whether service account flow is used.
+    */
+    public var isServiceAccount: Bool
     
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
@@ -103,7 +108,7 @@ public class Config {
     */
     public var isWebView: Bool = false
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, isServiceAccount: Bool? = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -117,5 +122,6 @@ public class Config {
         self.clientSecret = clientSecret
         self.accountId = accountId
         self.isWebView = isWebView
+        self.isServiceAccount = isServiceAccount ?? false
     }
 }

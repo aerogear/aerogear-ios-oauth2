@@ -32,6 +32,7 @@
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
 		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CAD7A3AB1BAC5C800092315D /* OpenStackOauth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2WebViewController.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8AABF38B64CDFEB481203C1 /* Pods-AeroGearOAuth2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenStackOauth2Module.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */,
 				48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */,
 				48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */,
+				CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */,
 			);
 			path = AeroGearOAuth2;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
 				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
+				CAD7A3AB1BAC5C800092315D /* OpenStackOauth2Module.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
