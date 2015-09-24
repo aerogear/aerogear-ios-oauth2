@@ -116,7 +116,7 @@ public class OAuth2Module: AuthzModule {
 
         // calculate final url
         let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
         if let url = url {
             if self.webView != nil {
                 self.webView!.targetURL = url
@@ -318,7 +318,7 @@ public class OAuth2Module: AuthzModule {
     func parametersFromQueryString(queryString: String?) -> [String: String] {
         var parameters = [String: String]()
         if (queryString != nil) {
-            var parameterScanner: NSScanner = NSScanner(string: queryString!)
+            let parameterScanner: NSScanner = NSScanner(string: queryString!)
             var name:NSString? = nil
             var value:NSString? = nil
 

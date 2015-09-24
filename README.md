@@ -1,6 +1,6 @@
 # aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
 
-> This module currently build with Xcode 6.4 and supports iOS7, iOS8.
+> This module currently build with Xcode 7 and supports iOS7, iOS8, iOS9.
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
 Taking care of: 
@@ -11,12 +11,10 @@ Taking care of:
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.1.0.Final](http://keycloak.jboss.org/) etc...
+* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.5.0.Final](http://keycloak.jboss.org/) etc...
 * openID Connect login
 
-100% Swift.
-
-**Supported platforms:** iOS7, iOS8.
+100% Swift 2.0.
 
 |                 | Project Info  |
 | --------------- | ------------- |
