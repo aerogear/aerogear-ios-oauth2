@@ -348,7 +348,7 @@ public class OAuth2Module: AuthzModule {
                 parameterScanner.scanString("&", intoString:nil)
 
                 if (name != nil && value != nil) {
-                    parameters[name!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!] = value!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                    parameters[name!.stringByRemovingPercentEncoding!] = value!.stringByRemovingPercentEncoding
                 }
             }
         }

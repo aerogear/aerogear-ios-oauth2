@@ -31,7 +31,7 @@ public class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     /// Override of viewDidLoad to load the login page.
     override public func viewDidLoad() {
         super.viewDidLoad()
-        webView.frame = UIScreen.mainScreen().applicationFrame
+        webView.frame = UIScreen.mainScreen().bounds
         webView.delegate = self
         self.view.addSubview(webView)
         loadAddressURL()
