@@ -57,6 +57,7 @@ open class OAuth2Module: AuthzModule {
     var state: AuthorizationState
     open var webView: OAuth2WebViewController?
     open var idToken: String?
+    open var serverCode: String?
 
     /**
     Initialize an OAuth2 module.
@@ -122,13 +123,18 @@ open class OAuth2Module: AuthzModule {
         self.state = .authorizationStatePendingExternalApproval
 
         // calculate final url
-        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url:config.authzEndpoint) else {
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+
+        if let audienceId = config.audienceId {
+            params = "\(params)&audience=\(audienceId)"
+        }
+
+        guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url: config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
             completionHandler(nil, error)
             return
         }
-        if let url = URL(string:computedUrl.absoluteString + params) {
+        if let url = URL(string: computedUrl.absoluteString + params) {
             if self.webView != nil {
                 self.webView!.targetURL = url
                 config.webViewHandler(self.webView!, completionHandler)
@@ -186,6 +192,10 @@ open class OAuth2Module: AuthzModule {
             paramDict["client_secret"] = unwrapped
         }
 
+        if let audience = config.audienceId {
+            paramDict["audience"] = audience
+        }
+
         http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
             if (error != nil) {
                 completionHandler(nil, error)
@@ -203,6 +213,7 @@ open class OAuth2Module: AuthzModule {
         let accessToken: String   = unwrappedResponse["access_token"] as! String
         let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
         let idToken: String?      = unwrappedResponse["id_token"] as? String
+        let serverCode: String?   = unwrappedResponse["server_code"] as? String
         let expiration            = unwrappedResponse["expires_in"] as? NSNumber
         let exp: String?          = expiration?.stringValue
         // expiration for refresh token is used in Keycloak
@@ -211,6 +222,7 @@ open class OAuth2Module: AuthzModule {
 
         self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: idToken)
         self.idToken    = self.oauth2Session.idToken
+        self.serverCode = serverCode
 
         return accessToken
     }
