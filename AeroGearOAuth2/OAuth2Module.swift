@@ -44,9 +44,8 @@ Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 public class OAuth2Module: AuthzModule {
     let config: Config
-    var http: Http
-
-    var oauth2Session: OAuth2Session
+    public var http: Http
+    public var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
@@ -194,18 +193,28 @@ public class OAuth2Module: AuthzModule {
             }
 
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                let accessToken: String = unwrappedResponse["access_token"] as! String
-                let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
-                let expiration = unwrappedResponse["expires_in"] as? NSNumber
-                let exp: String? = expiration?.stringValue
-                // expiration for refresh token is used in Keycloak
-                let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
-                let expRefresh = expirationRefresh?.stringValue
-
-                self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
+                let accessToken = self.tokenResponse(unwrappedResponse)
                 completionHandler(accessToken, nil)
             }
         })
+    }
+
+    public func tokenResponse(unwrappedResponse: [String: AnyObject]) -> String {
+        let accessToken: String = unwrappedResponse["access_token"] as! String
+        let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
+        let serverCode: String? = unwrappedResponse["server_code"] as? String
+        let idToken: String? = unwrappedResponse["id_token"] as? String
+        let expiration = unwrappedResponse["expires_in"] as? NSNumber
+        let exp: String? = expiration?.stringValue
+        // expiration for refresh token is used in Keycloak
+        let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
+        let expRefresh = expirationRefresh?.stringValue
+
+        self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: idToken)
+        self.serverCode = serverCode
+        self.idToken = self.oauth2Session.idToken
+
+        return accessToken
     }
 
     /**
@@ -252,7 +261,7 @@ public class OAuth2Module: AuthzModule {
                     }
                     var openIDClaims: OpenIDClaim?
                     if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                        openIDClaims = OpenIDClaim(fromDict: unwrappedResponse)
+                        openIDClaims = self.openIDClaim(unwrappedResponse)
                     }
                     completionHandler(response, openIDClaims, nil)
                 })
@@ -263,6 +272,10 @@ public class OAuth2Module: AuthzModule {
 
         }
 
+    }
+
+    public func openIDClaim(fromDict: [String: AnyObject]) -> OpenIDClaim {
+        return OpenIDClaim(fromDict: fromDict)
     }
 
     /**
