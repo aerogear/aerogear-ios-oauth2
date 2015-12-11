@@ -167,7 +167,7 @@ public class OAuth2Module: AuthzModule {
 
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
 
-                    completionHandler(unwrappedResponse["access_token"], nil);
+                    completionHandler(unwrappedResponse["access_token"], nil)
                 }
             })
         }
@@ -242,7 +242,7 @@ public class OAuth2Module: AuthzModule {
     */
     public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
 
-        self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+        self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
 
             if (error != nil) {
                 completionHandler(nil, nil, error)

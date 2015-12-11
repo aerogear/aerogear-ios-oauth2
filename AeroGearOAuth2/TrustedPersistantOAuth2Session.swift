@@ -183,7 +183,7 @@ public class KeychainWrap {
     }
 
     /**
-    Clear all keychain entries. Note that Keychain can only be cleared progemmatically.
+    Clear all keychain entries. Note that Keychain can only be cleared programmatically.
     */
     public func resetKeychain() -> Bool {
         return self.deleteAllKeysForSecClass(kSecClassGenericPassword) &&

@@ -115,7 +115,7 @@ public class KeycloakConfig: Config {
 An account manager used to instantiate, store and retrieve OAuth2 modules.
 */
 public class AccountManager {
-    /// List of OAuth2 modules available for a given app. Each module is linked to an OAuht2Session which securely store the tokens.
+    /// List of OAuth2 modules available for a given app. Each module is linked to an OAuth2Session which securely store the tokens.
     var modules: [String: OAuth2Module]
 
     init() {
