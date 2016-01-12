@@ -10,6 +10,59 @@ import UIKit
 
 public class OpenStackOAuth2Module: OAuth2Module {
     
+    /**
+    Request an authorization code.
+    
+    :param: completionHandler A block object to be executed when the request operation finishes.
+    */
+    public override func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
+        // register with the notification system in order to be notified when the 'authorization' process completes in the
+        // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
+        // from the server.
+        applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
+            self.extractCode(notification, completionHandler: completionHandler)
+            if ( self.webView != nil ) {
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
+        })
+        
+        // register to receive notification when the application becomes active so we
+        // can clear any pending authorization requests which are not completed properly,
+        // that is a user switched into the app without Accepting or Cancelling the authorization
+        // request in the external browser process.
+        applicationDidBecomeActiveNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppDidBecomeActiveNotification, object:nil, queue:nil, usingBlock: { (note: NSNotification!) -> Void in
+            // check the state
+            if (self.state == .AuthorizationStatePendingExternalApproval) {
+                // unregister
+                self.stopObserving()
+                // ..and update state
+                self.state = .AuthorizationStateUnknown;
+            }
+        })
+        
+        // update state to 'Pending'
+        self.state = .AuthorizationStatePendingExternalApproval
+        
+        // calculate final url
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        
+        // add consent prompt for online_access scope http://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
+        // force approval prompt to allow multiple refresh token requests http://docs.openstack.org/infra/openstackid/oauth2.html#offline-access
+        if config.scopes.contains("offline_access") {
+            params += "&prompt=consent&approval_prompt=force"
+        }
+        
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
+        if let url = url {
+            if self.webView != nil {
+                self.webView!.targetURL = url
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+            } else {
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }
+    }
+    
     public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
