@@ -148,32 +148,6 @@ public class OpenStackOAuth2Module: OAuth2Module {
         })
     }
     
-    /**
-    Request to refresh an access token.
-    
-    :param: completionHandler A block object to be executed when the request operation finishes.
-    */
-    public override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
-        if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
-            var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
-            if (config.clientSecret != nil) {
-                paramDict["client_secret"] = config.clientSecret!
-            }
-            
-            http.POST(config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
-                if (error != nil) {
-                    completionHandler(nil, error)
-                    return
-                }
-                
-                if let unwrappedResponse = response as? [String: AnyObject] {
-                    completionHandler(unwrappedResponse, nil);
-                }
-            })
-        }
-    }
-    
-    
     func decode(token: String) -> [String: AnyObject]? {
         let string = token.componentsSeparatedByString(".")
         let toDecode = string[1] as String
