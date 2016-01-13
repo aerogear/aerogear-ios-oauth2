@@ -115,7 +115,12 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        // add consent prompt for online_access scope http://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
+        if config.scopes.contains("offline_access") {
+            params += "&prompt=consent"
+        }
+
         let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
         if let url = url {
             if self.webView != nil {
