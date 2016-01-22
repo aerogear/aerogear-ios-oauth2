@@ -38,6 +38,9 @@ public class OpenStackOAuth2Module: OAuth2Module {
     public override func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
         var openIDClaims: OpenIDClaim?
         
+        // hotfix to clear persistent tokens in keychain on login
+        self.oauth2Session.clearTokens()
+        
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
