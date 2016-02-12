@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B94E9362344D1BD2EF7D943 /* Pods_AeroGearOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4BA5A03E90C75CC2866ABF /* Pods_AeroGearOAuth2Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2B94E9362344D1BD2EF7D943 /* Pods_AeroGearOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4BA5A03E90C75CC2866ABF /* Pods_AeroGearOAuth2Tests.framework */; };
 		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
 		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
@@ -30,7 +30,7 @@
 		48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */; };
 		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
-		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -238,7 +238,6 @@
 				4833045E19AF1635002F8DA9 /* Frameworks */,
 				4833045F19AF1635002F8DA9 /* Headers */,
 				4833046019AF1635002F8DA9 /* Resources */,
-				8B9986C9E48F8BCC06A26222 /* Embed Pods Frameworks */,
 				E0642692721FE27851FB502F /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -354,21 +353,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8B9986C9E48F8BCC06A26222 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93450CEB2BAFED8F7B381800 /* Check Pods Manifest.lock */ = {
