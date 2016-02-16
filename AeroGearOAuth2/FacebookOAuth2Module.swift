@@ -40,7 +40,7 @@ public class FacebookOAuth2Module: OAuth2Module {
             paramDict["client_secret"] = unwrapped
         }
         
-        http.POST(config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
+        http.request(.POST, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
             
             if (error != nil) {
                 completionHandler(nil, error)
@@ -82,7 +82,7 @@ public class FacebookOAuth2Module: OAuth2Module {
         }
         let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
         
-        http.DELETE(config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+        http.request(.DELETE, path: config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             
             if (error != nil) {
                 completionHandler(nil, error)
@@ -111,7 +111,7 @@ public class FacebookOAuth2Module: OAuth2Module {
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
                 
-                self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+                self.http.request(.GET, path: userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return

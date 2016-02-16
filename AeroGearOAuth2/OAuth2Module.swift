@@ -139,7 +139,7 @@ public class OAuth2Module: AuthzModule {
                 paramDict["client_secret"] = config.clientSecret!
             }
 
-            http.POST(config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+            http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
                 if (error != nil) {
                     completionHandler(nil, error)
                     return
@@ -171,7 +171,7 @@ public class OAuth2Module: AuthzModule {
             paramDict["client_secret"] = unwrapped
         }
         
-        http.POST(config.accessTokenEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+        http.request(.POST, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
@@ -229,7 +229,7 @@ public class OAuth2Module: AuthzModule {
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
 
-                self.http.GET(userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+                self.http.request(.GET, path:userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return
@@ -261,7 +261,7 @@ public class OAuth2Module: AuthzModule {
         }
         let paramDict:[String:String] = ["token":self.oauth2Session.accessToken!]
 
-        http.POST(config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+        http.request(.POST, path: config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
