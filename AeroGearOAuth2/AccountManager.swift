@@ -134,13 +134,14 @@ public class AccountManager {
     Instantiate an OAuth2 Module using the configuration object passed in and adds it to the account manager. It uses the OAuth2Session account_id as the name that this module will be stored in.
     
     :param: config  the configuration object to use to setup an OAuth2 module.
+    :param: session the session that the OAuth2 module will be bound to.
     :param: moduleClass the type of the OAuth2 module to instantiate.
     
     :returns: the OAuth2 module
     */
-    public class func addAccount(config: Config, moduleClass: OAuth2Module.Type) -> OAuth2Module {
+    public class func addAccount(config: Config, session: OAuth2Session? = nil, moduleClass: OAuth2Module.Type) -> OAuth2Module {
         var myModule:OAuth2Module
-        myModule = moduleClass.init(config: config)
+        myModule = moduleClass.init(config: config, session: session)
         // TODO check accountId is unique in modules list
         sharedInstance.modules[myModule.oauth2Session.accountId] = myModule
         return myModule
