@@ -23,9 +23,7 @@ import OHHTTPStubs
 
 func setupStubWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-        return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+    stub({_ in return true}, response: { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             let stubJsonResponse = ["name": "John", "family_name": "Smith"]
             switch request.URL!.path! {
             case "/plus/v1/people/me/openIdConnect":
@@ -46,14 +44,12 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
 
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
             }
-        }))
+        })
 }
 
 func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
     // set up http stub
-    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-        return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+    stub({_ in return true}, response: { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             switch request.URL!.path! {
             case "/o/oauth2/token":
                 let string = "{\"access_token\":\"ACCESS_TOKEN\"}"
@@ -62,7 +58,7 @@ func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
                 
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 200, headers: ["Content-Type" : "text/json"])
             }
-        }))
+        })
 }
 
 

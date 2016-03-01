@@ -25,9 +25,7 @@ let KEYCLOAK_TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpb
 
 func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-        return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+    stub({_ in return true}, response: { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             //_ = ["name": "John", "family_name": "Smith"]
             switch request.URL!.path! {
 
@@ -41,7 +39,7 @@ func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
             }
-        }))
+        })
 }
 
 class KeycloakOAuth2ModuleTests: XCTestCase {
