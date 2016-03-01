@@ -85,12 +85,7 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-
-        if #available(iOS 8.0, *) {
-                keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-        } else { //ios7
-                keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        }
+        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
 
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
@@ -138,11 +133,8 @@ public class KeychainWrap {
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
         keychainQuery[kSecReturnData as String] = true
-        if #available(iOS 8.0, *) {
-            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-        } else {
-            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        }
+        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+
         
         var dataTypeRef: Unmanaged<AnyObject>?
         // Search for the keychain items
