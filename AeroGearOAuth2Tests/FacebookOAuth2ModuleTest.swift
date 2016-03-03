@@ -23,9 +23,7 @@ import OHHTTPStubs
 
 func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    OHHTTPStubs.stubRequestsPassingTest({ (request: NSURLRequest!) -> Bool in
-        return true
-        }, withStubResponse:( { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+    stub({_ in return true}, response: { (request: NSURLRequest!) -> OHHTTPStubsResponse in
             _ = ["name": "John", "family_name": "Smith"]
             switch request.URL!.path! {
             case "/me/permissions":
@@ -38,7 +36,7 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
             default: return OHHTTPStubsResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
             }
-        }))
+        })
 }
 
 class FacebookOAuth2ModuleTests: XCTestCase {

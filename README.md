@@ -1,6 +1,6 @@
 # aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
 
-> This module currently build with Xcode 7 and supports iOS7 [1], iOS8, iOS9.
+> This module currently build with Xcode 7 and supports iOS8, iOS9.
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
 Taking care of: 
@@ -25,7 +25,6 @@ Taking care of:
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
 
-**Note [1]**: Cocoapod central repo supports dynamic library from iOS8+. If you want to deploy on iOS7, use areoger-ios-http fom master source with its podspec pointing to iOS7.
 ## Example Usage
 
 #### OAuth2 grant for GET with a predefined config like Facebook
@@ -37,7 +36,7 @@ let facebookConfig = FacebookConfig(	// [2]
     scopes:["photo_upload, publish_actions"])
 var oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
 http.authzModule = oauth2Module			// [4]
-http.GET("/get", completionHandler: {(response, error) in	// [5]
+http.request(.GET, path: "/get", completionHandler: {(response, error) in	// [5]
 	// handle response
 })
 ```
@@ -76,7 +75,7 @@ Similar approach for configuration, here we want to login as Keycloak user, usin
 
 2. Get the dependencies
 
-The project uses [cocoapods](http://cocoapods.org) 0.36 release for handling its dependencies. As a pre-requisite, install [cocoapods](http://blog.cocoapods.org/CocoaPods-0.36/) and then install the pod. On the root directory of the project run:
+The project uses [CocoaPods](http://cocoapods.org) for handling its dependencies. As a pre-requisite, install CocoaPods and then install the pod. On the root directory of the project run:
 ```bash
 pod install
 ```
@@ -86,7 +85,7 @@ pod install
 To add the library in your project, you can either use [CocoaPods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
 
 ### Using [CocoaPods](http://cocoapods.org)
-Support for Swift frameworks is supported from [CocoaPods-0.36 release](http://blog.cocoapods.org/CocoaPods-0.36/) upwards. In your ```Podfile``` add:
+In your ```Podfile``` add:
 
 ```
 pod 'AeroGearOAuth2'
