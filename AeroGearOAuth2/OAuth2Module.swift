@@ -116,7 +116,12 @@ public class OAuth2Module: AuthzModule {
 
         // calculate final url
         let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
+        guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
+            let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
+            completionHandler(nil, error)
+            return
+        }
+        let url = NSURL(string:computedUrl.absoluteString + params)
         if let url = url {
             if self.webView != nil {
                 self.webView!.targetURL = url
