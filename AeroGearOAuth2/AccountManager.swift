@@ -112,6 +112,36 @@ public class KeycloakConfig: Config {
 }
 
 /**
+A Config object that sets up Telenor Connect specific configuration parameters.
+*/
+public class TelenorConnectConfig: Config {
+    /**
+    Init a Telenor Connect configuration.
+    :param: clientId OAuth2 credentials identifier.
+    :param: useStaging to select staging or production servers.
+    :param: scopes values for authorization
+    :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
+    */
+    public init (clientId: String, useStaging: Bool, scopes: [String], accountId: String) {
+        let baseUrl = useStaging ? "https://connect.staging.telenordigital.com/oauth" : "https://connect.telenordigital.com/oauth"
+        
+        super.init(base: baseUrl,
+            authzEndpoint: "\(baseUrl)/authorize",
+            redirectURL: "telenordigital-connectexample-android://oauth2callback",
+            accessTokenEndpoint: "\(baseUrl)/token",
+            clientId: clientId,
+            refreshTokenEndpoint: "\(baseUrl)/token",
+            revokeTokenEndpoint: "\(baseUrl)/revoke",
+            isOpenIDConnect: true,
+            userInfoEndpoint: "\(baseUrl)/userinfo",
+            scopes: scopes,
+            clientSecret: nil,
+            accountId: accountId,
+            isWebView: false)
+    }
+}
+
+/**
 An account manager used to instantiate, store and retrieve OAuth2 modules.
 */
 public class AccountManager {
