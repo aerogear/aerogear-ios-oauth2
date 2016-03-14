@@ -228,13 +228,11 @@ public class OAuth2Module: AuthzModule {
                 completionHandler(nil, nil, error)
                 return
             }
-            var paramDict: [String: String] = [:]
-            if response != nil {
-                paramDict = ["access_token": response! as! String]
-            }
-            if let userInfoEndpoint = self.config.userInfoEndpoint {
 
-                self.http.request(.GET, path:userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+            if let userInfoEndpoint = self.config.userInfoEndpoint {
+                let http = Http(baseURL: self.config.baseURL)
+                http.authzModule = self
+                http.request(.GET, path:userInfoEndpoint, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return
