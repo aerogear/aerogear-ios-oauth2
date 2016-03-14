@@ -41,7 +41,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
         // hotfix to clear persistent tokens in keychain on login
         self.oauth2Session.clearTokens()
         
-        self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
+        super.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
@@ -70,6 +70,28 @@ public class OpenStackOAuth2Module: OAuth2Module {
                     completionHandler(accessToken, nil, nil)
                 }
             }
+        }
+    }
+    
+    /**
+     Gateway to request authorization access.
+     
+     :param: completionHandler A block object to be executed when the request operation finishes.
+     */
+    public override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        if (self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()) {
+            // we already have a valid access token, nothing more to be done
+            completionHandler(self.oauth2Session.accessToken!, nil);
+        } else if (self.oauth2Session.refreshToken != nil && self.oauth2Session.refreshTokenIsNotExpired()) {
+            // need to refresh token
+            self.refreshAccessToken(completionHandler)
+        } else if (self.config.isServiceAccount) {
+            self.loginClientCredentials() { (accessToken, claims, error) in
+                completionHandler(accessToken, error)
+            }
+        } else {
+            // error, must enforce user to request interactive login
+            completionHandler(nil, NSError(domain: "OpenStackOAuth2Module", code: 8, userInfo: ["OpenStack OAuth2 Module": "User must do interactive login"]))
         }
     }
     
