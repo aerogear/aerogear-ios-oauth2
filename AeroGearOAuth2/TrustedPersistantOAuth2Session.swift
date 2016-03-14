@@ -119,6 +119,27 @@ public class KeychainWrap {
     }
     
     /**
+    Delete a specific token in Keychain.
+     
+    :param: key usually use accountId for oauth2 module, any unique string.
+    :param: tokenType type of token.
+    */
+    public func delete(key: String, tokenType: TokenType) -> Bool {
+        let keychainQuery = NSMutableDictionary()
+        if let groupId = self.groupId {
+            keychainQuery[kSecAttrAccessGroup as String] = groupId
+        }
+        keychainQuery[kSecClass as String] = kSecClassGenericPassword
+        keychainQuery[kSecAttrService as String] = self.serviceIdentifier
+        keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
+        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+
+        let statusDelete: OSStatus = SecItemDelete(keychainQuery)
+        
+        return statusDelete == noErr
+    }
+    
+    /**
     Read tokens information in Keychain. If the entry is not found return nil.
     
     :param: userAccount key of the keychain entry, usually accountId for oauth2 module.
@@ -210,6 +231,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         set(value) {
             if let unwrappedValue = value {
                 self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
+            } else {
+                self.keychain.delete(self.accountId, tokenType: .ExpirationDate)
             }
         }
     }
@@ -224,6 +247,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         set(value) {
             if let unwrappedValue = value {
                 self.keychain.save(self.accountId, tokenType: .AccessToken, value: unwrappedValue)
+            } else {
+                self.keychain.delete(self.accountId, tokenType: .AccessToken)
             }
         }
     }
@@ -238,6 +263,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         set(value) {
             if let unwrappedValue = value {
                 self.keychain.save(self.accountId, tokenType: .RefreshToken, value: unwrappedValue)
+            } else {
+                self.keychain.delete(self.accountId, tokenType: .RefreshToken)
             }
         }
     }
@@ -257,6 +284,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         set(value) {
             if let unwrappedValue = value {
                 _ = self.keychain.save(self.accountId, tokenType: .RefreshExpirationDate, value: unwrappedValue.toString())
+            } else {
+                self.keychain.delete(self.accountId, tokenType: .RefreshExpirationDate)
             }
         }
     }
@@ -319,15 +348,27 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         accessTokenExpirationDate: NSDate? = nil,
         refreshToken: String? = nil,
         refreshTokenExpirationDate: NSDate? = nil) {
-        self.accountId = accountId
-        if groupId != nil {
-            self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
-        } else {
-            self.keychain = KeychainWrap()
-        }
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        self.accessTokenExpirationDate = accessTokenExpirationDate
-        self.refreshTokenExpirationDate = refreshTokenExpirationDate
+            self.accountId = accountId
+            if groupId != nil {
+                self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
+            } else {
+                self.keychain = KeychainWrap()
+            }
+            
+            if accessToken != nil {
+                self.accessToken = accessToken
+            }
+            
+            if refreshToken != nil {
+                self.refreshToken = refreshToken
+            }
+            
+            if accessTokenExpirationDate != nil {
+                self.accessTokenExpirationDate = accessTokenExpirationDate
+            }
+            
+            if refreshToken != nil {
+                self.refreshTokenExpirationDate = refreshTokenExpirationDate
+            }
     }
 }
