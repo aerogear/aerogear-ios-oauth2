@@ -122,7 +122,7 @@ public class TelenorConnectConfig: Config {
     :param: scopes values for authorization
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
     */
-    public init (clientId: String, useStaging: Bool, scopes: [String], accountId: String) {
+    public init (clientId: String, useStaging: Bool, scopes: [String], accountId: String, webView: Bool = false) {
         let baseUrl = useStaging ? "https://connect.staging.telenordigital.com/oauth" : "https://connect.telenordigital.com/oauth"
         
         super.init(base: baseUrl,
@@ -137,7 +137,7 @@ public class TelenorConnectConfig: Config {
             scopes: scopes,
             clientSecret: nil,
             accountId: accountId,
-            isWebView: false)
+            isWebView: webView)
     }
 }
 
