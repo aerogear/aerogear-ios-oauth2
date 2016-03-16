@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import AeroGearHttp
+import JWT
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -348,8 +349,15 @@ public class OAuth2Module: AuthzModule {
         return parameters;
     }
     
-    public func getIdToken() -> String? {
-        return oauth2Session.idToken
+    public func getIdToken() -> Payload? {
+        if let token = oauth2Session.idToken {
+            do {
+                return try JWT.decode(token, algorithm: .None)
+            } catch {
+                print("Failed to decode JWT: \(error)")
+            }
+        }
+        return nil
     }
 
     deinit {
