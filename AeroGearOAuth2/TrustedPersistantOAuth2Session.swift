@@ -32,6 +32,7 @@ public enum TokenType: String {
     case RefreshToken = "RefreshToken"
     case ExpirationDate = "ExpirationDate"
     case RefreshExpirationDate = "RefreshExpirationDate"
+    case IdToken = "IdToken"
 }
 
 /**
@@ -270,6 +271,22 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     }
     
     /**
+     The JWT.
+     */
+    public var idToken: String? {
+        get {
+            return self.keychain.read(self.accountId, tokenType: .IdToken)
+        }
+        set(value) {
+            if let unwrappedValue = value {
+                self.keychain.save(self.accountId, tokenType: .IdToken, value: unwrappedValue)
+            } else {
+                self.keychain.delete(self.accountId, tokenType: .IdToken)
+            }
+        }
+    }
+    
+    /**
     The refresh token's expiration date.
     */
     public var refreshTokenExpirationDate: NSDate? {
@@ -309,17 +326,24 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     /**
     Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
     */
-    public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        
-        let now = NSDate()
-        if let inter = accessTokenExpiration?.doubleValue {
-            self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
-        }
-        if let inter = refreshTokenExpiration?.doubleValue {
-            self.refreshTokenExpirationDate = now.dateByAddingTimeInterval(inter)
-        }
+    public func saveAccessToken(accessToken: String?,
+        refreshToken: String?,
+        accessTokenExpiration: String?,
+        refreshTokenExpiration: String?,
+        idToken: String?) {
+            self.accessToken = accessToken
+            self.refreshToken = refreshToken
+            
+            let now = NSDate()
+            if let inter = accessTokenExpiration?.doubleValue {
+                self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
+            }
+            if let inter = refreshTokenExpiration?.doubleValue {
+                self.refreshTokenExpirationDate = now.dateByAddingTimeInterval(inter)
+            }
+            if let idToken = idToken {
+                self.idToken = idToken
+            }
     }
     
     /**
@@ -330,6 +354,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         self.refreshToken = nil
         self.accessTokenExpirationDate = nil
         self.refreshTokenExpirationDate = nil
+        self.idToken = nil
     }
     
     /**
@@ -347,7 +372,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         accessToken: String? = nil,
         accessTokenExpirationDate: NSDate? = nil,
         refreshToken: String? = nil,
-        refreshTokenExpirationDate: NSDate? = nil) {
+        refreshTokenExpirationDate: NSDate? = nil,
+        idToken: String? = nil) {
             self.accountId = accountId
             if groupId != nil {
                 self.keychain = KeychainWrap(serviceId: groupId, groupId: groupId)
@@ -369,6 +395,10 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
             
             if refreshToken != nil {
                 self.refreshTokenExpirationDate = refreshTokenExpirationDate
+            }
+            
+            if idToken != nil {
+                self.idToken = idToken
             }
     }
 }

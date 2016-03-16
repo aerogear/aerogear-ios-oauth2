@@ -47,6 +47,11 @@ public protocol OAuth2Session {
     var refreshToken: String? {get set}
     
     /**
+    The JWT.
+    */
+    var idToken: String? {get set}
+    
+    /**
     Check validity of accessToken. return true if still valid, false when expired.
     */
     func tokenIsNotExpired() -> Bool
@@ -71,5 +76,5 @@ public protocol OAuth2Session {
     :param: accessTokenExpiration the expiration for the access token.
     :param: refreshTokenExpiration the expiration for the refresh token.
     */
-    func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
+    func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?)
 }

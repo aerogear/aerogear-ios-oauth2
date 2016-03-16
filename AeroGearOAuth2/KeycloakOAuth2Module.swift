@@ -90,7 +90,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
                     let expRefresh = expirationRefresh?.stringValue
                     
                     // in Keycloak refresh token get refreshed every time you use them
-                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
+                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: nil)
                     completionHandler(accessToken, nil);
                 }
             })
