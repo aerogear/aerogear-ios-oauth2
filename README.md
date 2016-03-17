@@ -27,6 +27,11 @@ Taking care of:
 
 ## Example Usage
 
+### Hello World app for Telenor Connect
+https://github.com/telenordigital/TelenorConnectIosHelloWorld.
+
+Implements the API's for http://docs.telenordigital.com/apis/connect/id/authentication.html.
+
 #### OAuth2 grant for GET with a predefined config like Facebook
 ```swift
 var Http = Http() 						// [1]
