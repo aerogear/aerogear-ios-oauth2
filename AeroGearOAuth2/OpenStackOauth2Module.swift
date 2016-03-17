@@ -44,7 +44,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
         self.state = .AuthorizationStatePendingExternalApproval
         
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&nonce=\(generateNonce())"
         // add consent prompt for online_access scope http://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
         if config.scopes.contains("offline_access") {
             // force login on consent prompt
@@ -196,6 +196,12 @@ public class OpenStackOAuth2Module: OAuth2Module {
             }
         }
         return values
+    }
+    
+    func generateNonce() -> String {
+        let s = NSMutableData(length: 32)
+        SecRandomCopyBytes(kSecRandomDefault, s!.length, UnsafeMutablePointer<UInt8>(s!.mutableBytes))
+        return s!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
     }
 }
 
