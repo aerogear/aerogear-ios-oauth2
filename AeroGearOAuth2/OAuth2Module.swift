@@ -147,6 +147,10 @@ public class OAuth2Module: AuthzModule {
 
             http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
                 if (error != nil) {
+                    if error?.code == 400 {
+                        self.oauth2Session.clearTokens()
+                    }
+                    
                     completionHandler(nil, error)
                     return
                 }
@@ -349,15 +353,26 @@ public class OAuth2Module: AuthzModule {
         return parameters;
     }
     
-    public func getIdToken() -> Payload? {
-        if let token = oauth2Session.idToken {
-            do {
-                return try JWT.decode(token, algorithm: .None)
-            } catch {
-                print("Failed to decode JWT: \(error)")
-            }
+    public func getIdTokenPayload() throws -> Payload? {
+        guard let signedJwt = oauth2Session.idToken else {
+            return nil
         }
-        return nil
+
+        let token = try JWT.decode(signedJwt, algorithm: .None, verify: false, audience: config.clientId, issuer: config.baseURL)
+        
+        if let failure = validateIdToken(token, expectedIssuer: config.baseURL, expectedAudience: config.clientId) {
+            throw failure
+        }
+        
+        return token
+    }
+    
+    func validate(token: [String:AnyObject]) throws {
+        
+    }
+    
+    public func getIdTokenEncoded() -> String? {
+        return oauth2Session.idToken
     }
 
     deinit {
