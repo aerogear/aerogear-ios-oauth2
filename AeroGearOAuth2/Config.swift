@@ -98,6 +98,23 @@ public class Config {
     public var accountId: String?
     
     /**
+    Optional set of claims that will be formatted as urlencoded json and set as essential.
+    Example set: {"openid", "profile", "email", "address", "phone"}
+    Intermediate json would be:
+     {
+     "userinfo":{
+       "openid":{"essential":true},
+       "profile":{"essential":true},
+       "email":{"essential":true},
+       "address":{"essential":true},
+       "phone":{"essential":true}
+       }
+     }
+    End result will be %7B%22userinfo%22%3A%7B%22openid%22%3A%7B%22essential%22%3Atrue%7D%2C%22profile%22%3A%7B%22essential%22%3Atrue%7D%2C%22email%22%3A%7B%22essential%22%3Atrue%7D%2C%22address%22%3A%7B%22essential%22%3Atrue%7D%2C%22phone%22%3A%7B%22essential%22%3Atrue%7D%7D%7D
+    */
+    public var claims: Set<String>?
+    
+    /**
     This dict can be used to set optional query params such as state, prompt, max_age, ui_locales, login_hint and acr_values.
     */
     public var optionalParams: [String: String]?
@@ -108,7 +125,7 @@ public class Config {
     */
     public var isWebView: Bool = false
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -121,6 +138,7 @@ public class Config {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.accountId = accountId
+        self.claims = claims
         self.optionalParams = optionalParams
         self.isWebView = isWebView
     }

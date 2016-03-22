@@ -120,9 +120,37 @@ public class OAuth2Module: AuthzModule {
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
         
+
+        let essentialClaims = config.claims?.reduce([:], combine: { (var current: [String: AnyObject], claim: String) -> [String: AnyObject] in
+            current[claim] = ["essential": true]
+            return current
+        })
+        
+        var claims: [String: AnyObject]?
+        if let essentialClaims = essentialClaims {
+            claims = [
+                "userinfo" : essentialClaims
+            ]
+        }
+        
+        var jsonClaims: NSData?
+        if let claims = claims {
+            do {
+                jsonClaims = try NSJSONSerialization.dataWithJSONObject(claims, options: NSJSONWritingOptions())
+            } catch let error as NSError {
+                print(error)
+            }
+        }
+        
         var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
+        }
+        
+        if let jsonClaims = jsonClaims {
+            let jsonClaimsString = NSString(data: jsonClaims, encoding: NSUTF8StringEncoding)
+            let encodedJson = (jsonClaimsString as! String).urlEncode()
+            params += "&claims=\(encodedJson)"
         }
         
         guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
