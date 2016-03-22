@@ -303,10 +303,10 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         
         let now = NSDate()
         if let inter = accessTokenExpiration?.doubleValue {
-            self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter)
+            self.accessTokenExpirationDate = now.dateByAddingTimeInterval(inter - 20)
         }
         if let inter = refreshTokenExpiration?.doubleValue {
-            self.refreshTokenExpirationDate = now.dateByAddingTimeInterval(inter)
+            self.refreshTokenExpirationDate = now.dateByAddingTimeInterval(inter - 20)
         }
     }
     

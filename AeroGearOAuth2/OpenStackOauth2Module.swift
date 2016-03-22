@@ -73,9 +73,8 @@ public class OpenStackOAuth2Module: OAuth2Module {
             return;
         }
         var paramDict:[String:String] = [ "client_id": config.clientId]
-        if (self.oauth2Session.refreshToken != nil) {
-            paramDict["refresh_token"] = self.oauth2Session.refreshToken!
-        }
+        paramDict["secret"] = config.clientSecret
+        paramDict["token"] = self.oauth2Session.accessToken!
         http.POST(config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
