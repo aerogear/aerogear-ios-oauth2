@@ -90,26 +90,30 @@ public class OAuth2Module: AuthzModule {
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
-        applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
-            self.extractCode(notification, completionHandler: completionHandler)
-            if ( self.webView != nil ) {
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-            }
-        })
+        if applicationLaunchNotificationObserver == nil {
+            applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
+                self.extractCode(notification, completionHandler: completionHandler)
+                if ( self.webView != nil ) {
+                    UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+                }
+            })
+        }
 
         // register to receive notification when the application becomes active so we
         // can clear any pending authorization requests which are not completed properly,
         // that is a user switched into the app without Accepting or Cancelling the authorization
         // request in the external browser process.
-        applicationDidBecomeActiveNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppDidBecomeActiveNotification, object:nil, queue:nil, usingBlock: { (note: NSNotification!) -> Void in
-            // check the state
-            if (self.state == .AuthorizationStatePendingExternalApproval) {
-                // unregister
-                self.stopObserving()
-                // ..and update state
-                self.state = .AuthorizationStateUnknown;
-            }
-        })
+        if applicationDidBecomeActiveNotificationObserver == nil {
+            applicationDidBecomeActiveNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppDidBecomeActiveNotification, object:nil, queue:nil, usingBlock: { (note: NSNotification!) -> Void in
+                // check the state
+                if (self.state == .AuthorizationStatePendingExternalApproval) {
+                    // unregister
+                    self.stopObserving()
+                    // ..and update state
+                    self.state = .AuthorizationStateUnknown;
+                }
+            })
+        }
 
         // update state to 'Pending'
         self.state = .AuthorizationStatePendingExternalApproval
