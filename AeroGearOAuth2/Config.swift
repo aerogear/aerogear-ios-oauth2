@@ -98,12 +98,17 @@ public class Config {
     public var accountId: String?
     
     /**
+    This dict can be used to set optional query params such as state, prompt, max_age, ui_locales, login_hint and acr_values.
+    */
+    public var optionalParams: [String: String]?
+    
+    /**
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
     */
     public var isWebView: Bool = false
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -116,6 +121,7 @@ public class Config {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.accountId = accountId
+        self.optionalParams = optionalParams
         self.isWebView = isWebView
     }
 }

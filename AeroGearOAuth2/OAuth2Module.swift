@@ -116,7 +116,15 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
-        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        let optionalParamsEncoded = config.optionalParams?.keys.reduce("", combine: { (current: String, key: String) -> String in
+            return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
+        })
+        
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        if let optionalParamsEncoded = optionalParamsEncoded {
+            params += optionalParamsEncoded
+        }
+        
         guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
             completionHandler(nil, error)
