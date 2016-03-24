@@ -319,7 +319,15 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         self.keychain.save(self.accountId, tokenType: .RefreshToken, value: nil)
         self.keychain.save(self.accountId, tokenType: .RefreshExpirationDate, value: nil)
     }
-    
+
+    /**
+     Clear access tokens. Method used when doing logout or revoke.
+     */
+    public func clearAccessTokens() {
+        self.keychain.save(self.accountId, tokenType: .ExpirationDate, value: nil)
+        self.keychain.save(self.accountId, tokenType: .AccessToken, value: nil)
+    }
+
     /**
     Initialize TrustedPersistantOAuth2Session using account id. Account id is the service id used for keychain storage.
     

@@ -320,6 +320,10 @@ public class OAuth2Module: AuthzModule {
         self.oauth2Session.clearTokens()
     }
     
+    public func revokeLocalAccessToken() {
+        self.oauth2Session.clearAccessTokens()
+    }
+    
     /**
      Return any authorization fields.
      

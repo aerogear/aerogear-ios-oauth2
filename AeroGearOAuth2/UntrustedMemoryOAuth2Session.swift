@@ -92,6 +92,15 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
     }
     
     /**
+     Clear access tokens. Method used when doing logout or revoke.
+     */
+    public func clearAccessTokens() {
+        self.accessToken = nil
+        self.accessTokenExpirationDate = nil
+    }
+    
+    
+    /**
     Initialize session using account id. 
     
     :param: accountId uniqueId to identify the oauth2module.
