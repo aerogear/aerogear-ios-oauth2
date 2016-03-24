@@ -322,12 +322,18 @@ public class OAuth2Module: AuthzModule {
             completionHandler(response, nil)
         })
     }
+
+    public func revokeLocalAccess(notify: Bool) -> Void {
+        self.oauth2Session.clearTokens()
+        if notify {
+            let notification = NSNotification(name: OAuth2Module.revokeNotification, object:nil, userInfo:nil)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
+            
+        }
+    }
     
     public func revokeLocalAccess() -> Void {
-        self.oauth2Session.clearTokens()
-        let notification = NSNotification(name: OAuth2Module.revokeNotification, object:nil, userInfo:nil)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
-        
+        revokeLocalAccess(true)        
     }
     
     public func revokeLocalAccessToken() {
@@ -403,7 +409,7 @@ public class OAuth2Module: AuthzModule {
         
         return parameters;
     }
-    
+   
     deinit {
         self.stopObserving()
     }
