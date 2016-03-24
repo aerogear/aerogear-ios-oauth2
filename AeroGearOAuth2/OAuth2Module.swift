@@ -51,6 +51,9 @@ public class OAuth2Module: AuthzModule {
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
     var webView: OAuth2WebViewController?
+
+    public static let revokeNotification = "kRevokeNotification"
+    
     /**
      Initialize an OAuth2 module.
      
@@ -150,6 +153,10 @@ public class OAuth2Module: AuthzModule {
             
             http.POST(config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
                 if (error != nil) {
+                    if (error?.code == 400 || error?.code == 401 || error?.code == 403 || error?.code == 404) {
+                        self.revokeLocalAccess()
+                    }
+                    
                     completionHandler(nil, error)
                     return
                 }
@@ -318,6 +325,9 @@ public class OAuth2Module: AuthzModule {
     
     public func revokeLocalAccess() -> Void {
         self.oauth2Session.clearTokens()
+        let notification = NSNotification(name: OAuth2Module.revokeNotification, object:nil, userInfo:nil)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
+        
     }
     
     public func revokeLocalAccessToken() {
