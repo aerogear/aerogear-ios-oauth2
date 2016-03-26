@@ -27,6 +27,8 @@ An OAuth2Session implementation the stores OAuth2 metadata in-memory
 */
 public class UntrustedMemoryOAuth2Session: OAuth2Session {
     
+    static var instances = [String:UntrustedMemoryOAuth2Session]()
+    
     /**
     The account id.
     */
@@ -115,5 +117,13 @@ public class UntrustedMemoryOAuth2Session: OAuth2Session {
         self.refreshToken = refreshToken
         self.refreshTokenExpirationDate = refreshTokenExpirationDate
         self.accountId = accountId
+    }
+    
+    public static func getInstance(accountId: String) -> UntrustedMemoryOAuth2Session {
+        if UntrustedMemoryOAuth2Session.instances[accountId] == nil {
+            UntrustedMemoryOAuth2Session.instances[accountId] = UntrustedMemoryOAuth2Session(accountId: accountId)
+        }
+        
+        return UntrustedMemoryOAuth2Session.instances[accountId]!
     }
 }
