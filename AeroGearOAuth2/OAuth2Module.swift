@@ -120,37 +120,18 @@ public class OAuth2Module: AuthzModule {
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
         
-
-        let essentialClaims = config.claims?.reduce([:], combine: { (var current: [String: AnyObject], claim: String) -> [String: AnyObject] in
-            current[claim] = ["essential": true]
-            return current
-        })
-        
-        var claims: [String: AnyObject]?
-        if let essentialClaims = essentialClaims {
-            claims = [
-                "userinfo" : essentialClaims
-            ]
-        }
-        
-        var jsonClaims: NSData?
-        if let claims = claims {
-            do {
-                jsonClaims = try NSJSONSerialization.dataWithJSONObject(claims, options: NSJSONWritingOptions())
-            } catch let error as NSError {
-                print(error)
-            }
-        }
-        
         var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
         }
         
-        if let jsonClaims = jsonClaims {
-            let jsonClaimsString = NSString(data: jsonClaims, encoding: NSUTF8StringEncoding)
-            let encodedJson = (jsonClaimsString as! String).urlEncode()
-            params += "&claims=\(encodedJson)"
+        if let claims = config.claims {
+            do {
+                try params += OAuth2Module.getClaimsParam(claims)
+            } catch let error as NSError {
+                completionHandler(nil, error)
+            }
+            
         }
         
         guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
@@ -167,6 +148,30 @@ public class OAuth2Module: AuthzModule {
                 UIApplication.sharedApplication().openURL(url)
             }
         }
+    }
+    
+    public class func getClaimsParam(claims: Set<String>) throws -> String {
+        let essentialClaims = claims.reduce([:], combine: { (let current: [String: AnyObject], claim: String) -> [String: AnyObject] in
+            var newCurrent = current
+            newCurrent[claim] = ["essential": true]
+            return newCurrent
+        })
+        
+        let userinfoClaims = [
+            "userinfo" : essentialClaims
+        ]
+        
+        var jsonClaims: NSData
+        do {
+            jsonClaims = try NSJSONSerialization.dataWithJSONObject(userinfoClaims, options: NSJSONWritingOptions())
+        } catch let error as NSError {
+            print(error)
+            throw error
+        }
+       
+        let jsonClaimsString = NSString(data: jsonClaims, encoding: NSUTF8StringEncoding)
+        let encodedJson = (jsonClaimsString as! String).urlEncode()
+        return "&claims=\(encodedJson)"
     }
 
     /**

@@ -31,6 +31,8 @@
 		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
 		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; };
+		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
+		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,8 @@
 		48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2SessionTest.swift; sourceTree = "<group>"; };
 		48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2Module.swift; sourceTree = "<group>"; };
 		48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2WebViewController.swift; sourceTree = "<group>"; };
+		5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidator.swift; sourceTree = "<group>"; };
+		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8AABF38B64CDFEB481203C1 /* Pods-AeroGearOAuth2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +145,8 @@
 				483304A419AF44DF002F8DA9 /* Config.swift */,
 				48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */,
 				485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */,
+				5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */,
+				5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */,
 				48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */,
 				4872F71519EFE7D100F3FDE8 /* DateUtils.swift */,
 				4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */,
@@ -411,11 +417,13 @@
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
 				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
+				5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
 				4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */,
 				4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */,
 				4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */,
+				5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */,
 				483304A519AF44DF002F8DA9 /* Config.swift in Sources */,
 				4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */,
 			);

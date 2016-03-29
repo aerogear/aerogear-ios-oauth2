@@ -178,4 +178,15 @@ class OAuth2ModuleTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
+    func testGetClaimsParamFormatsCorrectly() {
+        let claims: Set<String> = ["email", "phone"]
+        
+        do {
+            let actual = try OAuth2Module.getClaimsParam(claims)
+            XCTAssertEqual("&claims=%7B%22userinfo%22%3A%7B%22email%22%3A%7B%22essential%22%3Atrue%7D%2C%22phone%22%3A%7B%22essential%22%3Atrue%7D%7D%7D", actual)
+        } catch {
+            XCTFail(String(error))
+        }
+    }
+    
 }

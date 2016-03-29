@@ -33,6 +33,7 @@ public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
     public var accessTokenExpirationDate: NSDate?
     public var refreshTokenExpirationDate: NSDate?
     public var refreshToken: String?
+    public var idToken: String?
     public func tokenIsNotExpired() -> Bool {
         return true
     }
@@ -43,7 +44,7 @@ public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
     
     public func clearTokens() {}
     
-    public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {}
+    public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?) {}
     public init() {}
 }
 
@@ -72,7 +73,7 @@ public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccess
     public override func tokenIsNotExpired() -> Bool {
         return false
     }
-    public override func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
+    public override func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?) {
         savedRefreshedToken = refreshToken
     }
     public override func clearTokens() {initCalled = 1}
