@@ -189,4 +189,40 @@ class OAuth2ModuleTests: XCTestCase {
         }
     }
     
+    func testClaimsAreFormattedToQueryParam() {
+        let config = TelenorConnectConfig(
+            clientId: "clientId",
+            useStaging: true,
+            scopes: ["scope1", "scope2"],
+            accountId: "accountId",
+            claims: ["claim1", "claim2"],
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
+            webView: false)
+        let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
+        do {
+            let url = try OAuth2Module.getAuthUrl(config, http: http)
+            XCTAssertNotNil(url.query?.rangeOfString("&claims=%7B%22userinfo%22%3A%7B%22claim2%22%3A%7B%22essential%22%3Atrue%7D%2C%22claim1%22%3A%7B%22essential%22%3Atrue%7D%7D%7D"))
+        } catch {
+            XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
+        }
+    }
+    
+    func testMissingClaimsIsAllowed() {
+        let config = TelenorConnectConfig(
+            clientId: "clientId",
+            useStaging: true,
+            scopes: ["scope1", "scope2"],
+            accountId: "accountId",
+            claims: nil,
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
+            webView: false)
+        let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
+        do {
+            let url = try OAuth2Module.getAuthUrl(config, http: http)
+            XCTAssertNil(url.query?.rangeOfString("&claims="))
+        } catch {
+            XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
+        }
+    }
+    
 }

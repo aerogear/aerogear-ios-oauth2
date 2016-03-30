@@ -116,6 +116,24 @@ public class OAuth2Module: AuthzModule {
         self.state = .AuthorizationStatePendingExternalApproval
 
         // calculate final url
+        var url: NSURL
+        do {
+            url = try OAuth2Module.getAuthUrl(config, http: http)
+        } catch let error as NSError {
+            completionHandler(nil, error)
+            return
+        }
+        
+        if self.webView != nil {
+            self.webView!.targetURL = url
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+        } else {
+            UIApplication.sharedApplication().openURL(url)
+        }
+        
+    }
+    
+    public class func getAuthUrl(config: Config, http: Http) throws -> NSURL {
         let optionalParamsEncoded = config.optionalParams?.keys.reduce("", combine: { (current: String, key: String) -> String in
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
@@ -128,26 +146,17 @@ public class OAuth2Module: AuthzModule {
         if let claims = config.claims {
             do {
                 try params += OAuth2Module.getClaimsParam(claims)
-            } catch let error as NSError {
-                completionHandler(nil, error)
+            } catch {
+                throw error
             }
-            
         }
         
         guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
-            completionHandler(nil, error)
-            return
+            throw error
         }
-        let url = NSURL(string:computedUrl.absoluteString + params)
-        if let url = url {
-            if self.webView != nil {
-                self.webView!.targetURL = url
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
-            } else {
-                UIApplication.sharedApplication().openURL(url)
-            }
-        }
+        
+        return NSURL(string:computedUrl.absoluteString + params)!
     }
     
     public class func getClaimsParam(claims: Set<String>) throws -> String {
