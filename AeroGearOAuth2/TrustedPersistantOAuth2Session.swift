@@ -271,8 +271,8 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     }
     
     /**
-     The JWT.
-     */
+    The JWT.
+    */
     public var idToken: String? {
         get {
             return self.keychain.read(self.accountId, tokenType: .IdToken)
