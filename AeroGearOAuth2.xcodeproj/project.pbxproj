@@ -31,6 +31,7 @@
 		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
 		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; };
+		5C542B581CABD3C400039789 /* IdTokenValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */; };
 		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
 		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -91,6 +92,7 @@
 		48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2SessionTest.swift; sourceTree = "<group>"; };
 		48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycloakOAuth2Module.swift; sourceTree = "<group>"; };
 		48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2WebViewController.swift; sourceTree = "<group>"; };
+		5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidatorTest.swift; sourceTree = "<group>"; };
 		5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidator.swift; sourceTree = "<group>"; };
 		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +182,7 @@
 				485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */,
 				485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */,
 				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
+				5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
 			);
 			path = AeroGearOAuth2Tests;
@@ -434,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
+				5C542B581CABD3C400039789 /* IdTokenValidatorTest.swift in Sources */,
 				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
 				485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */,
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
