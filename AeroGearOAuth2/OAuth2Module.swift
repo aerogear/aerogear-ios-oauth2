@@ -40,6 +40,11 @@ enum AuthorizationState {
     case AuthorizationStateUnknown
 }
 
+public enum OAuth2Error: ErrorType {
+    case MissingRefreshToken
+    case UnexpectedResponse(String)
+}
+
 /**
 Parent class of any OAuth2 module implementing generic OAuth2 authorization flow.
 */
@@ -189,33 +194,39 @@ public class OAuth2Module: AuthzModule {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
-        if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
-            var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
-            if (config.clientSecret != nil) {
-                paramDict["client_secret"] = config.clientSecret!
-            }
-
-            http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
-                if (error != nil) {
-                    if error?.code == 400 {
-                        self.oauth2Session.clearTokens()
-                    }
-                    
-                    completionHandler(nil, error)
-                    return
-                }
-
-                if let unwrappedResponse = response as? [String: AnyObject] {
-                    let accessToken: String = unwrappedResponse["access_token"] as! String
-                    let expiration = unwrappedResponse["expires_in"] as! NSNumber
-                    let exp: String = expiration.stringValue
-                    
-                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil, idToken: nil)
-
-                    completionHandler(unwrappedResponse["access_token"], nil);
-                }
-            })
+        guard let unwrappedRefreshToken = self.oauth2Session.refreshToken else {
+            completionHandler(nil, OAuth2Error.MissingRefreshToken as NSError)
+            return
         }
+        
+        var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
+        if (config.clientSecret != nil) {
+            paramDict["client_secret"] = config.clientSecret!
+        }
+        
+        http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+            if (error != nil) {
+                if error?.code == 400 {
+                    self.oauth2Session.clearTokens()
+                }
+                
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let unwrappedResponse = response as? [String: AnyObject] else {
+                completionHandler(nil, OAuth2Error.UnexpectedResponse(response as! String) as NSError)
+                return
+            }
+            
+            let accessToken: String = unwrappedResponse["access_token"] as! String
+            let expiration = unwrappedResponse["expires_in"] as! NSNumber
+            let exp: String = expiration.stringValue
+            
+            self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil, idToken: nil)
+            
+            completionHandler(unwrappedResponse["access_token"], nil);
+        })
     }
 
     /**
@@ -237,23 +248,26 @@ public class OAuth2Module: AuthzModule {
                 return
             }
             
-            if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                let accessToken: String = unwrappedResponse["access_token"] as! String
-                let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
-                let idToken: String? = unwrappedResponse["id_token"] as? String
-                let expiration = unwrappedResponse["expires_in"] as? NSNumber
-                let exp: String? = expiration?.stringValue
-                // expiration for refresh token is used in Keycloak
-                let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
-                let expRefresh = expirationRefresh?.stringValue
-                
-                self.oauth2Session.saveAccessToken(accessToken,
-                    refreshToken: refreshToken,
-                    accessTokenExpiration: exp,
-                    refreshTokenExpiration: expRefresh,
-                    idToken: idToken)
-                completionHandler(accessToken, nil)
+            guard let unwrappedResponse = responseObject as? [String: AnyObject] else {
+                completionHandler(nil, OAuth2Error.UnexpectedResponse(responseObject as! String) as NSError)
+                return
             }
+            
+            let accessToken: String = unwrappedResponse["access_token"] as! String
+            let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
+            let idToken: String? = unwrappedResponse["id_token"] as? String
+            let expiration = unwrappedResponse["expires_in"] as? NSNumber
+            let exp: String? = expiration?.stringValue
+            // expiration for refresh token is used in Keycloak
+            let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
+            let expRefresh = expirationRefresh?.stringValue
+            
+            self.oauth2Session.saveAccessToken(accessToken,
+                refreshToken: refreshToken,
+                accessTokenExpiration: exp,
+                refreshTokenExpiration: expRefresh,
+                idToken: idToken)
+            completionHandler(accessToken, nil)
         })
     }
 

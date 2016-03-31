@@ -34,7 +34,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/o/oauth2/token":
-                let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23}"
+                let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23, \"id_token\":\"NEW_ID_TOKEN\"}"
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/rest/revoke":
@@ -223,6 +223,44 @@ class OAuth2ModuleTests: XCTestCase {
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
+    }
+    
+    func testRefreshAccessTokenCallsSaveAccessTokenWithNilIdToken() {
+        setupStubWithNSURLSessionDefaultConfiguration()
+        let expectation = expectationWithDescription("Unchanged ID token");
+        let googleConfig = GoogleConfig(
+            clientId: "xxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"])
+        
+        let mockedSession = MockOAuth2SessionWithRefreshToken()
+        let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
+        oauth2Module.refreshAccessToken { (response: AnyObject?, error:NSError?) -> Void in
+            if error != nil {
+                XCTFail("Got error")
+            }
+            XCTAssertFalse(mockedSession.idTokenChanged)
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testExchangeAuthorizationCodeForAccessTokenCallsSaveAccessTokenWithNonNilIdToken() {
+        setupStubWithNSURLSessionDefaultConfiguration()
+        let expectation = expectationWithDescription("AccessRequest");
+        let googleConfig = GoogleConfig(
+            clientId: "xxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"])
+        
+        let mockedSession = MockOAuth2SessionWithRefreshToken()
+        let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
+        oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
+            if error != nil {
+                XCTFail("Got error")
+            }
+            XCTAssertTrue(mockedSession.idTokenChanged)
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
 }
