@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import AeroGearHttp
+import SafariServices
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -50,7 +51,7 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var webView: OAuth2WebViewController?
+    var isWebViewPresented = false
 
     public static let revokeNotification = "kRevokeNotification"
     
@@ -75,9 +76,6 @@ public class OAuth2Module: AuthzModule {
         }
         
         self.config = config
-        if config.isWebView {
-            self.webView = OAuth2WebViewController()
-        }
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .AuthorizationStateUnknown
     }
@@ -96,7 +94,7 @@ public class OAuth2Module: AuthzModule {
         if applicationLaunchNotificationObserver == nil {
             applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
                 self.extractCode(notification, completionHandler: completionHandler)
-                if ( self.webView != nil ) {
+                if self.isWebViewPresented {
                     UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
             })
@@ -130,9 +128,16 @@ public class OAuth2Module: AuthzModule {
         
         let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
         if let url = url {
-            if self.webView != nil {
-                self.webView!.targetURL = url
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+            if config.isWebView {
+                let webView : UIViewController
+                if #available(iOS 9.0, *) {
+                    webView = SFSafariViewController(URL: url)
+                } else {
+                    webView = OAuth2WebViewController(URL: url)
+                }
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(webView, animated: true, completion: { () -> Void in
+                    self.isWebViewPresented = true
+                })
             } else {
                 UIApplication.sharedApplication().openURL(url)
             }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 public class OpenStackOAuth2Module: OAuth2Module {
     
@@ -22,7 +23,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
         if applicationLaunchNotificationObserver == nil {
             applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
                 self.extractCode(notification, completionHandler: completionHandler)
-                if ( self.webView != nil ) {
+                if self.isWebViewPresented {
                     UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
             })
@@ -58,9 +59,16 @@ public class OpenStackOAuth2Module: OAuth2Module {
         
         let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
         if let url = url {
-            if self.webView != nil {
-                self.webView!.targetURL = url
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+            if config.isWebView {
+                let webView : UIViewController
+                if #available(iOS 9.0, *) {
+                    webView = SFSafariViewController(URL: url)
+                } else {
+                    webView = OAuth2WebViewController(URL: url)
+                }
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(webView, animated: true, completion: { () -> Void in
+                    self.isWebViewPresented = true
+                })
             } else {
                 UIApplication.sharedApplication().openURL(url)
             }

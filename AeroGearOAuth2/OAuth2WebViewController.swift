@@ -24,9 +24,23 @@ rather than an external browser approach.
 */
 class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     /// Login URL for OAuth.
-    var targetURL : NSURL = NSURL()
+    var targetURL : NSURL
     /// WebView intance used to load login page.
     var webView : UIWebView = UIWebView()
+    
+    convenience init() {
+        self.init(URL: NSURL())
+    }
+    
+    init(URL: NSURL) {
+        self.targetURL = URL
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.targetURL = NSURL()
+        super.init(coder: aDecoder)
+    }
     
     /// Overrride of viewDidLoad to load the login page.
     override internal func viewDidLoad() {
