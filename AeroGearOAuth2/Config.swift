@@ -25,7 +25,7 @@ public class Config {
     Applies the baseURL to the configuration.
     */
     public let baseURL: String
-    
+
     /**
     Applies the "callback URL" once request token issued.
     */
@@ -66,18 +66,15 @@ public class Config {
     */
     public var scopes: [String]
     
-    var scope: String {
+    /**
+    Returns a string that conatins scopes, separated with spaces and url encoded.
+    ["scope1", "scope2"] -> "scope1%20scope2"
+    */
+    public var scopesEncoded: String {
         get {
-            // Create a string to concatenate all scopes existing in the _scopes array.
-            var scopeString = ""
-            for scope in self.scopes {
-                scopeString += scope.urlEncode()
-                // If the current scope is other than the last one, then add the "+" sign to the string to separate the scopes.
-                if (scope != self.scopes.last) {
-                    scopeString += "+"
-                }
-            }
-            return scopeString
+            return scopes
+                .joinWithSeparator(" ")
+                .urlEncode()
         }
     }
     

@@ -225,6 +225,24 @@ class OAuth2ModuleTests: XCTestCase {
         }
     }
     
+    func testGetAuthUrlWithScopesReturnsParamWithEncodedSpaceSeparatedScopes() {
+        let config = TelenorConnectConfig(
+            clientId: "clientId",
+            useStaging: true,
+            scopes: ["scope1", "scope2"],
+            accountId: "accountId",
+            claims: nil,
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
+            webView: false)
+        let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
+        do {
+            let url = try OAuth2Module.getAuthUrl(config, http: http)
+            XCTAssertNil(url.query?.rangeOfString("&scope=scope1%20scope2"))
+        } catch {
+            XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
+        }
+    }
+    
     func testRefreshAccessTokenCallsSaveAccessTokenWithNilIdToken() {
         setupStubWithNSURLSessionDefaultConfiguration()
         let expectation = expectationWithDescription("Unchanged ID token");
