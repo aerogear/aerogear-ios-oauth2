@@ -143,7 +143,7 @@ public class OAuth2Module: AuthzModule {
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
         
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
         }

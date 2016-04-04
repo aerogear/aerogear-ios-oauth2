@@ -90,5 +90,11 @@ class ConfigTests: XCTestCase {
         XCTAssert(keycloakConfig.scopes.filter({$0 == "profile"}) == ["profile"], "profile defined for Open ID Connect config")
         XCTAssert(keycloakConfig.scopes.filter({$0 == "email"}) == ["email"], "email defined for Open ID Connect config")
     }
+    
+    func testScopesEncodedReturnsSpaceSeparatedEncodedScopes() {
+        let config = Config(base: "base", authzEndpoint: "authzEndpoint", redirectURL: "redirectURL", accessTokenEndpoint: "accessTokenEndpoint", clientId: "clientId", refreshTokenEndpoint: "refreshTokenEndpoint", revokeTokenEndpoint: "revokeTokenEndpoint", isOpenIDConnect: true, userInfoEndpoint: "userInfoEndpoint", scopes: ["scope1", "scope2"], clientSecret: "clientSecret", accountId: "accountId", claims: nil, optionalParams: nil, isWebView: true)
+        
+        XCTAssertNotNil(config.scopesEncoded.rangeOfString("scope1%20scope2"), "scopesEncoded was as expected scope1%20scope2, instead: \(config.scopesEncoded)")
+    }
 
 }
