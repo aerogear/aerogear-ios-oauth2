@@ -19,6 +19,8 @@ import Foundation
 import UIKit
 import AeroGearHttp
 import JWT
+import SafariServices
+import WebKit
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -56,7 +58,8 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var webView: OAuth2WebViewController?
+    var controller: UIViewController?
+    
     /**
     Initialize an OAuth2 module.
 
@@ -78,9 +81,7 @@ public class OAuth2Module: AuthzModule {
         }
 
         self.config = config
-        if config.isWebView {
-            self.webView = OAuth2WebViewController()
-        }
+        
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .AuthorizationStateUnknown
     }
@@ -98,7 +99,8 @@ public class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
-            if ( self.webView != nil ) {
+            if self.config.isWebView && self.controller != nil {
+                // self.controller!.dismissViewControllerAnimated(true, completion: nil)
                 UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
         })
@@ -129,13 +131,19 @@ public class OAuth2Module: AuthzModule {
             return
         }
         
-        if self.webView != nil {
-            self.webView!.targetURL = url
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
-        } else {
+        if !self.config.isWebView {
             UIApplication.sharedApplication().openURL(url)
+            return
         }
         
+        if #available(iOS 9.0, *) {
+            controller = SFSafariViewController(URL: url)
+        } else {
+            controller = OAuth2WebViewController()
+            (controller as! OAuth2WebViewController).targetURL = url
+        }
+        
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.controller!, animated: true, completion: nil)
     }
     
     public class func getAuthUrl(config: Config, http: Http) throws -> NSURL {

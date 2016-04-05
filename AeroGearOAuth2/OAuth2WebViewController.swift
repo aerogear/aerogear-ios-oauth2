@@ -16,6 +16,7 @@
 */
 
 import Foundation
+import WebKit
 
 import UIKit
 /**
@@ -26,13 +27,12 @@ class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     /// Login URL for OAuth.
     var targetURL : NSURL = NSURL()
     /// WebView intance used to load login page.
-    var webView : UIWebView = UIWebView()
+    var webView : WKWebView = WKWebView()
     
     /// Overrride of viewDidLoad to load the login page.
     override internal func viewDidLoad() {
         super.viewDidLoad()
         webView.frame = UIScreen.mainScreen().applicationFrame
-        webView.delegate = self
         self.view.addSubview(webView)
         loadAddressURL()
     }
@@ -40,10 +40,6 @@ class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.webView.frame = self.view.bounds
-    }
-    
-    override internal func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     func loadAddressURL() {
