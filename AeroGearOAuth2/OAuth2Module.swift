@@ -58,7 +58,6 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var controller: UIViewController?
     
     /**
     Initialize an OAuth2 module.
@@ -99,8 +98,7 @@ public class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
-            if self.config.isWebView && self.controller != nil {
-                // self.controller!.dismissViewControllerAnimated(true, completion: nil)
+            if self.config.isWebView {
                 UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
         })
@@ -136,6 +134,7 @@ public class OAuth2Module: AuthzModule {
             return
         }
         
+        var controller: UIViewController
         if #available(iOS 9.0, *) {
             controller = SFSafariViewController(URL: url)
         } else {
@@ -143,7 +142,7 @@ public class OAuth2Module: AuthzModule {
             (controller as! OAuth2WebViewController).targetURL = url
         }
         
-        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.controller!, animated: true, completion: nil)
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
     }
     
     public class func getAuthUrl(config: Config, http: Http) throws -> NSURL {
