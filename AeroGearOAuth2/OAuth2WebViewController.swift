@@ -27,7 +27,7 @@ class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     /// Login URL for OAuth.
     var targetURL : NSURL = NSURL()
     /// WebView intance used to load login page.
-    var webView : WKWebView = WKWebView()
+    var webView = UIWebView()
     
     /// Overrride of viewDidLoad to load the login page.
     override internal func viewDidLoad() {
