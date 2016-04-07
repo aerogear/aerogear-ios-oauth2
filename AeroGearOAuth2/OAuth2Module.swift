@@ -51,7 +51,9 @@ public enum OAuth2Error: ErrorType {
 Parent class of any OAuth2 module implementing generic OAuth2 authorization flow.
 */
 public class OAuth2Module: AuthzModule {
-    let config: Config
+    
+    public let config: Config
+    
     var http: Http
 
     var oauth2Session: OAuth2Session
