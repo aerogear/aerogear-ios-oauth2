@@ -17,7 +17,7 @@
 
 import UIKit
 import XCTest
-import AeroGearOAuth2
+import TDConnectIosSdk
 
 class OAuth2SessionTests: XCTestCase {
 

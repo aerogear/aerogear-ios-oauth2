@@ -1,4 +1,4 @@
-# aerogear-ios-oauth2
+# connect-ios-sdk
 
 > This module currently build with Xcode 7 and supports iOS8, iOS9.
 
@@ -67,7 +67,7 @@ Similar approach for configuration, here we want to login as Keycloak user, usin
 
 > **NOTE:**  The latest version of the library works with Keycloak 1.1.0.Final. Previous version of Keycloak 1.0.x will work except for the transparent refresh of tokens (ie: after access token expires you will have to go through grant process).
 
-### Build, test and play with aerogear-ios-oauth2
+### Build, test and play with connect-ios-sdk
 
 1. Clone this project
 
@@ -77,7 +77,7 @@ The project uses [CocoaPods](http://cocoapods.org) for handling its dependencies
 ```bash
 pod install
 ```
-3. open AeroGearOAuth2.xcworkspace
+3. open TDConnectIosSdk.xcworkspace
 
 ## Adding the library to your project 
 To add the library in your project, you can either use [CocoaPods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
@@ -86,7 +86,7 @@ To add the library in your project, you can either use [CocoaPods](http://cocoap
 In your ```Podfile``` add:
 
 ```
-pod 'AeroGearOAuth2'
+pod 'TDConnectIosSdk', :git => 'https://github.com/telenordigital/connect-ios-sdk'
 ```
 
 and then:
@@ -100,29 +100,11 @@ to install your dependencies
 ### Manual Installation
 Follow these steps to add the library in your Swift project:
 
-1. Add AeroGearOAuth2 as a [submodule](http://git-scm.com/docs/git-submodule) in your project. Open a terminal and navigate to your project directory. Then enter:
+1. Add TDConnectIosSdk as a [submodule](http://git-scm.com/docs/git-submodule) in your project. Open a terminal and navigate to your project directory. Then enter:
 ```bash
-git submodule add https://github.com/aerogear/aerogear-ios-oauth2.git
+git submodule add https://github.com/telenordigital/connect-ios-sdk.git
 ```
-2. Open the `aerogear-ios-oauth2` folder, and drag the `AeroGearOAuth2.xcodeproj` into the file navigator in Xcode.
-3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearOAuth2.framework (Currently set to 8.0).
-5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `AeroGearOAuth2.framework`.
-7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `AeroGearOAuth2.framework`.
-
-## Documentation
-
-For more details about the current release, please consult [our documentation](https://aerogear.org/docs/guides/aerogear-ios-2.X/).
-
-## Development
-
-If you would like to help develop AeroGear you can join our [developer's mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-dev), join #aerogear on Freenode, or shout at us on Twitter @aerogears.
-
-Also takes some time and skim the [contributor guide](http://aerogear.org/docs/guides/Contributing/)
-
-## Questions?
-
-Join our [user mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-users) for any questions or help! We really hope you enjoy app development with AeroGear!
-
-## Found a bug?
-
-If you found a bug please create a ticket for us on [Jira](https://issues.jboss.org/browse/AGIOS) with some steps to reproduce it.
+2. Open the `connect-ios-sdk` folder, and drag the `TDConnectIosSdk.xcodeproj` into the file navigator in Xcode.
+3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of TDConnectIosSdk.framework (Currently set to 8.0).
+5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `TDConnectIosSdk.framework`.
+7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `TDConnectIosSdk.framework`.

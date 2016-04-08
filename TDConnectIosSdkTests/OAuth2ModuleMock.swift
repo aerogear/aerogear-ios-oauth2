@@ -16,7 +16,7 @@
 */
 
 import Foundation
-import AeroGearOAuth2
+import TDConnectIosSdk
 
 public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
     public var accountId: String {

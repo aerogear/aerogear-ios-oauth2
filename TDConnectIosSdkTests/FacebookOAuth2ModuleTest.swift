@@ -17,7 +17,7 @@
 
 import UIKit
 import XCTest
-import AeroGearOAuth2
+import TDConnectIosSdk
 import AeroGearHttp
 import OHHTTPStubs
 

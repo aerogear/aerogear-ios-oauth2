@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -9,15 +9,15 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-               BuildableName = "AeroGearOAuth2Tests.xctest"
-               BlueprintName = "AeroGearOAuth2Tests"
-               ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+               BlueprintIdentifier = "4833046119AF1635002F8DA9"
+               BuildableName = "TDConnectIosSdk.framework"
+               BlueprintName = "TDConnectIosSdk"
+               ReferencedContainer = "container:TDConnectIosSdk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,26 +26,27 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-               BuildableName = "AeroGearOAuth2Tests.xctest"
-               BlueprintName = "AeroGearOAuth2Tests"
-               ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+               BuildableName = "TDConnectIosSdkTests.xctest"
+               BlueprintName = "TDConnectIosSdkTests"
+               ReferencedContainer = "container:TDConnectIosSdk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-            BuildableName = "AeroGearOAuth2Tests.xctest"
-            BlueprintName = "AeroGearOAuth2Tests"
-            ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BuildableName = "TDConnectIosSdk.framework"
+            BlueprintName = "TDConnectIosSdk"
+            ReferencedContainer = "container:TDConnectIosSdk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-            BuildableName = "AeroGearOAuth2Tests.xctest"
-            BlueprintName = "AeroGearOAuth2Tests"
-            ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BuildableName = "TDConnectIosSdk.framework"
+            BlueprintName = "TDConnectIosSdk"
+            ReferencedContainer = "container:TDConnectIosSdk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -82,10 +83,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-            BuildableName = "AeroGearOAuth2Tests.xctest"
-            BlueprintName = "AeroGearOAuth2Tests"
-            ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
+            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BuildableName = "TDConnectIosSdk.framework"
+            BlueprintName = "TDConnectIosSdk"
+            ReferencedContainer = "container:TDConnectIosSdk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

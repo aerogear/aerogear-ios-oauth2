@@ -6,8 +6,8 @@ before_install:
 
 script:
     - set -o pipefail
-    - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -sdk iphonesimulator -destination "OS=9.0,name=iPhone 6 Plus" -configuration Release clean test
-    - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -sdk iphonesimulator -destination "OS=8.4,name=iPhone 6 Plus" -configuration Release clean test
+    - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -sdk iphonesimulator -destination "OS=9.0,name=iPhone 6 Plus" -configuration Release clean test
+    - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -sdk iphonesimulator -destination "OS=8.4,name=iPhone 6 Plus" -configuration Release clean test
 
 notifications:
   irc: "irc.freenode.org#aerogear"

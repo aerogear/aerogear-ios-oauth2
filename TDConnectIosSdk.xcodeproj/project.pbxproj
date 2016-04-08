@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B94E9362344D1BD2EF7D943 /* Pods_AeroGearOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4BA5A03E90C75CC2866ABF /* Pods_AeroGearOAuth2Tests.framework */; };
+		2B94E9362344D1BD2EF7D943 /* Pods_TDConnectIosSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */; };
 		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
 		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
-		4833046819AF1635002F8DA9 /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4833046819AF1635002F8DA9 /* TDConnectIosSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* TDConnectIosSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
 		483304A519AF44DF002F8DA9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
 		48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48432BE81A2F727C00F7A0FF /* ConfigTest.swift */; };
@@ -34,7 +34,7 @@
 		5C542B581CABD3C400039789 /* IdTokenValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */; };
 		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
 		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
-		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6F1432B81A168594003BEE5B /* TDConnectIosSdk.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,7 @@
 			containerPortal = 4833045919AF1635002F8DA9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4833046119AF1635002F8DA9;
-			remoteInfo = AeroGearOAuth2;
+			remoteInfo = TDConnectIosSdk;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -54,7 +54,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */,
+				6F1432B81A168594003BEE5B /* TDConnectIosSdk.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,17 +62,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09E5C3E9BF21978F6317B217 /* Pods-AeroGearOAuth2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		30038E87B86C6C0BB52B42DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		31897CDB95B69D233A342D2D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		3F4BA5A03E90C75CC2866ABF /* Pods_AeroGearOAuth2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AeroGearOAuth2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2Module.swift; sourceTree = "<group>"; };
-		4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDConnectIosSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833046619AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AeroGearOAuth2.h; sourceTree = "<group>"; };
-		4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroGearOAuth2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4833046719AF1635002F8DA9 /* TDConnectIosSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDConnectIosSdk.h; sourceTree = "<group>"; };
+		4833046D19AF1635002F8DA9 /* TDConnectIosSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TDConnectIosSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4833047019AF1635002F8DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4833049F19AF327D002F8DA9 /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		483304A419AF44DF002F8DA9 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidator.swift; sourceTree = "<group>"; };
 		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8AABF38B64CDFEB481203C1 /* Pods-AeroGearOAuth2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B94E9362344D1BD2EF7D943 /* Pods_AeroGearOAuth2Tests.framework in Frameworks */,
+				2B94E9362344D1BD2EF7D943 /* Pods_TDConnectIosSdkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,8 +122,8 @@
 		4833045819AF1635002F8DA9 = {
 			isa = PBXGroup;
 			children = (
-				4833046419AF1635002F8DA9 /* AeroGearOAuth2 */,
-				4833046E19AF1635002F8DA9 /* AeroGearOAuth2Tests */,
+				4833046419AF1635002F8DA9 /* TDConnectIosSdk */,
+				4833046E19AF1635002F8DA9 /* TDConnectIosSdkTests */,
 				4833046319AF1635002F8DA9 /* Products */,
 				EDC1B5EA330BE6809642E3C9 /* Pods */,
 				6DA531836D4D42D3E1904E78 /* Frameworks */,
@@ -133,13 +133,13 @@
 		4833046319AF1635002F8DA9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */,
-				4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */,
+				4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */,
+				4833046D19AF1635002F8DA9 /* TDConnectIosSdkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4833046419AF1635002F8DA9 /* AeroGearOAuth2 */ = {
+		4833046419AF1635002F8DA9 /* TDConnectIosSdk */ = {
 			isa = PBXGroup;
 			children = (
 				4833046519AF1635002F8DA9 /* Supporting Files */,
@@ -157,19 +157,19 @@
 				48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */,
 				48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */,
 			);
-			path = AeroGearOAuth2;
+			path = TDConnectIosSdk;
 			sourceTree = "<group>";
 		};
 		4833046519AF1635002F8DA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */,
+				4833046719AF1635002F8DA9 /* TDConnectIosSdk.h */,
 				4833046619AF1635002F8DA9 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4833046E19AF1635002F8DA9 /* AeroGearOAuth2Tests */ = {
+		4833046E19AF1635002F8DA9 /* TDConnectIosSdkTests */ = {
 			isa = PBXGroup;
 			children = (
 				485AAB901A383F9900ABEBB2 /* Mock */,
@@ -185,7 +185,7 @@
 				5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
 			);
-			path = AeroGearOAuth2Tests;
+			path = TDConnectIosSdkTests;
 			sourceTree = "<group>";
 		};
 		4833046F19AF1635002F8DA9 /* Supporting Files */ = {
@@ -208,7 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				9ADB5FF0CB048392A40B2D60 /* Pods.framework */,
-				3F4BA5A03E90C75CC2866ABF /* Pods_AeroGearOAuth2Tests.framework */,
+				3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,8 +218,8 @@
 			children = (
 				31897CDB95B69D233A342D2D /* Pods.debug.xcconfig */,
 				30038E87B86C6C0BB52B42DD /* Pods.release.xcconfig */,
-				B8AABF38B64CDFEB481203C1 /* Pods-AeroGearOAuth2Tests.debug.xcconfig */,
-				09E5C3E9BF21978F6317B217 /* Pods-AeroGearOAuth2Tests.release.xcconfig */,
+				B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */,
+				09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -231,16 +231,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4833046819AF1635002F8DA9 /* AeroGearOAuth2.h in Headers */,
+				4833046819AF1635002F8DA9 /* TDConnectIosSdk.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4833046119AF1635002F8DA9 /* AeroGearOAuth2 */ = {
+		4833046119AF1635002F8DA9 /* TDConnectIosSdk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */;
+			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdk" */;
 			buildPhases = (
 				AC859C314229F66700908186 /* Check Pods Manifest.lock */,
 				4833045D19AF1635002F8DA9 /* Sources */,
@@ -253,14 +253,14 @@
 			);
 			dependencies = (
 			);
-			name = AeroGearOAuth2;
-			productName = AeroGearOAuth2;
-			productReference = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */;
+			name = TDConnectIosSdk;
+			productName = TDConnectIosSdk;
+			productReference = 4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4833046C19AF1635002F8DA9 /* AeroGearOAuth2Tests */ = {
+		4833046C19AF1635002F8DA9 /* TDConnectIosSdkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2Tests" */;
+			buildConfigurationList = 4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdkTests" */;
 			buildPhases = (
 				93450CEB2BAFED8F7B381800 /* Check Pods Manifest.lock */,
 				4833046919AF1635002F8DA9 /* Sources */,
@@ -275,9 +275,9 @@
 			dependencies = (
 				6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */,
 			);
-			name = AeroGearOAuth2Tests;
-			productName = AeroGearOAuth2Tests;
-			productReference = 4833046D19AF1635002F8DA9 /* AeroGearOAuth2Tests.xctest */;
+			name = TDConnectIosSdkTests;
+			productName = TDConnectIosSdkTests;
+			productReference = 4833046D19AF1635002F8DA9 /* TDConnectIosSdkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -298,7 +298,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "AeroGearOAuth2" */;
+			buildConfigurationList = 4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "TDConnectIosSdk" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -310,8 +310,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4833046119AF1635002F8DA9 /* AeroGearOAuth2 */,
-				4833046C19AF1635002F8DA9 /* AeroGearOAuth2Tests */,
+				4833046119AF1635002F8DA9 /* TDConnectIosSdk */,
+				4833046C19AF1635002F8DA9 /* TDConnectIosSdkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -346,7 +346,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		43077EF0E9B8CD33A80E7B9F /* Copy Pods Resources */ = {
@@ -361,7 +361,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93450CEB2BAFED8F7B381800 /* Check Pods Manifest.lock */ = {
@@ -455,7 +455,7 @@
 /* Begin PBXTargetDependency section */
 		6FC65AEF19D16BCE001B59B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4833046119AF1635002F8DA9 /* AeroGearOAuth2 */;
+			target = 4833046119AF1635002F8DA9 /* TDConnectIosSdk */;
 			targetProxy = 6FC65AEE19D16BCE001B59B4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -557,7 +557,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AeroGearOAuth2/Info.plist;
+				INFOPLIST_FILE = TDConnectIosSdk/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
@@ -576,7 +576,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AeroGearOAuth2/Info.plist;
+				INFOPLIST_FILE = TDConnectIosSdk/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
@@ -587,7 +587,7 @@
 		};
 		4833047919AF1635002F8DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8AABF38B64CDFEB481203C1 /* Pods-AeroGearOAuth2Tests.debug.xcconfig */;
+			baseConfigurationReference = B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -595,7 +595,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
+				INFOPLIST_FILE = TDConnectIosSdkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -606,11 +606,11 @@
 		};
 		4833047A19AF1635002F8DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09E5C3E9BF21978F6317B217 /* Pods-AeroGearOAuth2Tests.release.xcconfig */;
+			baseConfigurationReference = 09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
-				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
+				INFOPLIST_FILE = TDConnectIosSdkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -621,7 +621,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "AeroGearOAuth2" */ = {
+		4833045C19AF1635002F8DA9 /* Build configuration list for PBXProject "TDConnectIosSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4833047319AF1635002F8DA9 /* Debug */,
@@ -630,7 +630,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */ = {
+		4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4833047619AF1635002F8DA9 /* Debug */,
@@ -639,7 +639,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2Tests" */ = {
+		4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdkTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4833047919AF1635002F8DA9 /* Debug */,

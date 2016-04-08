@@ -17,7 +17,7 @@
 
 import UIKit
 import XCTest
-import AeroGearOAuth2
+import TDConnectIosSdk
 import AeroGearHttp
 import OHHTTPStubs
 
@@ -192,6 +192,7 @@ class OAuth2ModuleTests: XCTestCase {
     func testClaimsAreFormattedToQueryParam() {
         let config = TelenorConnectConfig(
             clientId: "clientId",
+            redirectUrl: "redirectUrl",
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
@@ -210,6 +211,7 @@ class OAuth2ModuleTests: XCTestCase {
     func testMissingClaimsIsAllowed() {
         let config = TelenorConnectConfig(
             clientId: "clientId",
+            redirectUrl: "redirectUrl",
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
@@ -228,6 +230,7 @@ class OAuth2ModuleTests: XCTestCase {
     func testGetAuthUrlWithScopesReturnsParamWithEncodedSpaceSeparatedScopes() {
         let config = TelenorConnectConfig(
             clientId: "clientId",
+            redirectUrl: "redirectUrl",
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",

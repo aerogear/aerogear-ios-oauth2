@@ -1,6 +1,6 @@
 //
 //  IdTokenValidatorTest.swift
-//  AeroGearOAuth2
+//  TDConnectIosSdk
 //
 //  Created by Jørund Fagerjord on 30/03/16.
 //  Copyright © 2016 aerogear. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 
 import XCTest
-import AeroGearOAuth2
+import TDConnectIosSdk
 
 class IdTokenValidatorTest: XCTestCase {
     

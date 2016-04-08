@@ -17,11 +17,11 @@
 
 import UIKit
 import XCTest
-import AeroGearOAuth2
+import TDConnectIosSdk
 import AeroGearHttp
 import OHHTTPStubs
 
-class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
+class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -32,54 +32,50 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         OHHTTPStubs.removeAllStubs()
     }
     
-    class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
-        
+    class MyMockOAuth2ModuleSuccess: OAuth2Module {
+       
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
     }
     
-    class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
+    class MyMockOAuth2ModuleFailure: OAuth2Module {
         
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
     
-    func testFacebookOpenIDSuccess() {
+    func testGoogleOpenIDSuccess() {
         let loginExpectation = expectationWithDescription("Login");
-        
-        let facebookConfig = FacebookConfig(
-            clientId: "YYY",
-            clientSecret: "XXX",
-            scopes:["photo_upload, publish_actions"],
+
+        let googleConfig = GoogleConfig(
+            clientId: "xxxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
         
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            
-            XCTAssertTrue("Corinne Krych" == claims?.name, "name should be filled")
-            XCTAssertTrue("Corinne" == claims?.givenName, "first name should be filled")
-            XCTAssertTrue("Krych" == claims?.familyName, "family name should be filled")
-            XCTAssertTrue("female" == claims?.gender, "gender should be filled")
+
+            XCTAssertTrue("John" == claims?.name, "claim shoud be as mocked")
             loginExpectation.fulfill()
             
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testFacebookOpenIDFailureNoUserInfoEndPoint() {
+    func testGoogleOpenIDFailureNoUserInfoEndPoint() {
         let loginExpectation = expectationWithDescription("Login");
         
-        let fbConfig = Config(base: "https://fb",
+        let googleConfig = Config(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/auth",
             redirectURL: "google:/oauth2Callback",
             accessTokenEndpoint: "o/oauth2/token",
-            clientId: "302356789040-eums187utfllgetv6kmbems0pm3mfhgl.apps.googleusercontent.com",
+            clientId: "xxxx.apps.googleusercontent.com",
             refreshTokenEndpoint: "o/oauth2/token",
             revokeTokenEndpoint: "rest/revoke",
             isOpenIDConnect: true,
@@ -88,7 +84,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
@@ -100,17 +96,16 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testFacebookOpenIDFailure() {
+    func testGoogleOpenIDFailure() {
         let loginExpectation = expectationWithDescription("Login");
         
-        let facebookConfig = FacebookConfig(
-            clientId: "YYY",
-            clientSecret: "XXX",
-            scopes:["photo_upload, publish_actions"],
+        let googleConfig = GoogleConfig(
+            clientId: "xxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
         
-        
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
+
+        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
         
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             
@@ -120,4 +115,5 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
 }
