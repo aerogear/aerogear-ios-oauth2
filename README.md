@@ -18,54 +18,11 @@ Taking care of:
 
 Documentation on forked project: https://aerogear.org/docs/guides/aerogear-ios-2.X/
 
-## Example Usage
+## Hello World app using the SDK
 
-### Hello World app for Telenor Connect
 https://github.com/telenordigital/TelenorConnectIosHelloWorld.
 
 Implements the API's for http://docs.telenordigital.com/apis/connect/id/authentication.html.
-
-#### OAuth2 grant for GET with a predefined config like Facebook
-```swift
-var Http = Http() 						// [1]
-let facebookConfig = FacebookConfig(	// [2]
-    clientId: "YYY",
-    clientSecret: "XXX",
-    scopes:["photo_upload, publish_actions"])
-var oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
-http.authzModule = oauth2Module			// [4]
-http.request(.GET, path: "/get", completionHandler: {(response, error) in	// [5]
-	// handle response
-})
-```
-Create an instance of Http [1] from [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) a thin layer on top of NSURLSession.
-
-Fill-in the OAuth2 configuration in [2], here we use a predefined Config with all Facebook endpoint filled-in for us.
-
-Create an OAuth2Module from AccountManager's factory method in [3].
-
-Inject OAuth2Module into http object in [4] and uses the http object to GET/POST etc...
-
-See full description in [aerogear.org](https://aerogear.org/docs/guides/aerogear-ios-2.X/Authorization/)
-
-#### OpenID Connect with Keycloak
-```swift
-var Http = Http()
-let keycloakConfig = KeycloakConfig(
-    clientId: "sharedshoot-third-party",
-    host: "http://localhost:8080",
-    realm: "shoot-realm",
-    isOpenIDConnect: true)
-var oauth2Module = AccountManager.addKeycloakAccount(keycloakConfig)
-http.authzModule = oauth2Module
-oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in // [1]
-    // Do your own stuff here
-}
-
-```
-Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIDClaim object.
-
-> **NOTE:**  The latest version of the library works with Keycloak 1.1.0.Final. Previous version of Keycloak 1.0.x will work except for the transparent refresh of tokens (ie: after access token expires you will have to go through grant process).
 
 ### Build, test and play with connect-ios-sdk
 
