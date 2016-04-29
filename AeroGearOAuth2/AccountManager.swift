@@ -96,13 +96,13 @@ public class KeycloakConfig: Config {
         let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
-        super.init(base: String(format: "%@/auth", host),
-            authzEndpoint: String(format: "realms/%@/tokens/login", realm),
+        super.init(base: "\(host)/auth",
+            authzEndpoint: "realms/\(realm)/protocol/openid-connect/auth",
             redirectURL: "\(bundleString)://oauth2Callback",
-            accessTokenEndpoint: String(format: "realms/%@/tokens/access/codes", realm),
+            accessTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             clientId: clientId,
-            refreshTokenEndpoint: String(format: "realms/%@/tokens/refresh", realm),
-            revokeTokenEndpoint: String(format: "realms/%@/tokens/logout", realm),
+            refreshTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
+            revokeTokenEndpoint: "realms/\(realm)/protocol/openid-connect/logout",
             isOpenIDConnect: isOpenIDConnect)
         // Add openIdConnect scope
         if self.isOpenIDConnect {
