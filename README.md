@@ -11,7 +11,7 @@ Taking care of:
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.5.0.Final](http://keycloak.jboss.org/) etc...
+* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.9.3.Final](http://keycloak.jboss.org/) etc...
 * openID Connect login
 
 100% Swift 2.0.
