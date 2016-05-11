@@ -152,7 +152,14 @@ public class OAuth2Module: AuthzModule {
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
         
-        var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        var version = "unknown"
+        if let path = NSBundle.mainBundle().pathForResource("Info", ofType: "plist", inDirectory: "Frameworks/TDConnectIosSdk.framework") {
+            if let dict = NSDictionary(contentsOfFile: path) {
+                version = dict["CFBundleShortVersionString"] as! String
+            }
+        }
+        
+        var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&telenordigital_sdk_version=iosv\(version)"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
         }
