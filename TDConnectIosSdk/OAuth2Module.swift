@@ -155,11 +155,13 @@ public class OAuth2Module: AuthzModule {
         var version = "unknown"
         if let path = NSBundle.mainBundle().pathForResource("Info", ofType: "plist", inDirectory: "Frameworks/TDConnectIosSdk.framework") {
             if let dict = NSDictionary(contentsOfFile: path) {
-                version = dict["CFBundleShortVersionString"] as! String
+                let osVersion = NSProcessInfo.processInfo().operatingSystemVersion
+                let podVersion = dict["CFBundleShortVersionString"] as! String
+                version = "v\(podVersion)_\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
             }
         }
         
-        var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&telenordigital_sdk_version=iosv\(version)"
+        var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&telenordigital_sdk_version=ios_\(version)"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
         }
