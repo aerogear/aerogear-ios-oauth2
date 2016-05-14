@@ -29,12 +29,12 @@ Taking care of:
 
 #### OAuth2 grant for GET with a predefined config like Facebook
 ```swift
-var Http = Http() 						// [1]
+let http = Http() 						// [1]
 let facebookConfig = FacebookConfig(	// [2]
     clientId: "YYY",
     clientSecret: "XXX",
     scopes:["photo_upload, publish_actions"])
-var oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
+let oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
 http.authzModule = oauth2Module			// [4]
 http.request(.GET, path: "/get", completionHandler: {(response, error) in	// [5]
 	// handle response
@@ -52,13 +52,13 @@ See full description in [aerogear.org](https://aerogear.org/docs/guides/aerogear
 
 #### OpenID Connect with Keycloak
 ```swift
-var Http = Http()
+let http = Http()
 let keycloakConfig = KeycloakConfig(
     clientId: "sharedshoot-third-party",
     host: "http://localhost:8080",
     realm: "shoot-realm",
     isOpenIDConnect: true)
-var oauth2Module = AccountManager.addKeycloakAccount(keycloakConfig)
+let oauth2Module = AccountManager.addKeycloakAccount(keycloakConfig)
 http.authzModule = oauth2Module
 oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in // [1]
     // Do your own stuff here
