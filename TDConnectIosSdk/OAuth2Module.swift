@@ -240,8 +240,12 @@ public class OAuth2Module: AuthzModule {
             let accessToken: String = unwrappedResponse["access_token"] as! String
             let expiration = unwrappedResponse["expires_in"] as! NSNumber
             let exp: String = expiration.stringValue
+            var refreshToken = unwrappedRefreshToken
+            if let newRefreshToken = unwrappedResponse["refresh_token"] as? String {
+                refreshToken = newRefreshToken
+            }
             
-            self.oauth2Session.saveAccessToken(accessToken, refreshToken: unwrappedRefreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil, idToken: nil)
+            self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil, idToken: nil)
             
             completionHandler(unwrappedResponse["access_token"], nil);
         })
