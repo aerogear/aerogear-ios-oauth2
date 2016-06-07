@@ -20,16 +20,16 @@ import XCTest
 import AeroGearOAuth2
 
 class ConfigTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     func testGoogleConfigWithoutOpenID() {
         let googleConfig = GoogleConfig(
             clientId: "873670803862-g6pjsgt64gvp7r25edgf4154e8sld5nq.apps.googleusercontent.com",
@@ -38,7 +38,7 @@ class ConfigTests: XCTestCase {
         XCTAssert(googleConfig.scopes.filter({$0 == "openid"}) == [], "no openid defined per default")
         XCTAssert(googleConfig.scopes == ["https://www.googleapis.com/auth/drive"], "no openid defined per default")
     }
-    
+
     func testGoogleConfigWithOpenID() {
         let googleConfig = GoogleConfig(
             clientId: "873670803862-g6pjsgt64gvp7r25edgf4154e8sld5nq.apps.googleusercontent.com",
@@ -49,7 +49,7 @@ class ConfigTests: XCTestCase {
         XCTAssert(googleConfig.scopes.filter({$0 == "profile"}) == ["profile"], "profile defined for Open ID Connect config")
         XCTAssert(googleConfig.scopes.filter({$0 == "email"}) == ["email"], "email defined for Open ID Connect config")
     }
-    
+
     func testFacebookConfigWithoutOpenID() {
         let facebookConfig = FacebookConfig(
             clientId: "clientid",
@@ -58,7 +58,7 @@ class ConfigTests: XCTestCase {
         print(facebookConfig.scopes)
         XCTAssert(facebookConfig.scopes[0].rangeOfString("public_profile") == nil, "no public_profile defined per default")
     }
-    
+
     func testFacebookConfigWithOpenID() {
         let facebookConfig = FacebookConfig(
             clientId: "clientid",
@@ -69,23 +69,23 @@ class ConfigTests: XCTestCase {
         XCTAssert(facebookConfig.scopes[0] == "photo_upload, publish_actions, public_profile", "public_profile defined for Open ID Connect config, facebook does not use openid")
 
     }
-    
+
     func testKeycloakConfigWithoutOpenID() {
         let keycloakConfig = KeycloakConfig(
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
             realm: "shoot-realm")
-        
+
         XCTAssert(keycloakConfig.scopes.filter({$0 == "openid"}) == [], "no openid defined per default")
     }
-    
+
     func testkeycloakConfigWithOpenID() {
         let keycloakConfig = KeycloakConfig(
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
             realm: "shoot-realm",
             isOpenIDConnect: true)
-        
+
         XCTAssert(keycloakConfig.scopes.filter({$0 == "openid"}) == ["openid"], "openid defined for Open ID Connect config")
         XCTAssert(keycloakConfig.scopes.filter({$0 == "profile"}) == ["profile"], "profile defined for Open ID Connect config")
         XCTAssert(keycloakConfig.scopes.filter({$0 == "email"}) == ["email"], "email defined for Open ID Connect config")

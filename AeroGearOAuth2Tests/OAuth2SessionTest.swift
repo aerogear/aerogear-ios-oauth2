@@ -24,25 +24,25 @@ class OAuth2SessionTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     func testInitUntrustedMemoryOAuth2SessionWithoutAccessToken() {
         let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID")
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
         XCTAssert(session.accessToken ==  nil, "session should be without access token")
     }
-    
+
     func testInitUntrustedMemoryOAuth2SessionWithAccessToken() {
         let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessTokenExpirationDate: NSDate(), accessToken: "ACCESS")
         XCTAssert(session.accountId == "MY_FACEBOOK_ID", "wrong account id")
         XCTAssert(session.accessToken ==  "ACCESS", "session should be with access token")
         XCTAssert(session.accessTokenExpirationDate !=  nil, "session should be with access token expiration date")
     }
-    
+
     func testSaveNilTokens() {
         let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessToken: "ACCESS", refreshToken: "REFRESH")
         session.clearTokens()
@@ -51,7 +51,7 @@ class OAuth2SessionTests: XCTestCase {
         XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
         XCTAssert(session.accessTokenExpirationDate ==  nil, "session should be without access token expiration date")
     }
-    
+
     func testSaveTokens() {
         let session = UntrustedMemoryOAuth2Session(accountId: "MY_FACEBOOK_ID", accessTokenExpirationDate: NSDate(), accessToken: "ACCESS", refreshToken: "REFRESH")
         session.clearTokens()
@@ -60,5 +60,5 @@ class OAuth2SessionTests: XCTestCase {
         XCTAssert(session.refreshToken ==  nil, "session should be without refresh token")
         XCTAssert(session.accessTokenExpirationDate ==  nil, "session should be without access token expiration date")
     }
-    
+
 }

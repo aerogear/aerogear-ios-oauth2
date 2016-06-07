@@ -111,7 +111,7 @@ public class Config {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL

@@ -20,19 +20,19 @@ import XCTest
 import AeroGearOAuth2
 
 class DateUtilsTest: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     func testDateFormatting() {
         let date1 = NSDate(dateString: "2014-02-12 12:45:30 AM")
         XCTAssert(date1.toString() == "2014-02-12 12:45:30 AM")
     }
-    
+
 }

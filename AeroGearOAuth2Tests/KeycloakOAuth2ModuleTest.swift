@@ -43,13 +43,13 @@ func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
 }
 
 class KeycloakOAuth2ModuleTests: XCTestCase {
-   
+
     override func setUp() {
         super.setUp()
         OHHTTPStubs.removeAllStubs()
         setupStubKeycloakWithNSURLSessionDefaultConfiguration()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
@@ -61,13 +61,13 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
             realm: "shoot-realm")
-        
+
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = KeycloakOAuth2Module(config: keycloakConfig, session: mockedSession)
         oauth2Module.refreshAccessToken ({ (response: AnyObject?, error:NSError?) -> Void in
             XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             XCTAssertTrue(KEYCLOAK_TOKEN == mockedSession.savedRefreshedToken, "Saved newly issued refresh token")
-            expectation.fulfill()            
+            expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
@@ -79,7 +79,7 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
             clientId: "shoot-third-party",
             host: "http://localhost:8080",
             realm: "shoot-realm")
-        
+
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = KeycloakOAuth2Module(config: keycloakConfig, session: mockedSession)
         oauth2Module.revokeAccess({(response: AnyObject?, error:NSError?) -> Void in
@@ -88,5 +88,5 @@ class KeycloakOAuth2ModuleTests: XCTestCase {
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-      */ 
+      */
 }

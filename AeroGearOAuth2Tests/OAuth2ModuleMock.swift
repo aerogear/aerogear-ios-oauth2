@@ -36,13 +36,13 @@ public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
     public func tokenIsNotExpired() -> Bool {
         return true
     }
-    
+
     public func refreshTokenIsNotExpired() -> Bool {
         return true
     }
-    
+
     public func clearTokens() {}
-    
+
     public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {}
     public init() {}
 }
@@ -68,7 +68,7 @@ public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccess
         }
         set(value) {}
     }
-    
+
     public override func tokenIsNotExpired() -> Bool {
         return false
     }
@@ -89,7 +89,7 @@ public class MockOAuth2SessionWithAuthzCode: MockOAuth2SessionWithValidAccessTok
     public override func tokenIsNotExpired() -> Bool {
         return false
     }
-    
+
 }
 
 class OAuth2ModulePartialMock: OAuth2Module {

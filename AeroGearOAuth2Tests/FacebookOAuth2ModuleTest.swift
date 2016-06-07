@@ -40,47 +40,47 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
 }
 
 class FacebookOAuth2ModuleTests: XCTestCase {
-   
+
     override func setUp() {
         super.setUp()
         setupStubFacebookWithNSURLSessionDefaultConfiguration()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
     }
- 
+
     func testExchangeAuthorizationCodeForAccessToken() {
-        let expectation = expectationWithDescription("ExchangeAccessToken");
+        let expectation = expectationWithDescription("ExchangeAccessToken")
         let facebookConfig = FacebookConfig(
             clientId: "xxx",
             clientSecret: "yyy",
             scopes:["photo_upload, publish_actions"])
-        
+
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
-        oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
-            XCTAssertTrue(response as! String == "CAAK4k" , "Check access token is return to callback")
-            expectation.fulfill()            
+        oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
+            XCTAssertTrue(response as! String == "CAAK4k", "Check access token is return to callback")
+            expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
+
     func testRevokeAccess() {
-        let expectation = expectationWithDescription("Revoke");
+        let expectation = expectationWithDescription("Revoke")
         let facebookConfig = FacebookConfig(
             clientId: "xxx",
             clientSecret: "yyy",
             scopes:["photo_upload, publish_actions"])
-        
+
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
-        oauth2Module.revokeAccess({(response: AnyObject?, error:NSError?) -> Void in
+        oauth2Module.revokeAccess({(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
+
 }
