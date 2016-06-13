@@ -50,7 +50,8 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var webView: OAuth2WebViewController?
+    public var webView: OAuth2WebViewController?
+
     /**
     Initialize an OAuth2 module.
 
@@ -125,7 +126,7 @@ public class OAuth2Module: AuthzModule {
         if let url = url {
             if self.webView != nil {
                 self.webView!.targetURL = url
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+                config.webViewHandler(self.webView!, completionHandler: completionHandler)
             } else {
                 UIApplication.sharedApplication().openURL(url)
             }
