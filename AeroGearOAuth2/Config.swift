@@ -25,7 +25,7 @@ public class Config {
     Applies the baseURL to the configuration.
     */
     public let baseURL: String
-    
+
     /**
     Applies the "callback URL" once request token issued.
     */
@@ -35,7 +35,7 @@ public class Config {
     Applies the "authorization endpoint" to the request token.
     */
     public var authzEndpoint: String
-    
+
     /**
     Applies the "access token endpoint" to the exchange code for access token.
     */
@@ -45,27 +45,27 @@ public class Config {
     Endpoint for request to invalidate both accessToken and refreshToken.
     */
     public let revokeTokenEndpoint: String?
-    
+
     /**
     Endpoint for request a refreshToken.
     */
     public let refreshTokenEndpoint: String?
-    
+
     /**
     Endpoint for OpenID Connect to get user information.
     */
     public let userInfoEndpoint: String?
-    
+
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
     */
     public var isOpenIDConnect: Bool
-    
+
     /**
     Applies the various scopes of the authorization.
     */
     public var scopes: [String]
-    
+
     var scope: String {
         get {
             // Create a string to concatenate all scopes existing in the _scopes array.
@@ -80,29 +80,37 @@ public class Config {
             return scopeString
         }
     }
-    
+
     /**
     Applies the "client id" obtained with the client registration process.
     */
     public let clientId: String
-    
+
     /**
     Applies the "client secret" obtained with the client registration process.
     */
     public let clientSecret: String?
-    
+
     /**
     Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
     and can be any String. If AccountManager is not used, this field is optional.
     */
     public var accountId: String?
-    
+
     /**
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
     */
     public var isWebView: Bool = false
-    
+
+    /**
+    A handler to allow the webview to be pushed onto the navigation controller
+    */
+    public var webViewHandler: ((OAuth2WebViewController, completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+        (webView, completionHandler) in
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(webView, animated: true, completion: nil)
+    }
+
     public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint

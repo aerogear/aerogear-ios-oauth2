@@ -50,7 +50,8 @@ public class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var webView: OAuth2WebViewController?
+    public var webView: OAuth2WebViewController?
+
     /**
     Initialize an OAuth2 module.
 
@@ -125,7 +126,7 @@ public class OAuth2Module: AuthzModule {
         if let url = url {
             if self.webView != nil {
                 self.webView!.targetURL = url
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(self.webView!, animated: true, completion: nil)
+                config.webViewHandler(self.webView!, completionHandler: completionHandler)
             } else {
                 UIApplication.sharedApplication().openURL(url)
             }
@@ -158,7 +159,7 @@ public class OAuth2Module: AuthzModule {
                     if let newRefreshToken = unwrappedResponse["refresh_token"] as? String {
                         refreshToken = newRefreshToken
                     }
-                    
+
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
 
                     completionHandler(unwrappedResponse["access_token"], nil);
@@ -175,17 +176,17 @@ public class OAuth2Module: AuthzModule {
     */
     public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
-        
+
         if let unwrapped = config.clientSecret {
             paramDict["client_secret"] = unwrapped
         }
-        
+
         http.request(.POST, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
-            
+
             if let unwrappedResponse = responseObject as? [String: AnyObject] {
                 let accessToken: String = unwrappedResponse["access_token"] as! String
                 let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
@@ -194,7 +195,7 @@ public class OAuth2Module: AuthzModule {
                 // expiration for refresh token is used in Keycloak
                 let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
                 let expRefresh = expirationRefresh?.stringValue
-                
+
                 self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
                 completionHandler(accessToken, nil)
             }
@@ -218,16 +219,16 @@ public class OAuth2Module: AuthzModule {
             self.requestAuthorizationCode(completionHandler)
         }
     }
-    
+
     /**
     Gateway to provide authentication using the Authorization Code Flow with OpenID Connect.
-    
+
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        
+
         self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
-            
+
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
@@ -253,11 +254,11 @@ public class OAuth2Module: AuthzModule {
                 completionHandler(nil, nil, NSError(domain: "OAuth2Module", code: 0, userInfo: ["OpenID Connect" : "No UserInfo endpoint available in config"]))
                 return
             }
-            
+
         }
 
     }
-    
+
     /**
     Request to revoke access.
 
