@@ -37,7 +37,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23}"
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
-            case "/rest/revoke":
+            case "/o/oauth2/revoke":
                 let string = "{}"
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
