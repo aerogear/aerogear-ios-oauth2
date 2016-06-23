@@ -13,8 +13,6 @@ OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-
 
 100% Swift 2.0.
 
-Documentation on forked project: https://aerogear.org/docs/guides/aerogear-ios-2.X/
-
 ## Hello World app using the SDK
 
 The easiest way to get started is looking at the _Hello World_ example app.
@@ -22,6 +20,8 @@ The easiest way to get started is looking at the _Hello World_ example app.
 https://github.com/telenordigital/TelenorConnectIosHelloWorld.
 
 Implements the API's for http://docs.telenordigital.com/apis/connect/id/authentication.html.
+
+Documentation on the project forked from can be found at https://aerogear.org/docs/guides/aerogear-ios-2.X/
 
 ### Build, test and play with connect-ios-sdk
 
