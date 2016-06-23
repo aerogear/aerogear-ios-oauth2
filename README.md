@@ -1,24 +1,23 @@
 # connect-ios-sdk
 
-> This module currently build with Xcode 7 and supports iOS8, iOS9.
-
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
-Taking care of: 
+
+##Features
 
 * account manager for multiple OAuth2 accounts,
 * request access and refresh token,
-* grant access through secure external browser and URI schema to re-enter app,
+* grant access through secure browser and URI schema to re-enter app,
 * (implicit or explicit) refresh tokens, 
 * revoke tokens,
 * permanent secure storage,
-* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.5.0.Final](http://keycloak.jboss.org/) etc...
-* openID Connect login
 
 100% Swift 2.0.
 
 Documentation on forked project: https://aerogear.org/docs/guides/aerogear-ios-2.X/
 
 ## Hello World app using the SDK
+
+The easiest way to get started is looking at the _Hello World_ example app.
 
 https://github.com/telenordigital/TelenorConnectIosHelloWorld.
 
