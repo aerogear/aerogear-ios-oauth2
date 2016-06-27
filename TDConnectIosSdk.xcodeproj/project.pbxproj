@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B94E9362344D1BD2EF7D943 /* Pods_TDConnectIosSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */; };
 		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
 		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
+		4830BF4E1D4C1E7F8491CB58 /* Pods_TDConnectIosSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29CEFEBD6E843FBD5EE93FEB /* Pods_TDConnectIosSdkTests.framework */; };
 		4833046819AF1635002F8DA9 /* TDConnectIosSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* TDConnectIosSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
 		483304A519AF44DF002F8DA9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
@@ -30,7 +30,7 @@
 		48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */; };
 		48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DE90A519CDEAEE007F9B21 /* KeycloakOAuth2Module.swift */; };
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
-		516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADB5FF0CB048392A40B2D60 /* Pods.framework */; };
+		4B9A26288B291AE0A3828F98 /* Pods_TDConnectIosSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */; };
 		5C542B581CABD3C400039789 /* IdTokenValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */; };
 		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
 		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
@@ -62,10 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.release.xcconfig"; sourceTree = "<group>"; };
-		30038E87B86C6C0BB52B42DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		31897CDB95B69D233A342D2D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29CEFEBD6E843FBD5EE93FEB /* Pods_TDConnectIosSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookOAuth2Module.swift; sourceTree = "<group>"; };
@@ -95,8 +92,12 @@
 		5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidatorTest.swift; sourceTree = "<group>"; };
 		5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidator.swift; sourceTree = "<group>"; };
 		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
+		81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82795C1D3260B724DC6F6A00 /* Pods-TDConnectIosSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk.release.xcconfig"; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B8BA81BC938C950FC172C5D7 /* Pods-TDConnectIosSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C6412BF91B7738BE06CECC5A /* Pods-TDConnectIosSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		C84BEAA5E381A22486AE922C /* Pods-TDConnectIosSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				516C2B389D203ECEBD9E0815 /* Pods.framework in Frameworks */,
+				4B9A26288B291AE0A3828F98 /* Pods_TDConnectIosSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,21 +113,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B94E9362344D1BD2EF7D943 /* Pods_TDConnectIosSdkTests.framework in Frameworks */,
+				4830BF4E1D4C1E7F8491CB58 /* Pods_TDConnectIosSdkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		119CB8F2269D9F093E29AE2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C84BEAA5E381A22486AE922C /* Pods-TDConnectIosSdk.debug.xcconfig */,
+				82795C1D3260B724DC6F6A00 /* Pods-TDConnectIosSdk.release.xcconfig */,
+				B8BA81BC938C950FC172C5D7 /* Pods-TDConnectIosSdkTests.debug.xcconfig */,
+				C6412BF91B7738BE06CECC5A /* Pods-TDConnectIosSdkTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4833045819AF1635002F8DA9 = {
 			isa = PBXGroup;
 			children = (
 				4833046419AF1635002F8DA9 /* TDConnectIosSdk */,
 				4833046E19AF1635002F8DA9 /* TDConnectIosSdkTests */,
 				4833046319AF1635002F8DA9 /* Products */,
-				EDC1B5EA330BE6809642E3C9 /* Pods */,
 				6DA531836D4D42D3E1904E78 /* Frameworks */,
+				119CB8F2269D9F093E29AE2B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,20 +220,10 @@
 			isa = PBXGroup;
 			children = (
 				9ADB5FF0CB048392A40B2D60 /* Pods.framework */,
-				3F4BA5A03E90C75CC2866ABF /* Pods_TDConnectIosSdkTests.framework */,
+				81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */,
+				29CEFEBD6E843FBD5EE93FEB /* Pods_TDConnectIosSdkTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EDC1B5EA330BE6809642E3C9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				31897CDB95B69D233A342D2D /* Pods.debug.xcconfig */,
-				30038E87B86C6C0BB52B42DD /* Pods.release.xcconfig */,
-				B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */,
-				09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,12 +244,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdk" */;
 			buildPhases = (
-				AC859C314229F66700908186 /* Check Pods Manifest.lock */,
+				78AAE80F48F1E3DE0D894510 /* [CP] Check Pods Manifest.lock */,
 				4833045D19AF1635002F8DA9 /* Sources */,
 				4833045E19AF1635002F8DA9 /* Frameworks */,
 				4833045F19AF1635002F8DA9 /* Headers */,
 				4833046019AF1635002F8DA9 /* Resources */,
-				E0642692721FE27851FB502F /* Copy Pods Resources */,
+				02DB3DCE44CB854E9B543025 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -262,13 +264,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4833047819AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "TDConnectIosSdkTests" */;
 			buildPhases = (
-				93450CEB2BAFED8F7B381800 /* Check Pods Manifest.lock */,
+				45DCE44E828CCE862184EF58 /* [CP] Check Pods Manifest.lock */,
 				4833046919AF1635002F8DA9 /* Sources */,
 				4833046A19AF1635002F8DA9 /* Frameworks */,
 				4833046B19AF1635002F8DA9 /* Resources */,
 				6F1432B31A16857C003BEE5B /* Copy Frameworks */,
-				117651896C6099169FF40CAA /* Embed Pods Frameworks */,
-				43077EF0E9B8CD33A80E7B9F /* Copy Pods Resources */,
+				00AAD8C39FA14D087CBC8613 /* [CP] Embed Pods Frameworks */,
+				C7B14E91846F3174319DBEDD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -334,14 +336,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		117651896C6099169FF40CAA /* Embed Pods Frameworks */ = {
+		00AAD8C39FA14D087CBC8613 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,64 +351,64 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		43077EF0E9B8CD33A80E7B9F /* Copy Pods Resources */ = {
+		02DB3DCE44CB854E9B543025 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		45DCE44E828CCE862184EF58 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		78AAE80F48F1E3DE0D894510 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C7B14E91846F3174319DBEDD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93450CEB2BAFED8F7B381800 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		AC859C314229F66700908186 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		E0642692721FE27851FB502F /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -550,7 +552,7 @@
 		};
 		4833047619AF1635002F8DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31897CDB95B69D233A342D2D /* Pods.debug.xcconfig */;
+			baseConfigurationReference = C84BEAA5E381A22486AE922C /* Pods-TDConnectIosSdk.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -569,7 +571,7 @@
 		};
 		4833047719AF1635002F8DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30038E87B86C6C0BB52B42DD /* Pods.release.xcconfig */;
+			baseConfigurationReference = 82795C1D3260B724DC6F6A00 /* Pods-TDConnectIosSdk.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -587,7 +589,7 @@
 		};
 		4833047919AF1635002F8DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8AABF38B64CDFEB481203C1 /* Pods-TDConnectIosSdkTests.debug.xcconfig */;
+			baseConfigurationReference = B8BA81BC938C950FC172C5D7 /* Pods-TDConnectIosSdkTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -606,7 +608,7 @@
 		};
 		4833047A19AF1635002F8DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09E5C3E9BF21978F6317B217 /* Pods-TDConnectIosSdkTests.release.xcconfig */;
+			baseConfigurationReference = C6412BF91B7738BE06CECC5A /* Pods-TDConnectIosSdkTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
