@@ -86,27 +86,24 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
         
         // if found update
         if (statusSearch == errSecSuccess) {
-            if (dataFromString != nil) {
-                let attributesToUpdate = NSMutableDictionary()
-                attributesToUpdate[kSecValueData as String] = dataFromString!
+            let attributesToUpdate = NSMutableDictionary()
+            attributesToUpdate[kSecValueData as String] = dataFromString!
+            attributesToUpdate[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
                 
-                let statusUpdate: OSStatus = SecItemUpdate(keychainQuery, attributesToUpdate)
-                if (statusUpdate != errSecSuccess) {
-                    print("tokens not updated")
-                    return false
-                }
-            } else { // revoked token or newly installed app, clear KC
-                return self.resetKeychain()
+            let statusUpdate: OSStatus = SecItemUpdate(keychainQuery, attributesToUpdate)
+            if (statusUpdate != errSecSuccess) {
+                print("tokens not updated")
+                return false
             }
         } else if(statusSearch == errSecItemNotFound) { // if new, add
             keychainQuery[kSecValueData as String] = dataFromString!
+            keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             let statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
             if(statusAdd != errSecSuccess) {
                 print("tokens not saved")
