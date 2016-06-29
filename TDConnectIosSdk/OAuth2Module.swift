@@ -99,10 +99,27 @@ public class OAuth2Module: AuthzModule {
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
-            self.extractCode(notification, completionHandler: completionHandler)
-            if self.config.isWebView {
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-            }
+            self.extractCode(notification, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
+                guard let accessToken = accessToken else {
+                    if self.config.isWebView {
+                        UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+                            completionHandler(nil, error)
+                        })
+                    } else {
+                        completionHandler(nil, error)
+                    }
+                    return
+                }
+                
+                if self.config.isWebView {
+                    UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+                        completionHandler(accessToken, nil)
+                    })
+                } else {
+                    completionHandler(accessToken, nil)
+                }
+            })
+            
         })
 
         // register to receive notification when the application becomes active so we
