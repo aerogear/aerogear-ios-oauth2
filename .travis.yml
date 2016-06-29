@@ -5,7 +5,7 @@ xcode_scheme: AeroGearOAuth2Tests
 xcode_sdk: iphonesimulator
 
 before_install:
-    - gem install cocoapods -v '1.0.1' -N --no-rdoc --no-ri --no-document --quiet
+    - gem install cocoapods -v '0.39.0' -N --no-rdoc --no-ri --no-document --quiet
 
 notifications:
   irc: "irc.freenode.org#aerogear"
