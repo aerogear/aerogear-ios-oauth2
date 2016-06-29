@@ -592,7 +592,6 @@
 			baseConfigurationReference = B8BA81BC938C950FC172C5D7 /* Pods-TDConnectIosSdkTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -611,7 +610,6 @@
 			baseConfigurationReference = C6412BF91B7738BE06CECC5A /* Pods-TDConnectIosSdkTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TDConnectIosSdkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
