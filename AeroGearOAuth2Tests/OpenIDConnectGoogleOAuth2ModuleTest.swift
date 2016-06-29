@@ -22,55 +22,55 @@ import AeroGearHttp
 import OHHTTPStubs
 
 class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
     }
-    
+
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
-       
+
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
     }
-    
+
     class MyMockOAuth2ModuleFailure: OAuth2Module {
-        
+
         override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
-    
+
     func testGoogleOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login");
+        let loginExpectation = expectationWithDescription("Login")
 
         let googleConfig = GoogleConfig(
             clientId: "xxxx.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
-        
+
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
         let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
-        
+
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
 
             XCTAssertTrue("John" == claims?.name, "claim shoud be as mocked")
             loginExpectation.fulfill()
-            
+
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
+
     func testGoogleOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+        let loginExpectation = expectationWithDescription("Login")
+
         let googleConfig = Config(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/auth",
             redirectURL: "google:/oauth2Callback",
@@ -85,35 +85,35 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
         let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
-        
+
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
-            
+
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
+
     func testGoogleOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login");
-        
+        let loginExpectation = expectationWithDescription("Login")
+
         let googleConfig = GoogleConfig(
             clientId: "xxx.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"],
             isOpenIDConnect: true)
-        
+
 
         let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
-        
+
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
-            
+
             XCTAssertTrue(error != nil, "Error")
             loginExpectation.fulfill()
-            
+
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
+
 }

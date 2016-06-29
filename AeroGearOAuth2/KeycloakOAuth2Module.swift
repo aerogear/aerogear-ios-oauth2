@@ -21,32 +21,32 @@ import Foundation
 An OAuth2Module subclass specific to 'Keycloak' authorization
 */
 public class KeycloakOAuth2Module: OAuth2Module {
-    
+
     public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
-            return;
+            return
         }
-        let paramDict:[String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
+        let paramDict: [String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
         http.request(.POST, path: config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
-            
+
             self.oauth2Session.clearTokens()
             completionHandler(response, nil)
         })
     }
-    
+
     /**
     Gateway to login with OpenIDConnect
-    
+
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public override func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
         var openIDClaims: OpenIDClaim?
-        
+
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
@@ -62,10 +62,10 @@ public class KeycloakOAuth2Module: OAuth2Module {
             completionHandler(accessToken, openIDClaims, nil)
         }
     }
-    
+
     /**
     Request to refresh an access token.
-    
+
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
@@ -74,13 +74,13 @@ public class KeycloakOAuth2Module: OAuth2Module {
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
-            
+
             http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
                 if (error != nil) {
                     completionHandler(nil, error)
                     return
                 }
-                
+
                 if let unwrappedResponse = response as? [String: AnyObject] {
                     let accessToken: String = unwrappedResponse["access_token"] as! String
                     let refreshToken: String = unwrappedResponse["refresh_token"] as! String
@@ -88,21 +88,21 @@ public class KeycloakOAuth2Module: OAuth2Module {
                     let exp: String = expiration.stringValue
                     let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
                     let expRefresh = expirationRefresh?.stringValue
-                    
+
                     // in Keycloak refresh token get refreshed every time you use them
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
-                    completionHandler(accessToken, nil);
+                    completionHandler(accessToken, nil)
                 }
             })
         }
     }
-    
-    
+
+
     func decode(token: String) -> [String: AnyObject]? {
         let string = token.componentsSeparatedByString(".")
         let toDecode = string[1] as String
-        
-        
+
+
         var stringtoDecode: String = toDecode.stringByReplacingOccurrencesOfString("-", withString: "+") // 62nd char of encoding
         stringtoDecode = stringtoDecode.stringByReplacingOccurrencesOfString("_", withString: "/") // 63rd char of encoding
         switch (stringtoDecode.utf16.count % 4) {
@@ -113,7 +113,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
         }
         let dataToDecode = NSData(base64EncodedString: stringtoDecode, options: [])
         let base64DecodedString = NSString(data: dataToDecode!, encoding: NSUTF8StringEncoding)
-        
+
         var values: [String: AnyObject]?
         if let string = base64DecodedString {
             if let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
@@ -122,5 +122,5 @@ public class KeycloakOAuth2Module: OAuth2Module {
         }
         return values
     }
-    
+
 }

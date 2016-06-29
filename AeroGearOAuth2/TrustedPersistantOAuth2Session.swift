@@ -196,7 +196,7 @@ public class KeychainWrap {
     func deleteAllKeysForSecClass(secClass: CFTypeRef) -> Bool {
         let keychainQuery = NSMutableDictionary()
         keychainQuery[kSecClass as String] = secClass
-        let result:OSStatus = SecItemDelete(keychainQuery)
+        let result: OSStatus = SecItemDelete(keychainQuery)
         if (result == errSecSuccess) {
             return true
         } else {
@@ -221,7 +221,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public var accessTokenExpirationDate: NSDate? {
         get {
             let dateAsString = self.keychain.read(self.accountId, tokenType: .ExpirationDate)
-            if let unwrappedDate:String = dateAsString {
+            if let unwrappedDate: String = dateAsString {
                 return NSDate(dateString: unwrappedDate)
             } else {
                 return nil
@@ -274,7 +274,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     public var refreshTokenExpirationDate: NSDate? {
         get {
             let dateAsString = self.keychain.read(self.accountId, tokenType: .RefreshExpirationDate)
-            if let unwrappedDate:String = dateAsString {
+            if let unwrappedDate: String = dateAsString {
                 return NSDate(dateString: unwrappedDate)
             } else {
                 return nil

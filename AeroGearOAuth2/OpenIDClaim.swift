@@ -70,9 +70,9 @@ public class OpenIDClaim: CustomStringConvertible {
             "nickname: \(nickname)\npreferredUsername: \(preferredUsername)\nprofile: \(profile)\npicture: \(picture)\n" +
         "website: \(website)\nemail: \(email)\nemailVerified: \(emailVerified)\ngender: \(gender)\nbirthdate: \(birthdate)\n"
     }
-    
+
     /// Initialize an OpenIDClaim from a dictionary. all information not available are optional values set to .None.
-    public init(fromDict:[String: AnyObject]) {
+    public init(fromDict: [String: AnyObject]) {
         sub = fromDict["sub"] as? String
         name = fromDict["name"] as? String
         givenName = fromDict["given_name"] as? String
@@ -97,13 +97,11 @@ public class OpenIDClaim: CustomStringConvertible {
 }
 /// Facebook specific claims.
 public class FacebookOpenIDClaim: OpenIDClaim {
-    
-    override init(fromDict:[String: AnyObject]) {
+
+    override init(fromDict: [String: AnyObject]) {
         super.init(fromDict: fromDict)
         givenName = fromDict["first_name"] as? String
         familyName = fromDict["last_name"] as? String
         zoneinfo = fromDict["timezone"] as? String
     }
 }
-
-
