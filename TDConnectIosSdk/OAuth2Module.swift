@@ -45,6 +45,7 @@ enum AuthorizationState {
 public enum OAuth2Error: ErrorType {
     case MissingRefreshToken
     case UnexpectedResponse(String)
+    case UnequalStateParameter(String)
 }
 
 /**
@@ -95,10 +96,29 @@ public class OAuth2Module: AuthzModule {
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
     public func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
+        let state = NSUUID().UUIDString
+        
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
         applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
+            
+            let url: NSURL? = (notification.userInfo as! [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
+            
+            let stateFromRedirectUrl = self.parametersFromQueryString(url?.query)["state"]
+            
+            guard let _ = stateFromRedirectUrl where stateFromRedirectUrl == state else {
+                let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server,") as NSError
+                if self.config.isWebView {
+                    UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+                        completionHandler(nil, error)
+                    })
+                } else {
+                    completionHandler(nil, error)
+                }
+                return
+            }
+            
             self.extractCode(notification, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
                 guard let accessToken = accessToken else {
                     if self.config.isWebView {
@@ -142,7 +162,7 @@ public class OAuth2Module: AuthzModule {
         // calculate final url
         var url: NSURL
         do {
-            url = try OAuth2Module.getAuthUrl(config, http: http)
+            url = try OAuth2Module.getAuthUrl(config, http: http, state: state)
         } catch let error as NSError {
             completionHandler(nil, error)
             return
@@ -164,7 +184,7 @@ public class OAuth2Module: AuthzModule {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
     }
     
-    public class func getAuthUrl(config: Config, http: Http) throws -> NSURL {
+    public class func getAuthUrl(config: Config, http: Http, state: String? = nil) throws -> NSURL {
         let optionalParamsEncoded = config.optionalParams?.keys.reduce("", combine: { (current: String, key: String) -> String in
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
@@ -189,6 +209,10 @@ public class OAuth2Module: AuthzModule {
             } catch {
                 throw error
             }
+        }
+        
+        if let state = state {
+            params += "&state=\(state)"
         }
         
         guard let computedUrl = http.calculateURL(config.baseURL, url:config.authzEndpoint) else {
