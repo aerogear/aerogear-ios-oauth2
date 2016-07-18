@@ -122,7 +122,14 @@ public class Config {
     */
     public var isWebView: Bool = false
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false) {
+    /**
+    Boolean to indicate whether the client is a public client (true) or a confidential client (false).
+    A public client will exchange the authorization code for tokens, on successful authentication and authorization.
+    A confidential client will not exchange the authorization code but simply return this to the client through the callback, on successful authentication and authorization.
+    */
+    public let isPublicClient: Bool
+    
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -138,5 +145,6 @@ public class Config {
         self.claims = claims
         self.optionalParams = optionalParams
         self.isWebView = isWebView
+        self.isPublicClient = isPublicClient
     }
 }

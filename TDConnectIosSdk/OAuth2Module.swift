@@ -410,20 +410,20 @@ public class OAuth2Module: AuthzModule {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()
     }
 
-    // MARK: Internal Methods
-
     func extractCode(notification: NSNotification, completionHandler: (AnyObject?, NSError?) -> Void) {
         let url: NSURL? = (notification.userInfo as! [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
 
         // extract the code from the URL
         let code = self.parametersFromQueryString(url?.query)["code"]
         // if exists perform the exchange
-        if (code != nil) {
+        if (code != nil && self.config.isPublicClient) {
             self.exchangeAuthorizationCodeForAccessToken(code!, completionHandler: completionHandler)
             // update state
             state = .AuthorizationStateApproved
+        } else if (code != nil && !self.config.isPublicClient) {
+            completionHandler(code!, nil)
+            state = .AuthorizationStateApproved
         } else {
-
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
             completionHandler(nil, error)
         }
@@ -468,10 +468,6 @@ public class OAuth2Module: AuthzModule {
         }
         
         return token
-    }
-    
-    func validate(token: [String:AnyObject]) throws {
-        
     }
     
     public func getIdTokenEncoded() -> String? {

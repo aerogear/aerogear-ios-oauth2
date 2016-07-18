@@ -2,7 +2,7 @@
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
 
-##Features
+## Features
 
 * account manager for multiple OAuth2 accounts,
 * request access and refresh token,
@@ -64,3 +64,36 @@ git submodule add https://github.com/telenordigital/connect-ios-sdk.git
 3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of TDConnectIosSdk.framework (Currently set to 8.0).
 5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `TDConnectIosSdk.framework`.
 7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `TDConnectIosSdk.framework`.
+
+## Advanced Usage
+
+### Confidenetial Client
+
+To set the SDK to **Confidential Client** mode set the optional init parameter in the `Config` object named `isPublicClient` to `false`. Otherwise it will default to a **public client**.
+A confidential client will not exchange the authorization code but simply return this to the client through the callback. The app code can then send this to a third party client server.
+
+See [http://docs.telenordigital.com/connect/id/native_apps.html](http://docs.telenordigital.com/connect/id/native_apps.html) for more information.
+
+```swift
+override func viewDidAppear(animated: Bool) {
+	super.viewDidAppear(animated)
+	let config = TelenorConnectConfig(clientId: "telenordigital-connectexample-ios",
+	    redirectUrl: "telenordigital-connectexample-ios://oauth2callback",
+	    useStaging: true,
+	    scopes: ["profile", "openid", "email"],
+	    accountId: "telenor-connect-ios-hello-world",
+	    isPublicClient: false) // this variable needs to be present
+
+	let oauth2Module = AccountManager.getAccountByConfig(config) 
+		?? AccountManager.addAccount(self.config, moduleClass: TelenorConnectOAuth2Module.self)
+
+	oauth2Module.requestAuthorizationCode { (authorizationCode: AnyObject?, error: NSError?) in
+        if (error != nil) {
+            // handle error
+            return
+        }
+        
+        // use authorizationCode
+    }
+}
+```
