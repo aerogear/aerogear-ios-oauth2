@@ -109,35 +109,17 @@ public class OAuth2Module: AuthzModule {
             
             guard let _ = stateFromRedirectUrl where stateFromRedirectUrl == state else {
                 let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server,") as NSError
-                if self.config.isWebView {
-                    UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-                        completionHandler(nil, error)
-                    })
-                } else {
-                    completionHandler(nil, error)
-                }
+                self.callCompletion(nil, error: error, completionHandler: completionHandler)
                 return
             }
             
             self.extractCode(notification, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
                 guard let accessToken = accessToken else {
-                    if self.config.isWebView {
-                        UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-                            completionHandler(nil, error)
-                        })
-                    } else {
-                        completionHandler(nil, error)
-                    }
+                    self.callCompletion(nil, error: error, completionHandler: completionHandler)
                     return
                 }
                 
-                if self.config.isWebView {
-                    UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-                        completionHandler(accessToken, nil)
-                    })
-                } else {
-                    completionHandler(accessToken, nil)
-                }
+                self.callCompletion(accessToken, error: nil, completionHandler: completionHandler)
             })
             
         })
@@ -182,6 +164,16 @@ public class OAuth2Module: AuthzModule {
         }
         
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func callCompletion(success: AnyObject?, error: NSError?, completionHandler: (AnyObject?, NSError?) -> Void) {
+        if self.config.isWebView {
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+                completionHandler(success, error)
+            })
+        } else {
+            completionHandler(success, error)
+        }
     }
     
     public class func getAuthUrl(config: Config, http: Http, state: String? = nil) throws -> NSURL {
