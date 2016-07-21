@@ -1,0 +1,30 @@
+PODS:
+  - AeroGearHttp (0.5.1)
+  - OHHTTPStubs (4.7.1):
+    - OHHTTPStubs/Default (= 4.7.1)
+  - OHHTTPStubs/Core (4.7.1)
+  - OHHTTPStubs/Default (4.7.1):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (4.7.1):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (4.7.1):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (4.7.1)
+  - OHHTTPStubs/Swift (4.7.1):
+    - OHHTTPStubs/Core
+
+DEPENDENCIES:
+  - AeroGearHttp (= 0.5.1)
+  - OHHTTPStubs (= 4.7.1)
+  - OHHTTPStubs/Swift (= 4.7.1)
+
+SPEC CHECKSUMS:
+  AeroGearHttp: 9eb405b694aa9ac5daff842f68648f4a9fe0fa66
+  OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
+
+PODFILE CHECKSUM: 4ece632c05dbb3f81228028f076989c54da7875c
+
+COCOAPODS: 1.1.0.beta.1
