@@ -10,7 +10,7 @@ target 'AeroGearOAuth2' do
   target 'AeroGearOAuth2Tests' do
       inherit! :search_paths
 
-      pod 'OHHTTPStubs', '4.7.1'
-      pod 'OHHTTPStubs/Swift', '4.7.1'
+      pod 'OHHTTPStubs', '5.1.0'
+      pod 'OHHTTPStubs/Swift', '5.1.0'
   end
 end
