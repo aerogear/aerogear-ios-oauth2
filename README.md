@@ -70,7 +70,7 @@ git submodule add https://github.com/telenordigital/connect-ios-sdk.git
 ### Confidenetial Client
 
 To set the SDK to **Confidential Client** mode set the optional init parameter in the `Config` object named `isPublicClient` to `false`. Otherwise it will default to a **public client**.
-A confidential client will not exchange the authorization code but simply return this to the client through the callback. The app code can then send this to a third party client server.
+A confidential client will not exchange the authorization code but simply return this to the client through the callback. The app code can then send this to the server-side component of the client.
 
 See [http://docs.telenordigital.com/connect/id/native_apps.html](http://docs.telenordigital.com/connect/id/native_apps.html) for more information.
 
