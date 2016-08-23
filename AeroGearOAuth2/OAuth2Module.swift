@@ -122,7 +122,13 @@ public class OAuth2Module: AuthzModule {
             completionHandler(nil, error)
             return
         }
-        let url = NSURL(string:computedUrl.absoluteString + params)
+        #if swift(>=2.3)
+            // this compiles on Xcode 8 / Swift 2.3 / iOS 10
+            let url = NSURL(string:computedUrl.absoluteString! + params)
+        #else
+            // this compiles on Xcode 7 / Swift 2.2 / iOS 9
+            let url = NSURL(string:computedUrl.absoluteString + params)
+        #endif
         if let url = url {
             if self.webView != nil {
                 self.webView!.targetURL = url
