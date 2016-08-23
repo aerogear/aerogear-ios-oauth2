@@ -2,7 +2,7 @@ language: objective-c
 osx_image: xcode7.3
 
 before_install:
-    - gem install cocoapods -v '1.1.0.beta.1' --no-rdoc --no-ri --no-document --quiet
+    - gem install cocoapods --pre -n /usr/local/bin
 
 script:
     - set -o pipefail
