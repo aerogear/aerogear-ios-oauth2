@@ -106,7 +106,9 @@ public class Config {
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
     */
+    #if os(iOS)
     public var isWebView: Bool = false
+    #endif
     
     public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, isServiceAccount: Bool? = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
@@ -121,7 +123,9 @@ public class Config {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.accountId = accountId
+        #if os(iOS)
         self.isWebView = isWebView
+        #endif
         self.isServiceAccount = isServiceAccount ?? false
     }
 }

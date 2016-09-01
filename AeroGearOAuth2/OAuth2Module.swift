@@ -16,9 +16,12 @@
 */
 
 import Foundation
-import UIKit
 import AeroGearHttp
+
+#if os(iOS)
+import UIKit
 import SafariServices
+#endif
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -93,10 +96,12 @@ public class OAuth2Module: AuthzModule {
         // from the server.
         if applicationLaunchNotificationObserver == nil {
             applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
+                #if os(iOS)
                 self.extractCode(notification, completionHandler: completionHandler)
                 if self.isWebViewPresented {
                     UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
+                #endif
             })
         }
         
@@ -128,6 +133,7 @@ public class OAuth2Module: AuthzModule {
         
         let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
         if let url = url {
+            #if os(iOS)
             if config.isWebView {
                 let webView : UIViewController
                 if #available(iOS 9.0, *) {
@@ -141,6 +147,7 @@ public class OAuth2Module: AuthzModule {
             } else {
                 UIApplication.sharedApplication().openURL(url)
             }
+            #endif
         }
     }
     
@@ -371,6 +378,7 @@ public class OAuth2Module: AuthzModule {
     
     // MARK: Internal Methods
     
+    #if os(iOS)
     func extractCode(notification: NSNotification, completionHandler: (AnyObject?, NSError?) -> Void) {
         let url: NSURL? = (notification.userInfo as! [String: AnyObject])[UIApplicationLaunchOptionsURLKey] as? NSURL
         
@@ -389,6 +397,7 @@ public class OAuth2Module: AuthzModule {
         // finally, unregister
         self.stopObserving()
     }
+    #endif
     
     func parametersFromQueryString(queryString: String?) -> [String: String] {
         var parameters = [String: String]()

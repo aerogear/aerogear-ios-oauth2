@@ -6,8 +6,10 @@
 //  Copyright © 2015 aerogear. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 import SafariServices
+#endif
 
 public class OpenStackOAuth2Module: OAuth2Module {
     
@@ -22,10 +24,12 @@ public class OpenStackOAuth2Module: OAuth2Module {
         // from the server.
         if applicationLaunchNotificationObserver == nil {
             applicationLaunchNotificationObserver = NSNotificationCenter.defaultCenter().addObserverForName(AGAppLaunchedWithURLNotification, object: nil, queue: nil, usingBlock: { (notification: NSNotification!) -> Void in
+                #if os(iOS)
                 self.extractCode(notification, completionHandler: completionHandler)
                 if self.isWebViewPresented {
                     UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
+                #endif
             })
         }
         
@@ -58,6 +62,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
         }
         
         let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
+        #if os(iOS)
         if let url = url {
             if config.isWebView {
                 let webView : UIViewController
@@ -73,6 +78,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
                 UIApplication.sharedApplication().openURL(url)
             }
         }
+        #endif
     }
     
     public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
