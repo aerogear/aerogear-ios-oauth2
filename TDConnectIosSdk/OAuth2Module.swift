@@ -51,7 +51,7 @@ public enum OAuth2Error: ErrorType {
 /**
 Parent class of any OAuth2 module implementing generic OAuth2 authorization flow.
 */
-public class OAuth2Module: AuthzModule {
+public class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     
     public let config: Config
     
@@ -157,7 +157,9 @@ public class OAuth2Module: AuthzModule {
         
         var controller: UIViewController
         if #available(iOS 9.0, *) {
-            controller = SFSafariViewController(URL: url)
+            let safariViewController = SFSafariViewController(URL: url)
+            safariViewController.delegate = self
+            controller = safariViewController
         } else {
             controller = OAuth2WebViewController()
             (controller as! OAuth2WebViewController).targetURL = url
@@ -505,5 +507,10 @@ public class OAuth2Module: AuthzModule {
             NSNotificationCenter.defaultCenter().removeObserver(applicationDidBecomeActiveNotificationObserver!)
             applicationDidBecomeActiveNotificationObserver = nil
         }
+    }
+    
+    @available(iOS 9.0, *)
+    public func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        stopObserving()
     }
 }
