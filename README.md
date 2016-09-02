@@ -11,7 +11,7 @@ OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-
 * revoke tokens,
 * permanent secure storage,
 
-100% Swift 2.0.
+100% Swift 2.X
 
 ## Hello World app using the SDK
 
