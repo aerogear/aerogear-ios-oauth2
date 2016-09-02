@@ -1,0 +1,36 @@
+PODS:
+  - AeroGearHttp (0.7.0)
+  - CryptoSwift (0.4.1)
+  - JSONWebToken (1.5.0):
+    - CryptoSwift (~> 0.4.0)
+  - OHHTTPStubs (4.7.1):
+    - OHHTTPStubs/Default (= 4.7.1)
+  - OHHTTPStubs/Core (4.7.1)
+  - OHHTTPStubs/Default (4.7.1):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (4.7.1):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (4.7.1):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (4.7.1)
+  - OHHTTPStubs/Swift (4.7.1):
+    - OHHTTPStubs/Core
+
+DEPENDENCIES:
+  - AeroGearHttp (= 0.7.0)
+  - JSONWebToken (= 1.5.0)
+  - OHHTTPStubs (= 4.7.1)
+  - OHHTTPStubs/Swift (= 4.7.1)
+
+SPEC CHECKSUMS:
+  AeroGearHttp: 4660c8bf5b56cd00a3b75d7c5ecf94774469df5c
+  CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
+  JSONWebToken: 6c8968ace6b60b2e6156a7bbe5019fd9b5ff9b5a
+  OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
+
+PODFILE CHECKSUM: 4e31b67e23963869c2f2bf994d9612ddd9054b8f
+
+COCOAPODS: 1.1.0.beta.1
