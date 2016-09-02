@@ -214,7 +214,14 @@ public class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate
             throw error
         }
         
-        return NSURL(string:computedUrl.absoluteString + params)!
+        #if swift(>=2.3)
+            // this compiles on Xcode 8 / Swift 2.3 / iOS 10
+            return NSURL(string:computedUrl.absoluteString! + params)!
+        #else
+            // this compiles on Xcode 7 / Swift 2.2 / iOS 9
+            return NSURL(string:computedUrl.absoluteString + params)!
+        #endif
+        
     }
     
     public class func getClaimsParam(claims: Set<String>) throws -> String {
