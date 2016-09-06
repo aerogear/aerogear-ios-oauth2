@@ -1,5 +1,8 @@
 # aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
 
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)
+[![Platform](https://img.shields.io/cocoapods/p/AeroGearOAuth2.svg?style=flat)](http://cocoadocs.org/docsets/AeroGearOAuth2)
+
 > This module currently build with Xcode 7 / Xcode 8 and supports iOS8, iOS9, iOS10.
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
