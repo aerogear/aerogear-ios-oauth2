@@ -61,7 +61,7 @@ public class OpenStackOAuth2Module: OAuth2Module {
             params += "&prompt=\(prompt.urlEncode())"
         }
         
-        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)
         #if os(iOS)
         if let url = url {
             if config.isWebView {

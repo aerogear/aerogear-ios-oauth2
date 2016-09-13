@@ -131,7 +131,7 @@ public class OAuth2Module: AuthzModule {
             params += "&prompt=consent"
         }
         
-        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString + params)
+        let url = NSURL(string:http.calculateURL(config.baseURL, url:config.authzEndpoint).absoluteString! + params)
         if let url = url {
             #if os(iOS)
             if config.isWebView {
