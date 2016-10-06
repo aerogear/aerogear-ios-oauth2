@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/telenordigital/aerogear-ios-oauth2"
   s.license      = 'Apache License, Version 2.0'
   s.author       = "Telenor Digital"
-  s.source       = { :git => 'https://github.com/telenordigital/aerogear-ios-oauth2.git', :tag => s.version }
+  s.source       = { :git => 'https://github.com/telenordigital/connect-ios-sdk.git', :tag => s.version }
   s.platform     = :ios, 8.0
   s.source_files = 'TDConnectIosSdk/*.{swift}'
   s.requires_arc = true
