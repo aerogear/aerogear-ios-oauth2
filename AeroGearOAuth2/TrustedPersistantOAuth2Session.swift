@@ -362,11 +362,11 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
                 self.refreshToken = refreshToken
             }
 
-            if accessTokenExpirationDate != nil {
+            if accessToken != nil && accessTokenExpirationDate != nil {
                 self.accessTokenExpirationDate = accessTokenExpirationDate
             }
 
-            if refreshToken != nil {
+            if refreshToken != nil && refreshTokenExpirationDate != nil {
                 self.refreshTokenExpirationDate = refreshTokenExpirationDate
             }
     }
