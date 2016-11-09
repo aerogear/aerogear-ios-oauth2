@@ -294,12 +294,12 @@
 				TargetAttributes = {
 					4833046119AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					4833046C19AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = M4Q75B4WS4;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
