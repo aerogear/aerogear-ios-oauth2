@@ -1,5 +1,5 @@
 PODS:
-  - AeroGearHttp (0.7.0)
+  - AeroGearHttp (0.8.0)
   - CryptoSwift (0.4.1)
   - JSONWebToken (1.5.0):
     - CryptoSwift (~> 0.4.0)
@@ -20,17 +20,17 @@ PODS:
     - OHHTTPStubs/Core
 
 DEPENDENCIES:
-  - AeroGearHttp (= 0.7.0)
+  - AeroGearHttp (= 0.8.0)
   - JSONWebToken (= 1.5.0)
   - OHHTTPStubs (= 4.7.1)
   - OHHTTPStubs/Swift (= 4.7.1)
 
 SPEC CHECKSUMS:
-  AeroGearHttp: 4660c8bf5b56cd00a3b75d7c5ecf94774469df5c
+  AeroGearHttp: 2f9bb955fac911c593fffe0aa0400db6fda79244
   CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
   JSONWebToken: 6c8968ace6b60b2e6156a7bbe5019fd9b5ff9b5a
   OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
 
-PODFILE CHECKSUM: 4e31b67e23963869c2f2bf994d9612ddd9054b8f
+PODFILE CHECKSUM: b2456627e2ab5e4c50c5f8af18138c20b5657e53
 
 COCOAPODS: 1.1.1

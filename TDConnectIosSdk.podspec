@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.framework = 'Security'
   s.dependency 'AeroGearHttp'
-  s.dependency 'JSONWebToken'
+  s.dependency 'JSONWebToken', '1.5.0'
 end

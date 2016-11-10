@@ -5,7 +5,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'TDConnectIosSdk' do
-	pod 'AeroGearHttp', '0.7.0'
+	pod 'AeroGearHttp', '0.8.0'
 	pod 'JSONWebToken', '1.5.0'
 
 	target 'TDConnectIosSdkTests' do
