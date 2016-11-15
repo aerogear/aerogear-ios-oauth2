@@ -34,7 +34,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,13 +42,13 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleFailure: OAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
 
     func testGoogleOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = GoogleConfig(
             clientId: "xxxx.apps.googleusercontent.com",
@@ -65,11 +65,11 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testGoogleOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = Config(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/auth",
@@ -93,11 +93,11 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testGoogleOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = GoogleConfig(
             clientId: "xxx.apps.googleusercontent.com",
@@ -113,7 +113,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
 }

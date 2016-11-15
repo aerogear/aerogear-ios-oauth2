@@ -20,7 +20,7 @@ import Foundation
 /**
 A Config object that setups facebook specific configuration parameters.
 */
-public class FacebookConfig: Config {
+open class FacebookConfig: Config {
     /**
     Init a Facebook configuration.
     :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
@@ -36,15 +36,15 @@ public class FacebookConfig: Config {
             accessTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
             clientId: clientId,
             refreshTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
-            clientSecret: clientSecret,
             revokeTokenEndpoint: "https://www.facebook.com/me/permissions",
             isOpenIDConnect: isOpenIDConnect,
             userInfoEndpoint: isOpenIDConnect ? "https://graph.facebook.com/v2.2/me" : nil,
             scopes: scopes,
+            clientSecret: clientSecret,
             accountId: accountId)
         // Add openIdConnect scope
         if self.isOpenIDConnect {
-            if self.scopes[0].rangeOfString("public_profile") == nil {
+            if self.scopes[0].range(of: "public_profile") == nil {
                 self.scopes[0] = self.scopes[0] + ", public_profile"
             }
         }
@@ -54,7 +54,7 @@ public class FacebookConfig: Config {
 /**
 A Config object that setups Google specific configuration parameters.
 */
-public class GoogleConfig: Config {
+open class GoogleConfig: Config {
     /**
     Init a Google configuration.
     :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
@@ -63,7 +63,7 @@ public class GoogleConfig: Config {
     :paream: isOpenIDConnect to identify if fetching id information is required.
     */
     public init(clientId: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
-        let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "google"
+        let bundleString = Bundle.main.bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/v2/auth",
             redirectURL: "\(bundleString):/oauth2Callback",
@@ -84,7 +84,7 @@ public class GoogleConfig: Config {
 /**
 A Config object that setups Keycloak specific configuration parameters.
 */
-public class KeycloakConfig: Config {
+open class KeycloakConfig: Config {
     /**
     Init a Keycloak configuration.
     :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
@@ -93,7 +93,7 @@ public class KeycloakConfig: Config {
     :paream: isOpenIDConnect to identify if fetching id information is required.
     */
     public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
-        let bundleString = NSBundle.mainBundle().bundleIdentifier ?? "keycloak"
+        let bundleString = Bundle.main.bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
         super.init(base: "\(host)/auth",
@@ -114,7 +114,7 @@ public class KeycloakConfig: Config {
 /**
 An account manager used to instantiate, store and retrieve OAuth2 modules.
 */
-public class AccountManager {
+open class AccountManager {
     /// List of OAuth2 modules available for a given app. Each module is linked to an OAuth2Session which securely store the tokens.
     var modules: [String: OAuth2Module]
 
@@ -123,7 +123,7 @@ public class AccountManager {
     }
 
     /// access a shared instance of an account manager
-    public class var sharedInstance: AccountManager {
+    open class var sharedInstance: AccountManager {
         struct Singleton {
             static let instance = AccountManager()
         }
@@ -139,7 +139,7 @@ public class AccountManager {
 
     :returns: the OAuth2 module
     */
-    public class func addAccount(config: Config, moduleClass: OAuth2Module.Type, session: OAuth2Session? = nil) -> OAuth2Module {
+    open class func addAccount(_ config: Config, moduleClass: OAuth2Module.Type, session: OAuth2Session? = nil) -> OAuth2Module {
         var myModule: OAuth2Module
         if let session = session {
             myModule = moduleClass.init(config: config, session: session)
@@ -160,8 +160,8 @@ public class AccountManager {
 
     :returns: the OAuth2module or nil if not found
     */
-    public class func removeAccount(name: String, config: Config, moduleClass: OAuth2Module.Type) -> OAuth2Module? {
-        return sharedInstance.modules.removeValueForKey(name)
+    open class func removeAccount(_ name: String, config: Config, moduleClass: OAuth2Module.Type) -> OAuth2Module? {
+        return sharedInstance.modules.removeValue(forKey: name)
     }
 
     /**
@@ -171,7 +171,7 @@ public class AccountManager {
 
     :returns: the OAuth2module or nil if not found.
     */
-    public class func getAccountByName(name: String) -> OAuth2Module? {
+    open class func getAccountByName(_ name: String) -> OAuth2Module? {
         return sharedInstance.modules[name]
     }
 
@@ -182,7 +182,7 @@ public class AccountManager {
 
     :returns: the OAuth2module or nil if not found.
     */
-    public class func getAccountsByClienId(clientId: String) -> [OAuth2Module] {
+    open class func getAccountsByClienId(_ clientId: String) -> [OAuth2Module] {
         let modules: [OAuth2Module] = [OAuth2Module](sharedInstance.modules.values)
         return modules.filter {$0.config.clientId == clientId }
     }
@@ -195,7 +195,7 @@ public class AccountManager {
 
     :returns: the OAuth2module or nil if not found.
     */
-    public class func getAccountByConfig(config: Config) -> OAuth2Module? {
+    open class func getAccountByConfig(_ config: Config) -> OAuth2Module? {
         if config.accountId != nil {
             return sharedInstance.modules[config.accountId!]
         } else {
@@ -215,7 +215,7 @@ public class AccountManager {
 
     :returns: a Facebook OAuth2 module.
     */
-    public class func addFacebookAccount(config: FacebookConfig) -> FacebookOAuth2Module {
+    open class func addFacebookAccount(_ config: FacebookConfig) -> FacebookOAuth2Module {
         return addAccount(config, moduleClass: FacebookOAuth2Module.self) as! FacebookOAuth2Module
     }
 
@@ -226,7 +226,7 @@ public class AccountManager {
 
     :returns: a google OAuth2 module.
     */
-    public class func addGoogleAccount(config: GoogleConfig) -> OAuth2Module {
+    open class func addGoogleAccount(_ config: GoogleConfig) -> OAuth2Module {
         return addAccount(config, moduleClass: OAuth2Module.self)
     }
 
@@ -237,7 +237,7 @@ public class AccountManager {
 
     :returns: a Keycloak OAuth2 module.
     */
-    public class func addKeycloakAccount(config: KeycloakConfig) -> KeycloakOAuth2Module {
+    open class func addKeycloakAccount(_ config: KeycloakConfig) -> KeycloakOAuth2Module {
         return addAccount(config, moduleClass: KeycloakOAuth2Module.self) as! KeycloakOAuth2Module
     }
 

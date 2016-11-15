@@ -34,7 +34,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,13 +42,13 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
 
     func testFacebookOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let facebookConfig = FacebookConfig(
             clientId: "YYY",
@@ -69,11 +69,11 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testFacebookOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let fbConfig = Config(base: "https://fb",
             authzEndpoint: "o/oauth2/auth",
@@ -97,11 +97,11 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testFacebookOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let facebookConfig = FacebookConfig(
             clientId: "YYY",
@@ -118,6 +118,6 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

@@ -34,12 +34,12 @@ public protocol OAuth2Session {
     /**
     The access token's expiration date.
     */
-     var accessTokenExpirationDate: NSDate? {get set}
+     var accessTokenExpirationDate: Date? {get set}
 
     /**
     The refresh token's expiration date.
     */
-    var refreshTokenExpirationDate: NSDate? {get set}
+    var refreshTokenExpirationDate: Date? {get set}
 
     /**
     The refresh tokens. This toke does not expire and should be used to renew access token when expired.
@@ -71,5 +71,5 @@ public protocol OAuth2Session {
     :param: accessTokenExpiration the expiration for the access token.
     :param: refreshTokenExpiration the expiration for the refresh token.
     */
-    func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
+    func saveAccessToken(_ accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
 }

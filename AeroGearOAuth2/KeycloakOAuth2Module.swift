@@ -20,22 +20,22 @@ import Foundation
 /**
 An OAuth2Module subclass specific to 'Keycloak' authorization
 */
-public class KeycloakOAuth2Module: OAuth2Module {
+open class KeycloakOAuth2Module: OAuth2Module {
 
-    public override func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+    open override func revokeAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return
         }
         let paramDict: [String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
-        http.request(.POST, path: config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+        http.request(.post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
 
             self.oauth2Session.clearTokens()
-            completionHandler(response, nil)
+            completionHandler(response as AnyObject?, nil)
         })
     }
 
@@ -44,7 +44,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    public override func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+    open override func login(_ completionHandler: @escaping (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
         var openIDClaims: OpenIDClaim?
 
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
@@ -59,7 +59,7 @@ public class KeycloakOAuth2Module: OAuth2Module {
                     openIDClaims = OpenIDClaim(fromDict: decodedToken)
                 }
             }
-            completionHandler(accessToken, openIDClaims, nil)
+            completionHandler(accessToken as AnyObject?, openIDClaims, nil)
         }
     }
 
@@ -68,14 +68,14 @@ public class KeycloakOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    public override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
+    open override func refreshAccessToken(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
 
-            http.request(.POST, path: config.refreshTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
+            http.request(.post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
                 if (error != nil) {
                     completionHandler(nil, error)
                     return
@@ -91,33 +91,33 @@ public class KeycloakOAuth2Module: OAuth2Module {
 
                     // in Keycloak refresh token get refreshed every time you use them
                     self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
-                    completionHandler(accessToken, nil)
+                    completionHandler(accessToken as AnyObject?, nil)
                 }
             })
         }
     }
 
 
-    func decode(token: String) -> [String: AnyObject]? {
-        let string = token.componentsSeparatedByString(".")
+    func decode(_ token: String) -> [String: AnyObject]? {
+        let string = token.components(separatedBy: ".")
         let toDecode = string[1] as String
 
 
-        var stringtoDecode: String = toDecode.stringByReplacingOccurrencesOfString("-", withString: "+") // 62nd char of encoding
-        stringtoDecode = stringtoDecode.stringByReplacingOccurrencesOfString("_", withString: "/") // 63rd char of encoding
+        var stringtoDecode: String = toDecode.replacingOccurrences(of: "-", with: "+") // 62nd char of encoding
+        stringtoDecode = stringtoDecode.replacingOccurrences(of: "_", with: "/") // 63rd char of encoding
         switch (stringtoDecode.utf16.count % 4) {
         case 2: stringtoDecode = "\(stringtoDecode)=="
         case 3: stringtoDecode = "\(stringtoDecode)="
         default: // nothing to do stringtoDecode can stay the same
             print("")
         }
-        let dataToDecode = NSData(base64EncodedString: stringtoDecode, options: [])
-        let base64DecodedString = NSString(data: dataToDecode!, encoding: NSUTF8StringEncoding)
+        let dataToDecode = Data(base64Encoded: stringtoDecode, options: [])
+        let base64DecodedString = NSString(data: dataToDecode!, encoding: String.Encoding.utf8.rawValue)
 
         var values: [String: AnyObject]?
         if let string = base64DecodedString {
-            if let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                values = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject]
+            if let data = string.data(using: String.Encoding.utf8.rawValue, allowLossyConversion: true) {
+                values = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject]
             }
         }
         return values
