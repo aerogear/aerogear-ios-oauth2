@@ -1,5 +1,5 @@
 PODS:
-  - AeroGearHttp (0.7.0)
+  - AeroGearHttp (1.0.0)
   - OHHTTPStubs (5.2.2):
     - OHHTTPStubs/Default (= 5.2.2)
   - OHHTTPStubs/Core (5.2.2)
@@ -15,13 +15,13 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (5.2.2)
 
 DEPENDENCIES:
-  - AeroGearHttp (= 0.7.0)
+  - AeroGearHttp (= 1.0.0)
   - OHHTTPStubs (= 5.2.2)
 
 SPEC CHECKSUMS:
-  AeroGearHttp: 4660c8bf5b56cd00a3b75d7c5ecf94774469df5c
+  AeroGearHttp: 8c825d4563439f565196f52efe80e15f0055109a
   OHHTTPStubs: 34d9d0994e64fcf8552dbfade5ce82ada913ee31
 
-PODFILE CHECKSUM: bc8568312e584d2ab285bc36aac5c5f72bfe44c4
+PODFILE CHECKSUM: 785c8ac06e4bc0215f1d8c4a4f19d3985bc3f062
 
 COCOAPODS: 1.1.1
