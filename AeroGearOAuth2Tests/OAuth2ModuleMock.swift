@@ -92,10 +92,10 @@ open class MockOAuth2SessionWithAuthzCode: MockOAuth2SessionWithValidAccessToken
 }
 
 class OAuth2ModulePartialMock: OAuth2Module {
-    override func refreshAccessToken(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    override func refreshAccessToken(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         completionHandler("NEW_ACCESS_TOKEN" as AnyObject?, nil)
     }
-    override func requestAuthorizationCode(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    override func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         completionHandler("ACCESS_TOKEN" as AnyObject?, nil)
     }
 }

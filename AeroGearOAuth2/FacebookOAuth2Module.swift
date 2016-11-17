@@ -33,14 +33,14 @@ open class FacebookOAuth2Module: OAuth2Module {
     :param: code the 'authorization' code to exchange for an access token.
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override open func exchangeAuthorizationCodeForAccessToken(_ code: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    override open func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
 
         if let unwrapped = config.clientSecret {
             paramDict["client_secret"] = unwrapped
         }
 
-        http.request(.post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
 
             if (error != nil) {
                 completionHandler(nil, error)
@@ -75,14 +75,14 @@ open class FacebookOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override open func revokeAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    override open func revokeAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return
         }
         let paramDict: [String:String] = ["access_token":self.oauth2Session.accessToken!]
 
-        http.request(.delete, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .delete, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
 
             if (error != nil) {
                 completionHandler(nil, error)
@@ -111,7 +111,7 @@ open class FacebookOAuth2Module: OAuth2Module {
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
 
-                self.http.request(.get, path: userInfoEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
+                self.http.request(method: .get, path: userInfoEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return

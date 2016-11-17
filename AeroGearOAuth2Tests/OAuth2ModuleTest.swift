@@ -144,7 +144,7 @@ class OAuth2ModuleTests: XCTestCase {
             scopes:["https://www.googleapis.com/auth/drive"])
 
         let oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
-        oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
+        oauth2Module.exchangeAuthorizationCodeForAccessToken (code: "CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue("NEWLY_REFRESHED_ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
         })
@@ -159,7 +159,7 @@ class OAuth2ModuleTests: XCTestCase {
             scopes:["https://www.googleapis.com/auth/drive"])
 
         let oauth2Module = OAuth2Module(config: googleConfig, session: MockOAuth2SessionWithRefreshToken())
-        oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
+        oauth2Module.exchangeAuthorizationCodeForAccessToken (code: "CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue("ACCESS_TOKEN" == response as! String, "If access token not valid but refresh token present and still valid")
             expectation.fulfill()
         })
@@ -175,7 +175,7 @@ class OAuth2ModuleTests: XCTestCase {
 
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
-        oauth2Module.revokeAccess({(response: AnyObject?, error: NSError?) -> Void in
+        oauth2Module.revokeAccess(completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
             expectation.fulfill()
         })

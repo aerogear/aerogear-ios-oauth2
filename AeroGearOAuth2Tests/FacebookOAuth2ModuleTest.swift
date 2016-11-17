@@ -60,7 +60,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
 
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
-        oauth2Module.exchangeAuthorizationCodeForAccessToken("CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
+        oauth2Module.exchangeAuthorizationCodeForAccessToken(code: "CODE", completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue(response as! String == "CAAK4k", "Check access token is return to callback")
             expectation.fulfill()
         })
@@ -76,7 +76,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
 
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
-        oauth2Module.revokeAccess({(response: AnyObject?, error: NSError?) -> Void in
+        oauth2Module.revokeAccess(completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
             XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
             expectation.fulfill()
         })

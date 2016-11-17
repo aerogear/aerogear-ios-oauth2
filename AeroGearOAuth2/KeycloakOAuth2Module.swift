@@ -22,13 +22,13 @@ An OAuth2Module subclass specific to 'Keycloak' authorization
 */
 open class KeycloakOAuth2Module: OAuth2Module {
 
-    open override func revokeAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open override func revokeAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return
         }
         let paramDict: [String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
-        http.request(.post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
@@ -68,14 +68,14 @@ open class KeycloakOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open override func refreshAccessToken(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open override func refreshAccessToken(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
 
-            http.request(.post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+            http.request(method: .post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
                 if (error != nil) {
                     completionHandler(nil, error)
                     return

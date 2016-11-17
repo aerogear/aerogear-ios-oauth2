@@ -34,7 +34,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
 
-        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,7 +42,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
 
-        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }

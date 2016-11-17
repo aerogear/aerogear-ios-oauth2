@@ -92,14 +92,14 @@ open class OAuth2Module: AuthzModule {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func requestAuthorizationCode(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
             if ( self.webView != nil ) {
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         })
 
@@ -121,7 +121,7 @@ open class OAuth2Module: AuthzModule {
         self.state = .authorizationStatePendingExternalApproval
 
         // calculate final url
-        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
         guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url:config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
             completionHandler(nil, error)
@@ -142,14 +142,14 @@ open class OAuth2Module: AuthzModule {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func refreshAccessToken(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open func refreshAccessToken(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         if let unwrappedRefreshToken = self.oauth2Session.refreshToken {
             var paramDict: [String: String] = ["refresh_token": unwrappedRefreshToken, "client_id": config.clientId, "grant_type": "refresh_token"]
             if (config.clientSecret != nil) {
                 paramDict["client_secret"] = config.clientSecret!
             }
 
-            http.request(.post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+            http.request(method: .post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
                 if (error != nil) {
                     completionHandler(nil, error)
                     return
@@ -178,14 +178,14 @@ open class OAuth2Module: AuthzModule {
     :param: code the 'authorization' code to exchange for an access token.
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func exchangeAuthorizationCodeForAccessToken(_ code: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
 
         if let unwrapped = config.clientSecret {
             paramDict["client_secret"] = unwrapped
         }
 
-        http.request(.post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
+        http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
@@ -201,17 +201,13 @@ open class OAuth2Module: AuthzModule {
     open func tokenResponse(_ unwrappedResponse: [String: AnyObject]) -> String {
         let accessToken: String = unwrappedResponse["access_token"] as! String
         let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
-        let serverCode: String? = unwrappedResponse["server_code"] as? String
-        let idToken: String? = unwrappedResponse["id_token"] as? String
         let expiration = unwrappedResponse["expires_in"] as? NSNumber
         let exp: String? = expiration?.stringValue
         // expiration for refresh token is used in Keycloak
         let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
         let expRefresh = expirationRefresh?.stringValue
 
-        self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: idToken)
-        self.serverCode = serverCode
-        self.idToken = self.oauth2Session.idToken
+        self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
 
         return accessToken
     }
@@ -221,16 +217,16 @@ open class OAuth2Module: AuthzModule {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         if (self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()) {
             // we already have a valid access token, nothing more to be done
             completionHandler(self.oauth2Session.accessToken! as AnyObject?, nil)
         } else if (self.oauth2Session.refreshToken != nil && self.oauth2Session.refreshTokenIsNotExpired()) {
             // need to refresh token
-            self.refreshAccessToken(completionHandler)
+            self.refreshAccessToken(completionHandler: completionHandler)
         } else {
             // ask for authorization code and once obtained exchange code for access token
-            self.requestAuthorizationCode(completionHandler)
+            self.requestAuthorizationCode(completionHandler: completionHandler)
         }
     }
 
@@ -253,7 +249,7 @@ open class OAuth2Module: AuthzModule {
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
 
-                self.http.request(.get, path:userInfoEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
+                self.http.request(method: .get, path:userInfoEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return
@@ -282,14 +278,14 @@ open class OAuth2Module: AuthzModule {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func revokeAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    open func revokeAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
             return
         }
         let paramDict: [String:String] = ["token":self.oauth2Session.accessToken!]
 
-        http.request(.post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
@@ -332,7 +328,7 @@ open class OAuth2Module: AuthzModule {
         let code = self.parametersFromQueryString(url?.query)["code"]
         // if exists perform the exchange
         if (code != nil) {
-            self.exchangeAuthorizationCodeForAccessToken(code!, completionHandler: completionHandler)
+            self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
             // update state
             state = .authorizationStateApproved
         } else {
