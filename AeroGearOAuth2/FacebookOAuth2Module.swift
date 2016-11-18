@@ -64,7 +64,7 @@ open class FacebookOAuth2Module: OAuth2Module {
                         expiredIn = array[index+1]
                     }
                 }
-                self.oauth2Session.save(accessToken: accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil)
+                self.oauth2Session.save(accessToken: accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil, idToken: nil)
                 completionHandler(accessToken as AnyObject?, nil)
             }
         })
