@@ -44,8 +44,8 @@ open class KeycloakOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open override func login(_ completionHandler: @escaping (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        var openIDClaims: OpenIDClaim?
+    open override func login(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
+        var openIDClaims: OpenIdClaim?
 
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
@@ -56,7 +56,7 @@ open class KeycloakOAuth2Module: OAuth2Module {
             if let accessToken = accessToken {
                 let token = self.decode(accessToken)
                 if let decodedToken = token {
-                    openIDClaims = OpenIDClaim(fromDict: decodedToken)
+                    openIDClaims = OpenIdClaim(fromDict: decodedToken)
                 }
             }
             completionHandler(accessToken as AnyObject?, openIDClaims, nil)
@@ -90,7 +90,7 @@ open class KeycloakOAuth2Module: OAuth2Module {
                     let expRefresh = expirationRefresh?.stringValue
 
                     // in Keycloak refresh token get refreshed every time you use them
-                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
+                    self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
                     completionHandler(accessToken as AnyObject?, nil)
                 }
             })

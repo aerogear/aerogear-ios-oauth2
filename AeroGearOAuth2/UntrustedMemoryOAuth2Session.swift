@@ -69,7 +69,7 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     /**
     Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
     */
-    open func saveAccessToken(_ accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
+    open func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         let now = Date()

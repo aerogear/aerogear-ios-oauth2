@@ -71,5 +71,5 @@ public protocol OAuth2Session {
     :param: accessTokenExpiration the expiration for the access token.
     :param: refreshTokenExpiration the expiration for the refresh token.
     */
-    func saveAccessToken(_ accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
+    func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?)
 }

@@ -164,7 +164,7 @@ open class OAuth2Module: AuthzModule {
                         refreshToken = newRefreshToken
                     }
 
-                    self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
+                    self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
 
                     completionHandler(unwrappedResponse["access_token"], nil)
                 }
@@ -207,7 +207,7 @@ open class OAuth2Module: AuthzModule {
         let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
         let expRefresh = expirationRefresh?.stringValue
 
-        self.oauth2Session.saveAccessToken(accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
+        self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
 
         return accessToken
     }
@@ -235,7 +235,7 @@ open class OAuth2Module: AuthzModule {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    open func login(_ completionHandler: @escaping (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+    open func login(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
 
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
 
@@ -254,9 +254,9 @@ open class OAuth2Module: AuthzModule {
                         completionHandler(nil, nil, error)
                         return
                     }
-                    var openIDClaims: OpenIDClaim?
+                    var openIDClaims: OpenIdClaim?
                     if let unwrappedResponse = responseObject as? [String: AnyObject] {
-                        openIDClaims = self.openIDClaim(unwrappedResponse)
+                        openIDClaims = self.makeOpenIdClaim(fromDict: unwrappedResponse)
                     }
                     completionHandler(response, openIDClaims, nil)
                 })
@@ -269,8 +269,8 @@ open class OAuth2Module: AuthzModule {
 
     }
 
-    open func openIDClaim(_ fromDict: [String: AnyObject]) -> OpenIDClaim {
-        return OpenIDClaim(fromDict: fromDict)
+    open func makeOpenIdClaim(fromDict: [String: AnyObject]) -> OpenIdClaim {
+        return OpenIdClaim(fromDict: fromDict)
     }
 
     /**
@@ -325,7 +325,7 @@ open class OAuth2Module: AuthzModule {
         let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
 
         // extract the code from the URL
-        let code = self.parametersFromQueryString(url?.query)["code"]
+        let code = self.parametersFrom(queryString: url?.query)["code"]
         // if exists perform the exchange
         if (code != nil) {
             self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
@@ -340,7 +340,7 @@ open class OAuth2Module: AuthzModule {
         self.stopObserving()
     }
 
-    func parametersFromQueryString(_ queryString: String?) -> [String: String] {
+    func parametersFrom(queryString: String?) -> [String: String] {
         var parameters = [String: String]()
         if (queryString != nil) {
             let parameterScanner: Scanner = Scanner(string: queryString!)

@@ -20,7 +20,7 @@ import Foundation
 /**
 Standard claims as described in spec: http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
 */
-open class OpenIDClaim: CustomStringConvertible {
+open class OpenIdClaim: CustomStringConvertible {
     /// Subject - Identifier for the End-User at the Issuer.
     open var sub: String?
     /// End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's locale and preferences.
@@ -96,7 +96,7 @@ open class OpenIDClaim: CustomStringConvertible {
     }
 }
 /// Facebook specific claims.
-open class FacebookOpenIDClaim: OpenIDClaim {
+open class FacebookOpenIdClaim: OpenIdClaim {
 
     override init(fromDict: [String: AnyObject]) {
         super.init(fromDict: fromDict)

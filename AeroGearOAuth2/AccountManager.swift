@@ -139,7 +139,7 @@ open class AccountManager {
 
     :returns: the OAuth2 module
     */
-    open class func addAccount(_ config: Config, moduleClass: OAuth2Module.Type, session: OAuth2Session? = nil) -> OAuth2Module {
+    open class func addAccountWith(config: Config, moduleClass: OAuth2Module.Type, session: OAuth2Session? = nil) -> OAuth2Module {
         var myModule: OAuth2Module
         if let session = session {
             myModule = moduleClass.init(config: config, session: session)
@@ -160,7 +160,7 @@ open class AccountManager {
 
     :returns: the OAuth2module or nil if not found
     */
-    open class func removeAccount(_ name: String, config: Config, moduleClass: OAuth2Module.Type) -> OAuth2Module? {
+    open class func removeAccountWith(name: String) -> OAuth2Module? {
         return sharedInstance.modules.removeValue(forKey: name)
     }
 
@@ -171,18 +171,18 @@ open class AccountManager {
 
     :returns: the OAuth2module or nil if not found.
     */
-    open class func getAccountByName(_ name: String) -> OAuth2Module? {
+    open class func getAccountBy(name: String) -> OAuth2Module? {
         return sharedInstance.modules[name]
     }
 
     /**
     Retrieves a list of OAuth2 modules bound to specific clientId.
 
-    :param: clientId  the client it that the oauth2 module was bound to.
+    :param: clientId  the client id that the oauth2 module was bound to.
 
     :returns: the OAuth2module or nil if not found.
     */
-    open class func getAccountsByClienId(_ clientId: String) -> [OAuth2Module] {
+    open class func getAccountsBy(clientId: String) -> [OAuth2Module] {
         let modules: [OAuth2Module] = [OAuth2Module](sharedInstance.modules.values)
         return modules.filter {$0.config.clientId == clientId }
     }
@@ -195,11 +195,11 @@ open class AccountManager {
 
     :returns: the OAuth2module or nil if not found.
     */
-    open class func getAccountByConfig(_ config: Config) -> OAuth2Module? {
+    open class func getAccountBy(config: Config) -> OAuth2Module? {
         if config.accountId != nil {
             return sharedInstance.modules[config.accountId!]
         } else {
-            let modules = getAccountsByClienId(config.clientId)
+            let modules = getAccountsBy(clientId: config.clientId)
             if modules.count > 0 {
                 return modules[0]
             } else {
@@ -215,8 +215,8 @@ open class AccountManager {
 
     :returns: a Facebook OAuth2 module.
     */
-    open class func addFacebookAccount(_ config: FacebookConfig) -> FacebookOAuth2Module {
-        return addAccount(config, moduleClass: FacebookOAuth2Module.self) as! FacebookOAuth2Module
+    open class func addFacebookAccount(config: FacebookConfig) -> FacebookOAuth2Module {
+        return addAccountWith(config: config, moduleClass: FacebookOAuth2Module.self) as! FacebookOAuth2Module
     }
 
     /**
@@ -226,8 +226,8 @@ open class AccountManager {
 
     :returns: a google OAuth2 module.
     */
-    open class func addGoogleAccount(_ config: GoogleConfig) -> OAuth2Module {
-        return addAccount(config, moduleClass: OAuth2Module.self)
+    open class func addGoogleAccount(config: GoogleConfig) -> OAuth2Module {
+        return addAccountWith(config: config, moduleClass: OAuth2Module.self)
     }
 
     /**
@@ -237,8 +237,8 @@ open class AccountManager {
 
     :returns: a Keycloak OAuth2 module.
     */
-    open class func addKeycloakAccount(_ config: KeycloakConfig) -> KeycloakOAuth2Module {
-        return addAccount(config, moduleClass: KeycloakOAuth2Module.self) as! KeycloakOAuth2Module
+    open class func addKeycloakAccount(config: KeycloakConfig) -> KeycloakOAuth2Module {
+        return addAccountWith(config: config, moduleClass: KeycloakOAuth2Module.self) as! KeycloakOAuth2Module
     }
 
 }

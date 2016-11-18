@@ -64,7 +64,7 @@ open class FacebookOAuth2Module: OAuth2Module {
                         expiredIn = array[index+1]
                     }
                 }
-                self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil)
+                self.oauth2Session.save(accessToken: accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil)
                 completionHandler(accessToken as AnyObject?, nil)
             }
         })
@@ -99,7 +99,7 @@ open class FacebookOAuth2Module: OAuth2Module {
 
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override open func login(_ completionHandler: @escaping (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
+    override open func login(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
         self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
@@ -119,9 +119,9 @@ open class FacebookOAuth2Module: OAuth2Module {
                     if let unwrappedResponse = responseObject as? String {
                         let data = unwrappedResponse.data(using: String.Encoding.utf8)
                         let json: AnyObject? = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)) as AnyObject?
-                        var openIDClaims: FacebookOpenIDClaim?
+                        var openIDClaims: FacebookOpenIdClaim?
                         if let unwrappedResponse = json as? [String: AnyObject] {
-                            openIDClaims = FacebookOpenIDClaim(fromDict: unwrappedResponse)
+                            openIDClaims = FacebookOpenIdClaim(fromDict: unwrappedResponse)
                         }
                         completionHandler(response, openIDClaims, nil)
                     }

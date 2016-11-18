@@ -304,7 +304,7 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     /**
     Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
     */
-    public func saveAccessToken(_ accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
+    public func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
 

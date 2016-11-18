@@ -57,9 +57,9 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue("John" == claims?.name, "claim shoud be as mocked")
             loginExpectation.fulfill()
@@ -84,9 +84,9 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
@@ -105,9 +105,9 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
 
 
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue(error != nil, "Error")
             loginExpectation.fulfill()

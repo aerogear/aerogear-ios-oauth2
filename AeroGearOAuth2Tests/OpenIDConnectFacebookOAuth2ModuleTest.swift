@@ -58,9 +58,9 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue("Corinne Krych" == claims?.name, "name should be filled")
             XCTAssertTrue("Corinne" == claims?.givenName, "first name should be filled")
@@ -88,9 +88,9 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
@@ -110,9 +110,9 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
 
 
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccountWith(config: facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue(error != nil, "Error")
             loginExpectation.fulfill()
