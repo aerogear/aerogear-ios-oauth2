@@ -56,7 +56,7 @@ class ConfigTests: XCTestCase {
             clientSecret: "secret",
             scopes:["photo_upload, publish_actions"])
         print(facebookConfig.scopes)
-        XCTAssert(facebookConfig.scopes[0].rangeOfString("public_profile") == nil, "no public_profile defined per default")
+        XCTAssert(facebookConfig.scopes[0].range(of: "public_profile") == nil, "no public_profile defined per default")
     }
 
     func testFacebookConfigWithOpenID() {

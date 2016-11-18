@@ -25,19 +25,19 @@ let KEYCLOAK_TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpb
 
 func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    stub({_ in return true}, response: { (request: NSURLRequest!) -> OHHTTPStubsResponse in
+    _ = stub(condition: {_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             //_ = ["name": "John", "family_name": "Smith"]
-            switch request.URL!.path! {
+            switch request.url!.path {
 
             case "/auth/realms/shoot-realm/tokens/refresh":
                 let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"\(KEYCLOAK_TOKEN)\",\"expires_in\":23}"
-                let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/auth/realms/shoot-realm/tokens/logout":
                 let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
-                let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
-            default: return OHHTTPStubsResponse(data:NSData(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            default: return OHHTTPStubsResponse(data:Data(), statusCode: 404, headers: ["Content-Type" : "text/json"])
             }
         })
 }

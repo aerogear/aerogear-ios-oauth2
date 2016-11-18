@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05BCE4A31DCFE1EC00DD931F /* FacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */; };
 		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
 		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
@@ -15,12 +16,11 @@
 		483304A519AF44DF002F8DA9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
 		48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48432BE81A2F727C00F7A0FF /* ConfigTest.swift */; };
 		485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */; };
-		485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */; };
 		485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AAB931A383FB500ABEBB2 /* OAuth2ModuleMock.swift */; };
 		485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */; };
 		485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */; };
 		485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */; };
-		485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */; };
+		485D73811A35BCBC0007D9EC /* OpenIdClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIdClaim.swift */; };
 		4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71519EFE7D100F3FDE8 /* DateUtils.swift */; };
 		4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */; };
 		48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */; };
@@ -78,7 +78,7 @@
 		485D73781A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectFacebookOAuth2ModuleTest.swift; sourceTree = "<group>"; };
 		485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectGoogleOAuth2ModuleTest.swift; sourceTree = "<group>"; };
 		485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDConnectKeycloakOAuth2ModuleTest.swift; sourceTree = "<group>"; };
-		485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIDClaim.swift; sourceTree = "<group>"; };
+		485D73801A35BCBC0007D9EC /* OpenIdClaim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenIdClaim.swift; sourceTree = "<group>"; };
 		4872F71519EFE7D100F3FDE8 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilsTest.swift; sourceTree = "<group>"; };
 		48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2ModuleTest.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 				4833049F19AF327D002F8DA9 /* AccountManager.swift */,
 				483304A419AF44DF002F8DA9 /* Config.swift */,
 				48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */,
-				485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */,
+				485D73801A35BCBC0007D9EC /* OpenIdClaim.swift */,
 				48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */,
 				4872F71519EFE7D100F3FDE8 /* DateUtils.swift */,
 				4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */,
@@ -280,16 +280,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = aerogear;
 				TargetAttributes = {
 					4833046119AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					4833046C19AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -413,7 +413,7 @@
 			files = (
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
-				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
+				485D73811A35BCBC0007D9EC /* OpenIdClaim.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
@@ -435,8 +435,8 @@
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
 				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,
 				485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */,
+				05BCE4A31DCFE1EC00DD931F /* FacebookOAuth2ModuleTest.swift in Sources */,
 				485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */,
-				485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */,
 				48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */,
 				485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */,
 			);
@@ -456,6 +456,7 @@
 		4833047319AF1635002F8DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -466,8 +467,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -495,7 +498,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -505,6 +508,7 @@
 		4833047419AF1635002F8DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -515,8 +519,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -536,7 +542,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -548,7 +554,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D75BD934F346EB2E7AB2F18D /* Pods-AeroGearOAuth2.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -560,7 +568,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -568,7 +576,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4BEBEA405587A6D46CBF5CBC /* Pods-AeroGearOAuth2.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -579,7 +589,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};
@@ -587,7 +597,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A0589EF0A39385A17C91B99C /* Pods-AeroGearOAuth2Tests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -599,7 +609,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -607,14 +617,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CB5D8DB5479CD05722EB5A2 /* Pods-AeroGearOAuth2Tests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AeroGearOAuth2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};

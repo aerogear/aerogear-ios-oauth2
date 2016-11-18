@@ -34,7 +34,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleSuccess: FacebookOAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,13 +42,13 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
     class MyFacebookMockOAuth2ModuleFailure: FacebookOAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
 
     func testFacebookOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let facebookConfig = FacebookConfig(
             clientId: "YYY",
@@ -58,9 +58,9 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
 
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue("Corinne Krych" == claims?.name, "name should be filled")
             XCTAssertTrue("Corinne" == claims?.givenName, "first name should be filled")
@@ -69,11 +69,11 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testFacebookOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let fbConfig = Config(base: "https://fb",
             authzEndpoint: "o/oauth2/auth",
@@ -88,20 +88,20 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: fbConfig, moduleClass: MyFacebookMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testFacebookOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let facebookConfig = FacebookConfig(
             clientId: "YYY",
@@ -110,14 +110,14 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
 
 
-        let oauth2Module = AccountManager.addAccount(facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccountWith(config: facebookConfig, moduleClass: MyFacebookMockOAuth2ModuleFailure.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue(error != nil, "Error")
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

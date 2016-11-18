@@ -34,7 +34,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,13 +42,13 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleFailure: OAuth2Module {
 
-        override func requestAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }
 
     func testGoogleOpenIDSuccess() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = GoogleConfig(
             clientId: "xxxx.apps.googleusercontent.com",
@@ -57,19 +57,19 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue("John" == claims?.name, "claim shoud be as mocked")
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testGoogleOpenIDFailureNoUserInfoEndPoint() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = Config(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/auth",
@@ -84,20 +84,20 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             accountId: "acc")
         // set up http stub
         setupStubWithNSURLSessionDefaultConfiguration()
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleSuccess.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
             XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testGoogleOpenIDFailure() {
-        let loginExpectation = expectationWithDescription("Login")
+        let loginExpectation = expectation(description: "Login")
 
         let googleConfig = GoogleConfig(
             clientId: "xxx.apps.googleusercontent.com",
@@ -105,15 +105,15 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
             isOpenIDConnect: true)
 
 
-        let oauth2Module = AccountManager.addAccount(googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
+        let oauth2Module = AccountManager.addAccountWith(config: googleConfig, moduleClass: MyMockOAuth2ModuleFailure.self)
 
-        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in
+        oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
 
             XCTAssertTrue(error != nil, "Error")
             loginExpectation.fulfill()
 
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
 }

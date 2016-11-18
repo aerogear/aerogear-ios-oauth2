@@ -31,7 +31,7 @@ class DateUtilsTest: XCTestCase {
     }
 
     func testDateFormatting() {
-        let date1 = NSDate(dateString: "2014-02-12 12:45:30 AM")
+        let date1 = Date(dateString: "2014-02-12 12:45:30 AM")
         XCTAssert(date1.toString() == "2014-02-12 12:45:30 AM")
     }
 

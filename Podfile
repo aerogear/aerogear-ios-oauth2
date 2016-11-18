@@ -5,12 +5,11 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'AeroGearOAuth2' do
-  pod 'AeroGearHttp', '0.7.0'
+  pod 'AeroGearHttp', '1.0.0'
 
   target 'AeroGearOAuth2Tests' do
       inherit! :search_paths
 
-      pod 'OHHTTPStubs', '5.1.0'
-      pod 'OHHTTPStubs/Swift', '5.1.0'
+      pod 'OHHTTPStubs', '5.2.2'
   end
 end

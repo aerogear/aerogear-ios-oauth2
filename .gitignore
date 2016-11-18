@@ -24,3 +24,6 @@ Pods/
 
 #Docset/AppleDoc
 */Docset/*
+
+# rbenv
+.ruby-version
