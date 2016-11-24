@@ -56,6 +56,7 @@ open class OAuth2Module: AuthzModule {
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
     open var webView: OAuth2WebViewController?
+    open var idToken: String?
 
     /**
     Initialize an OAuth2 module.
@@ -164,7 +165,7 @@ open class OAuth2Module: AuthzModule {
                         refreshToken = newRefreshToken
                     }
 
-                    self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil)
+                    self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: nil, idToken: nil)
 
                     completionHandler(unwrappedResponse["access_token"], nil)
                 }
@@ -199,15 +200,17 @@ open class OAuth2Module: AuthzModule {
     }
 
     open func tokenResponse(_ unwrappedResponse: [String: AnyObject]) -> String {
-        let accessToken: String = unwrappedResponse["access_token"] as! String
+        let accessToken: String   = unwrappedResponse["access_token"] as! String
         let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
-        let expiration = unwrappedResponse["expires_in"] as? NSNumber
-        let exp: String? = expiration?.stringValue
+        let idToken: String?      = unwrappedResponse["id_token"] as? String
+        let expiration            = unwrappedResponse["expires_in"] as? NSNumber
+        let exp: String?          = expiration?.stringValue
         // expiration for refresh token is used in Keycloak
-        let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
-        let expRefresh = expirationRefresh?.stringValue
+        let expirationRefresh     = unwrappedResponse["refresh_expires_in"] as? NSNumber
+        let expRefresh            = expirationRefresh?.stringValue
 
-        self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh)
+        self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: idToken)
+        self.idToken    = self.oauth2Session.idToken
 
         return accessToken
     }

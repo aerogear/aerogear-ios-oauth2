@@ -53,6 +53,11 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     open var refreshTokenExpirationDate: Date?
 
     /**
+    The JWT which expires.
+    */
+    open var idToken: String?
+
+    /**
     Check validity of accessToken. return true if still valid, false when expired.
     */
     open func tokenIsNotExpired() -> Bool {
@@ -69,7 +74,7 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     /**
     Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
     */
-    open func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
+    open func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         let now = Date()
