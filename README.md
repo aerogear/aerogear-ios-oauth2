@@ -3,7 +3,7 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)
 [![Platform](https://img.shields.io/cocoapods/p/AeroGearOAuth2.svg?style=flat)](http://cocoadocs.org/docsets/AeroGearOAuth2)
 
-> This module currently build with Xcode 7 / Xcode 8 and supports iOS8, iOS9, iOS10.
+> This module currently build with Xcode 8 and supports iOS8, iOS9, iOS10.
 
 OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
 Taking care of: 
@@ -17,7 +17,7 @@ Taking care of:
 * adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.9.3.Final](http://keycloak.jboss.org/) etc...
 * openID Connect login
 
-100% Swift 2.0.
+100% Swift 3.0.
 
 |                 | Project Info  |
 | --------------- | ------------- |
@@ -37,9 +37,9 @@ let facebookConfig = FacebookConfig(	// [2]
     clientId: "YYY",
     clientSecret: "XXX",
     scopes:["photo_upload, publish_actions"])
-let oauth2Module = AccountManager.addFacebookAccount(facebookConfig)  // [3]
+let oauth2Module = AccountManager.addFacebookAccount(config: facebookConfig)  // [3]
 http.authzModule = oauth2Module			// [4]
-http.request(.GET, path: "/get", completionHandler: {(response, error) in	// [5]
+http.request(method: .get, path: "/get", completionHandler: {(response, error) in	// [5]
 	// handle response
 })
 ```
@@ -61,14 +61,14 @@ let keycloakConfig = KeycloakConfig(
     host: "http://localhost:8080",
     realm: "shoot-realm",
     isOpenIDConnect: true)
-let oauth2Module = AccountManager.addKeycloakAccount(keycloakConfig)
+let oauth2Module = AccountManager.addKeycloakAccount(config: keycloakConfig)
 http.authzModule = oauth2Module
-oauth2Module.login {(accessToken: AnyObject?, claims: OpenIDClaim?, error: NSError?) in // [1]
+oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in // [1]
     // Do your own stuff here
 }
 
 ```
-Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIDClaim object.
+Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIdClaim object.
 
 > **NOTE:**  The latest version of the library works with Keycloak 1.1.0.Final. Previous version of Keycloak 1.0.x will work except for the transparent refresh of tokens (ie: after access token expires you will have to go through grant process).
 
