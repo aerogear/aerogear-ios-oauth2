@@ -106,7 +106,7 @@ open class Config {
     /**
     A handler to allow the webview to be pushed onto the navigation controller
     */
-    open var webViewHandler: ((OAuth2WebViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+    open var webViewHandler: ((UIViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
         (webView, completionHandler) in
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }

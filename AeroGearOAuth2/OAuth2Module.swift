@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 import AeroGearHttp
 
 /**
@@ -133,7 +134,12 @@ open class OAuth2Module: AuthzModule {
                 self.webView!.targetURL = url
                 config.webViewHandler(self.webView!, completionHandler)
             } else {
-                UIApplication.shared.openURL(url)
+                if #available(iOS 9.0, *) {
+                    let safariController = SFSafariViewController(url: url)
+                    config.webViewHandler(safariController, completionHandler)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
     }
