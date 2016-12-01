@@ -53,7 +53,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         let facebookConfig = FacebookConfig(
             clientId: "YYY",
             clientSecret: "XXX",
-            scopes:["photo_upload, publish_actions"],
+            scopes:["publish_actions"],
             isOpenIDConnect: true)
 
         // set up http stub
