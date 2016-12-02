@@ -23,7 +23,7 @@ An OAuth2Module subclass specific to 'Facebook' authorization
 */
 open class FacebookOAuth2Module: OAuth2Module {
 
-    public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer, responseSerializer: ResponseSerializer) {
+    public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer = JsonRequestSerializer(), responseSerializer: ResponseSerializer = StringResponseSerializer()) {
         super.init(config: config, session: session, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
     }
 
