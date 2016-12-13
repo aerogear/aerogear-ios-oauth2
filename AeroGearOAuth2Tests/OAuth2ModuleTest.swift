@@ -188,7 +188,8 @@ class OAuth2ModuleTests: XCTestCase {
             scopes:["https://www.googleapis.com/auth/drive"],
             audienceId: "xxx2.apps.googleusercontent.com"
         )
-        googleConfig.isWebView = true
+
+        googleConfig.webView = Config.WebViewType.embeddedWebView
 
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
