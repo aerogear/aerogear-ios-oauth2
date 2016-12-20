@@ -21,86 +21,86 @@ import AeroGearHttp
 /**
 An OAuth2Module subclass specific to 'Facebook' authorization
 */
-public class FacebookOAuth2Module: OAuth2Module {
-    
-    public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer, responseSerializer: ResponseSerializer) {
+open class FacebookOAuth2Module: OAuth2Module {
+
+    public required init(config: Config, session: OAuth2Session?, requestSerializer: RequestSerializer = JsonRequestSerializer(), responseSerializer: ResponseSerializer = StringResponseSerializer()) {
         super.init(config: config, session: session, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
     }
-    
+
     /**
     Exchange an authorization code for an access token.
-    
+
     :param: code the 'authorization' code to exchange for an access token.
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override public func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: (AnyObject?, NSError?) -> Void) {
+    override open func exchangeAuthorizationCodeForAccessToken(code: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         var paramDict: [String: String] = ["code": code, "client_id": config.clientId, "redirect_uri": config.redirectURL, "grant_type":"authorization_code"]
-        
+
         if let unwrapped = config.clientSecret {
             paramDict["client_secret"] = unwrapped
         }
-        
-        http.request(.POST, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
-            
+
+        http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
-            
+
             if let unwrappedResponse = response as? String {
                 var accessToken: String? = nil
                 var expiredIn: String? = nil
-                
+
                 let charSet: NSMutableCharacterSet = NSMutableCharacterSet()
-                charSet.addCharactersInString("&=")
-                let array = unwrappedResponse.componentsSeparatedByCharactersInSet(charSet)
-                for (index, elt) in array.enumerate() {
+                charSet.addCharacters(in: "&=")
+                let array = unwrappedResponse.components(separatedBy: charSet as CharacterSet)
+                for (index, elt) in array.enumerated() {
                     if elt == "access_token" {
                         accessToken = array[index+1]
                     }
                 }
-                for (index, elt) in array.enumerate() {
+                for (index, elt) in array.enumerated() {
                     if elt == "expires" {
                         expiredIn = array[index+1]
                     }
                 }
-                self.oauth2Session.saveAccessToken(accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil, idToken: nil)
-                completionHandler(accessToken, nil)
+                self.oauth2Session.save(accessToken: accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil, idToken: nil)
+                completionHandler(accessToken as AnyObject?, nil)
             }
         })
     }
-    
+
     /**
     Request to revoke access.
-    
+
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+    override open func revokeAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // return if not yet initialized
         if (self.oauth2Session.accessToken == nil) {
-            return;
+            return
         }
-        let paramDict:[String:String] = ["access_token":self.oauth2Session.accessToken!]
-        
-        http.request(.DELETE, path: config.revokeTokenEndpoint!, parameters: paramDict, completionHandler: { (response, error) in
-            
+        let paramDict: [String:String] = ["access_token":self.oauth2Session.accessToken!]
+
+        http.request(method: .delete, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
-            
+
             self.oauth2Session.clearTokens()
-            completionHandler(response!, nil)
+            completionHandler(response! as AnyObject?, nil)
         })
     }
-    
+
     /**
     Gateway to request authorization access
-    
+
     :param: completionHandler A block object to be executed when the request operation finishes.
     */
-    override public func login(completionHandler: (AnyObject?, OpenIDClaim?, NSError?) -> Void) {
-        self.requestAccess { (response:AnyObject?, error:NSError?) -> Void in
+    override open func login(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
+        self.requestAccess { (response: AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 completionHandler(nil, nil, error)
                 return
@@ -110,18 +110,18 @@ public class FacebookOAuth2Module: OAuth2Module {
                 paramDict = ["access_token": response! as! String]
             }
             if let userInfoEndpoint = self.config.userInfoEndpoint {
-                
-                self.http.request(.GET, path: userInfoEndpoint, parameters: paramDict, completionHandler: {(responseObject, error) in
+
+                self.http.request(method: .get, path: userInfoEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
                     if (error != nil) {
                         completionHandler(nil, nil, error)
                         return
                     }
                     if let unwrappedResponse = responseObject as? String {
-                        let data = unwrappedResponse.dataUsingEncoding(NSUTF8StringEncoding)
-                        let json: AnyObject? = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
-                        var openIDClaims: FacebookOpenIDClaim?
+                        let data = unwrappedResponse.data(using: String.Encoding.utf8)
+                        let json: AnyObject? = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)) as AnyObject?
+                        var openIDClaims: FacebookOpenIdClaim?
                         if let unwrappedResponse = json as? [String: AnyObject] {
-                            openIDClaims = FacebookOpenIDClaim(fromDict: unwrappedResponse)
+                            openIDClaims = FacebookOpenIdClaim(fromDict: unwrappedResponse)
                         }
                         completionHandler(response, openIDClaims, nil)
                     }

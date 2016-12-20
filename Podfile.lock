@@ -1,36 +1,33 @@
 PODS:
-  - AeroGearHttp (0.8.0)
-  - CryptoSwift (0.4.1)
-  - JSONWebToken (1.5.0):
-    - CryptoSwift (~> 0.4.0)
-  - OHHTTPStubs (4.7.1):
-    - OHHTTPStubs/Default (= 4.7.1)
-  - OHHTTPStubs/Core (4.7.1)
-  - OHHTTPStubs/Default (4.7.1):
+  - AeroGearHttp (1.0.0)
+  - CryptoSwift (0.6.7)
+  - JSONWebToken (2.0.2):
+    - CryptoSwift (~> 0.6.1)
+  - OHHTTPStubs (5.2.3):
+    - OHHTTPStubs/Default (= 5.2.3)
+  - OHHTTPStubs/Core (5.2.3)
+  - OHHTTPStubs/Default (5.2.3):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.7.1):
+  - OHHTTPStubs/JSON (5.2.3):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.7.1):
+  - OHHTTPStubs/NSURLSession (5.2.3):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.7.1)
-  - OHHTTPStubs/Swift (4.7.1):
-    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (5.2.3)
 
 DEPENDENCIES:
-  - AeroGearHttp (= 0.8.0)
-  - JSONWebToken (= 1.5.0)
-  - OHHTTPStubs (= 4.7.1)
-  - OHHTTPStubs/Swift (= 4.7.1)
+  - AeroGearHttp (= 1.0.0)
+  - JSONWebToken (= 2.0.2)
+  - OHHTTPStubs (= 5.2.3)
 
 SPEC CHECKSUMS:
-  AeroGearHttp: 2f9bb955fac911c593fffe0aa0400db6fda79244
-  CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
-  JSONWebToken: 6c8968ace6b60b2e6156a7bbe5019fd9b5ff9b5a
-  OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
+  AeroGearHttp: 8c825d4563439f565196f52efe80e15f0055109a
+  CryptoSwift: 685ae257941e5447474348a2b545583e1a16b573
+  JSONWebToken: ca86f02eeb3d1f58ba5197ec2cd53c7de915ecc1
+  OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
 
-PODFILE CHECKSUM: b2456627e2ab5e4c50c5f8af18138c20b5657e53
+PODFILE CHECKSUM: cf7938e2f5f5d6ccc0c56922b4bca928dcd4aa2b
 
 COCOAPODS: 1.1.1

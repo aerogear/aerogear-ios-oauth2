@@ -1,17 +1,13 @@
 language: objective-c
-osx_image: xcode7
+
+osx_image: xcode8.1
+xcode_workspace: TDConnectIosSdk.xcworkspace
+xcode_scheme: TDConnectIosSdkTests
+xcode_sdk: iphonesimulator
 
 before_install:
-    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+  - travis_wait pod repo update
 
 script:
-    - set -o pipefail
-    - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -sdk iphonesimulator -destination "OS=9.0,name=iPhone 6 Plus" -configuration Release clean test
-    - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -sdk iphonesimulator -destination "OS=8.4,name=iPhone 6 Plus" -configuration Release clean test
-
-notifications:
-  irc: "irc.freenode.org#aerogear"
-
-branches:
-  only:
-    - master
+  - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdk -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
+  - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test
