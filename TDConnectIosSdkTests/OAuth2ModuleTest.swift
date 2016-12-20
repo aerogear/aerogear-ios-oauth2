@@ -186,8 +186,8 @@ class OAuth2ModuleTests: XCTestCase {
         let claims: Set<String> = ["email", "phone"]
         
         do {
-            let actual = try OAuth2Module.getClaimsParam(claims)
-            XCTAssertEqual("&claims=%7B%22userinfo%22%3A%7B%22email%22%3A%7B%22essential%22%3Atrue%7D%2C%22phone%22%3A%7B%22essential%22%3Atrue%7D%7D%7D", actual)
+            let actual = try OAuth2Module.getParam(claims: claims)
+            XCTAssertEqual("&claims=%7B%22userinfo%22%3A%7B%22phone%22%3A%7B%22essential%22%3Atrue%7D%2C%22email%22%3A%7B%22essential%22%3Atrue%7D%7D%7D", actual)
         } catch {
             XCTFail(String(describing: error))
         }
@@ -205,8 +205,8 @@ class OAuth2ModuleTests: XCTestCase {
             webView: false)
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config, http: http)
-            XCTAssertNotNil(url.query?.rangeOfString("&claims=%7B%22userinfo%22%3A%7B%22claim2%22%3A%7B%22essential%22%3Atrue%7D%2C%22claim1%22%3A%7B%22essential%22%3Atrue%7D%7D%7D"))
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22%3A%7B%22claim1%22%3A%7B%22essential%22%3Atrue%7D%2C%22claim2%22%3A%7B%22essential%22%3Atrue%7D%7D%7D"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
@@ -224,8 +224,8 @@ class OAuth2ModuleTests: XCTestCase {
             webView: false)
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config, http: http)
-            XCTAssertNil(url.query?.rangeOfString("&claims="))
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            XCTAssertNil(url.query?.range(of: "&claims="))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
@@ -243,8 +243,8 @@ class OAuth2ModuleTests: XCTestCase {
             webView: false)
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config, http: http)
-            XCTAssertNil(url.query?.rangeOfString("&scope=scope1%20scope2"))
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            XCTAssertNil(url.query?.range(of: "&scope=scope1%20scope2"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
@@ -278,7 +278,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
-        oauth2Module.exchangeAuthorizationCodeForAccessToken ("CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
+        oauth2Module.exchangeAuthorizationCodeForAccessToken (code: "CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
             if error != nil {
                 XCTFail("Got error")
             }
