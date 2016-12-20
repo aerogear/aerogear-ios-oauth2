@@ -34,7 +34,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleSuccess: OAuth2Module {
 
-        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             let accessToken: AnyObject? = NSString(string:"TOKEN")
             completionHandler(accessToken, nil)
         }
@@ -42,7 +42,7 @@ class OpenIDConnectGoogleOAuth2ModuleTests: XCTestCase {
 
     class MyMockOAuth2ModuleFailure: OAuth2Module {
 
-        override func requestAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        override func requestAccess(_ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
             completionHandler(nil, NSError(domain: "", code: 0, userInfo: nil))
         }
     }

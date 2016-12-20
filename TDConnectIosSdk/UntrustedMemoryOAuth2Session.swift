@@ -46,11 +46,6 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     The refresh tokens. This toke does not expire and should be used to renew access token when expired.
     */
     open var refreshToken: String?
-
-    /**
-    The JWT.
-    */
-    public var idToken: String?
     
     /**
     The refresh token's expiration date.

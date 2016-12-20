@@ -74,7 +74,7 @@ public class KeychainWrap {
     */
     public func save(key: String, tokenType: TokenType, value: String) -> Bool {
         let dataFromString: Data? = value.data(using: String.Encoding.utf8)
-        guard let dataFromString = dataFromString else {
+        guard let unwrappedDataFromString = dataFromString else {
             return false
         }
 
@@ -93,7 +93,7 @@ public class KeychainWrap {
         // if found update
         if (statusSearch == errSecSuccess) {
             let attributesToUpdate = NSMutableDictionary()
-            attributesToUpdate[kSecValueData as String] = dataFromString
+            attributesToUpdate[kSecValueData as String] = unwrappedDataFromString
             attributesToUpdate[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
                 
             let statusUpdate: OSStatus = SecItemUpdate(keychainQuery, attributesToUpdate)
@@ -102,7 +102,7 @@ public class KeychainWrap {
                 return false
             }
         } else if(statusSearch == errSecItemNotFound) { // if new, add
-            keychainQuery[kSecValueData as String] = dataFromString
+            keychainQuery[kSecValueData as String] = unwrappedDataFromString
             keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             let statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
             if(statusAdd != errSecSuccess) {
@@ -324,10 +324,10 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
         
         let now = NSDate()
         if let inter = accessTokenExpiration?.doubleValue {
-            self.accessTokenExpirationDate = now.addingTimeInterval(inter)
+            self.accessTokenExpirationDate = now.addingTimeInterval(inter) as Date
         }
         if let inter = refreshTokenExpiration?.doubleValue {
-            self.refreshTokenExpirationDate = now.addingTimeInterval(inter)
+            self.refreshTokenExpirationDate = now.addingTimeInterval(inter) as Date
         }
         if let idToken = idToken {
             self.idToken = idToken

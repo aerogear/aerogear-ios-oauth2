@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum IdTokenValidationError: ErrorType {
+public enum IdTokenValidationError: Error {
     case IncorrectIssuer(String)
     case MissingIssuer
     case MissingAudience(String)
@@ -54,12 +54,12 @@ public func validateIdToken(token: [String:AnyObject], expectedIssuer: String, e
         return IdTokenValidationError.AuthorizedPartyMismatch("ID token authorized party is not the configured client ID.")
     }
     
-    guard let experationTime = token["exp"] as? NSTimeInterval ?? token["exp"]?.doubleValue as NSTimeInterval? else {
+    guard let experationTime = token["exp"] as? TimeInterval ?? token["exp"]?.doubleValue as TimeInterval? else {
         return IdTokenValidationError.ExperationTimeMissing
     }
     
     let experationDate = NSDate(timeIntervalSince1970: experationTime)
-    if experationDate.timeIntervalSinceNow.isSignMinus {
+    if experationDate.timeIntervalSinceNow.sign == FloatingPointSign.minus {
         return IdTokenValidationError.Expired("ID token has expired.")
     }
     

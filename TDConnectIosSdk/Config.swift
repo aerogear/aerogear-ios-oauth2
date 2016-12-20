@@ -73,7 +73,7 @@ open class Config {
     open var scopesEncoded: String {
         get {
             return scopes
-                .joinWithSeparator(" ")
+                .joined(separator: " ")
                 .urlEncode()
         }
     }

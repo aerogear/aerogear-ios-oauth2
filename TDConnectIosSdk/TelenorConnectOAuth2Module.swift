@@ -12,20 +12,20 @@ import AeroGearHttp
 
 public class TelenorConnectOAuth2Module: OAuth2Module {
     
-    override public func revokeAccess(completionHandler: (AnyObject?, NSError?) -> Void) {
+    override public func revokeAccess(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // TODO: also revoke refreshToken
         if (self.oauth2Session.accessToken == nil) {
             return;
         }
         let paramDict:[String:String] = [ "client_id": config.clientId, "token": self.oauth2Session.accessToken!]
-        http.request(.POST, path: config.revokeTokenEndpoint!, parameters: paramDict, responseSerializer: StringResponseSerializer(), completionHandler: { (response, error) in
+        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict, responseSerializer: StringResponseSerializer(), completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
             
             self.oauth2Session.clearTokens()
-            completionHandler(response, nil)
+            completionHandler(response as AnyObject?, nil)
         })
     }
 }

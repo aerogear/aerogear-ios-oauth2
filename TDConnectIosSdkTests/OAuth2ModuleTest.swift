@@ -21,13 +21,13 @@ import TDConnectIosSdk
 import AeroGearHttp
 import OHHTTPStubs
 
-public func stub(condition: @escaping OHHTTPStubsTestBlock, response: @escaping OHHTTPStubsResponseBlock) -> OHHTTPStubsDescriptor {
+public func stub(_ condition: @escaping OHHTTPStubsTestBlock, response: @escaping OHHTTPStubsResponseBlock) -> OHHTTPStubsDescriptor {
     return OHHTTPStubs.stubRequests(passingTest: condition, withStubResponse: response)
 }
 
 func setupStubWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    _ = stub(condition: {_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
+    _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             let stubJsonResponse = ["name": "John", "family_name": "Smith"]
             switch request.url!.path {
             case "/plus/v1/people/me/openIdConnect":
@@ -53,7 +53,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
 
 func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
     // set up http stub
-    _ = stub(condition: {_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
+    _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             switch request.url!.path {
             case "/o/oauth2/token":
                 let string = "{\"access_token\":\"ACCESS_TOKEN\"}"
@@ -189,7 +189,7 @@ class OAuth2ModuleTests: XCTestCase {
             let actual = try OAuth2Module.getClaimsParam(claims)
             XCTAssertEqual("&claims=%7B%22userinfo%22%3A%7B%22email%22%3A%7B%22essential%22%3Atrue%7D%2C%22phone%22%3A%7B%22essential%22%3Atrue%7D%7D%7D", actual)
         } catch {
-            XCTFail(String(error))
+            XCTFail(String(describing: error))
         }
     }
     
@@ -252,7 +252,7 @@ class OAuth2ModuleTests: XCTestCase {
     
     func testRefreshAccessTokenCallsSaveAccessTokenWithNilIdToken() {
         setupStubWithNSURLSessionDefaultConfiguration()
-        let expectation = expectationWithDescription("Unchanged ID token");
+        let expectation = self.expectation(description: "Unchanged ID token");
         let googleConfig = GoogleConfig(
             clientId: "xxx.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"])
@@ -266,12 +266,12 @@ class OAuth2ModuleTests: XCTestCase {
             XCTAssertFalse(mockedSession.idTokenChanged)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testExchangeAuthorizationCodeForAccessTokenCallsSaveAccessTokenWithNonNilIdToken() {
         setupStubWithNSURLSessionDefaultConfiguration()
-        let expectation = expectationWithDescription("AccessRequest");
+        let expectation = self.expectation(description: "AccessRequest");
         let googleConfig = GoogleConfig(
             clientId: "xxx.apps.googleusercontent.com",
             scopes:["https://www.googleapis.com/auth/drive"])
@@ -285,7 +285,7 @@ class OAuth2ModuleTests: XCTestCase {
             XCTAssertTrue(mockedSession.idTokenChanged)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
 }
