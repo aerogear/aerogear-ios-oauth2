@@ -42,7 +42,7 @@ To add the library in your project, you can either use [CocoaPods](http://cocoap
 In your ```Podfile``` add:
 
 ```
-pod 'TDConnectIosSdk', :git => 'https://github.com/telenordigital/connect-ios-sdk'
+pod 'TDConnectIosSdk'
 ```
 
 and then:
