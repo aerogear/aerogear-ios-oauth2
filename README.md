@@ -75,19 +75,19 @@ A confidential client will not exchange the authorization code but simply return
 See [http://docs.telenordigital.com/connect/id/native_apps.html](http://docs.telenordigital.com/connect/id/native_apps.html) for more information.
 
 ```swift
-override func viewDidAppear(animated: Bool) {
-	super.viewDidAppear(animated)
-	let config = TelenorConnectConfig(clientId: "telenordigital-connectexample-ios",
-	    redirectUrl: "telenordigital-connectexample-ios://oauth2callback",
-	    useStaging: true,
-	    scopes: ["profile", "openid", "email"],
-	    accountId: "telenor-connect-ios-hello-world",
-	    isPublicClient: false) // this variable needs to be present
-
-	let oauth2Module = AccountManager.getAccountByConfig(config) 
-		?? AccountManager.addAccount(self.config, moduleClass: TelenorConnectOAuth2Module.self)
-
-	oauth2Module.requestAuthorizationCode { (authorizationCode: AnyObject?, error: NSError?) in
+override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let config = TelenorConnectConfig(clientId: "telenordigital-connectexample-ios",
+                                      redirectUrl: "telenordigital-connectexample-ios://oauth2callback",
+                                      useStaging: true,
+                                      scopes: ["profile", "openid", "email"],
+                                      accountId: "telenor-connect-ios-hello-world",
+                                      isPublicClient: false) // this variable needs to be present
+    
+    let oauth2Module = AccountManager.getAccountBy(config: config)
+        ?? AccountManager.addAccountWith(config: self.config, moduleClass: TelenorConnectOAuth2Module.self)
+    
+    oauth2Module.requestAuthorizationCode { (authorizationCode: AnyObject?, error: NSError?) in
         if (error != nil) {
             // handle error
             return
