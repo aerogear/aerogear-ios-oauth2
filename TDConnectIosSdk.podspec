@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name         = "TDConnectIosSdk"
-  s.version      = "0.8.1"
+  s.version      = "1.0.0"
   s.summary      = "OAuth2 client library based on aerogear-ios-http"
-  s.homepage     = "https://github.com/telenordigital/aerogear-ios-oauth2"
+  s.homepage     = "https://github.com/telenordigital/connect-ios-sdk"
   s.license      = 'Apache License, Version 2.0'
   s.author       = "Telenor Digital"
   s.source       = { :git => 'https://github.com/telenordigital/connect-ios-sdk.git', :tag => s.version }
@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.framework = 'Security'
   s.dependency 'AeroGearHttp'
-  s.dependency 'JSONWebToken', '1.5.0'
+  s.dependency 'JSONWebToken'
 end
