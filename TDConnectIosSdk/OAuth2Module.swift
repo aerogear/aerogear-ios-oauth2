@@ -53,7 +53,7 @@ Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     
-    let config: Config
+    open let config: Config
     open var http: Http
     open var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
