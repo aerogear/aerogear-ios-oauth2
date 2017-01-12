@@ -80,9 +80,14 @@ open class FacebookOAuth2Module: OAuth2Module {
         if (self.oauth2Session.accessToken == nil) {
             return
         }
+        // return if no revoke endpoint
+        guard let revokeTokenEndpoint = config.revokeTokenEndpoint else {
+            return
+        }
+
         let paramDict: [String:String] = ["access_token":self.oauth2Session.accessToken!]
 
-        http.request(method: .delete, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .delete, path: revokeTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
 
             if (error != nil) {
                 completionHandler(nil, error)
