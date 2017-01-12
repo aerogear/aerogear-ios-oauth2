@@ -17,7 +17,7 @@
 import Foundation
 
 /**
-The protocol that an OAuth2 Session modules must adhere to and represent storage of oauth specific metadata. See TrustedPersistantOAuth2Session and UntrustedMemoryOAuth2Session as example implementations
+The protocol that an OAuth2 Session modules must adhere to and represent storage of OAuth2 specific metadata. See TrustedPersistentOAuth2Session and UntrustedMemoryOAuth2Session as example implementations
 */
 public protocol OAuth2Session {
 
@@ -68,7 +68,7 @@ public protocol OAuth2Session {
     func clearTokens()
 
     /**
-    Save tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting
+    Save tokens information. Saving tokens allow you to refresh accessToken transparently for the user without prompting
     for grant access.
 
     :param: accessToken the access token.
