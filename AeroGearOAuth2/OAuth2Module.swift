@@ -57,6 +57,7 @@ open class OAuth2Module: AuthzModule {
     var state: AuthorizationState
     open var webView: OAuth2WebViewController?
     open var idToken: String?
+    open var customDismiss: Bool = false
 
     /**
     Initialize an OAuth2 module.
@@ -99,7 +100,7 @@ open class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
-            if ( self.webView != nil ) {
+            if ( self.webView != nil && !self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         })
