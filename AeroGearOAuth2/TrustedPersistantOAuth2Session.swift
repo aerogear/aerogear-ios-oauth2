@@ -46,19 +46,19 @@ public class KeychainWrap {
     public var serviceIdentifier: String
 
     /**
-    The group id is Keychain access group which is used for sharing keychain content accross multiple apps issued from same developer. By default there is no access group.
+    The group id is Keychain access group which is used for sharing keychain content across multiple apps issued from same developer. By default there is no access group.
     */
     public var groupId: String?
 
     /**
     Initialize KeychainWrapper setting default values.
 
-    :param: serviceId unique service, defulated to bundleId
+    :param: serviceId unique service, defaulted to bundleId
     :param: groupId used for SSO between app issued from same developer certificate.
     */
     public init(serviceId: String? =  Bundle.main.bundleIdentifier, groupId: String? = nil) {
         if serviceId == nil {
-            self.serviceIdentifier = "unkown"
+            self.serviceIdentifier = "unknown"
         } else {
             self.serviceIdentifier = serviceId!
         }
@@ -68,7 +68,7 @@ public class KeychainWrap {
     /**
     Save tokens information in Keychain.
 
-    :param: key usually use accountId for oauth2 module, any unique string.
+    :param: key usually use accountId for OAuth2 module, any unique string.
     :param: tokenType type of token: access, refresh.
     :param: value string value of the token.
     */
@@ -205,7 +205,7 @@ public class KeychainWrap {
 /**
 An OAuth2Session implementation to store OAuth2 metadata using the Keychain.
 */
-public class TrustedPersistantOAuth2Session: OAuth2Session {
+public class TrustedPersistentOAuth2Session: OAuth2Session {
 
     /**
     The account id.
@@ -345,14 +345,14 @@ public class TrustedPersistantOAuth2Session: OAuth2Session {
     }
 
     /**
-    Initialize TrustedPersistantOAuth2Session using account id. Account id is the service id used for keychain storage.
+    Initialize TrustedPersistentOAuth2Session using account id. Account id is the service id used for keychain storage.
 
-    :param: accountId uniqueId to identify the oauth2module
+    :param: accountId uniqueId to identify the OAuth2Module
     :param: groupId used for SSO between app issued from same developer certificate.
-    :param: accessToken optional parameter to initilaize the storage with initial values
-    :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values
-    :param: refreshToken optional parameter to initilaize the storage with initial values
-    :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values
+    :param: accessToken optional parameter to initialize the storage with initial values
+    :param: accessTokenExpirationDate optional parameter to initialize the storage with initial values
+    :param: refreshToken optional parameter to initialize the storage with initial values
+    :param: refreshTokenExpirationDate optional parameter to initialize the storage with initial values
     */
     public init(accountId: String,
         groupId: String? = nil,

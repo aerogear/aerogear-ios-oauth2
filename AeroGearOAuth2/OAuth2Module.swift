@@ -58,6 +58,8 @@ open class OAuth2Module: AuthzModule {
     var state: AuthorizationState
     open var webView: OAuth2WebViewController?
     open var idToken: String?
+    open var serverCode: String?
+    open var customDismiss: Bool = false
 
     /**
     Initialize an OAuth2 module.
@@ -74,7 +76,7 @@ open class OAuth2Module: AuthzModule {
             config.accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
         }
         if (session == nil) {
-            self.oauth2Session = TrustedPersistantOAuth2Session(accountId: config.accountId!)
+            self.oauth2Session = TrustedPersistentOAuth2Session(accountId: config.accountId!)
         } else {
             self.oauth2Session = session!
         }
@@ -87,7 +89,7 @@ open class OAuth2Module: AuthzModule {
         self.state = .authorizationStateUnknown
     }
 
-    // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
+    // MARK: Public API - To be overridden if necessary by OAuth2 specific adapter
 
     /**
     Request an authorization code.
@@ -100,7 +102,7 @@ open class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
-            if ( self.webView != nil ) {
+            if ( self.webView != nil && !self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         })
@@ -123,8 +125,13 @@ open class OAuth2Module: AuthzModule {
         self.state = .authorizationStatePendingExternalApproval
 
         // calculate final url
-        let params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
-        guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url:config.authzEndpoint) else {
+        var params = "?scope=\(config.scope)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code"
+
+        if let audienceId = config.audienceId {
+            params = "\(params)&audience=\(audienceId)"
+        }
+
+        guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url: config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
             completionHandler(nil, error)
             return
@@ -195,6 +202,10 @@ open class OAuth2Module: AuthzModule {
             paramDict["client_secret"] = unwrapped
         }
 
+        if let audience = config.audienceId {
+            paramDict["audience"] = audience
+        }
+
         http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
             if (error != nil) {
                 completionHandler(nil, error)
@@ -212,6 +223,7 @@ open class OAuth2Module: AuthzModule {
         let accessToken: String   = unwrappedResponse["access_token"] as! String
         let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
         let idToken: String?      = unwrappedResponse["id_token"] as? String
+        let serverCode: String?   = unwrappedResponse["server_code"] as? String
         let expiration            = unwrappedResponse["expires_in"] as? NSNumber
         let exp: String?          = expiration?.stringValue
         // expiration for refresh token is used in Keycloak
@@ -220,6 +232,7 @@ open class OAuth2Module: AuthzModule {
 
         self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: idToken)
         self.idToken    = self.oauth2Session.idToken
+        self.serverCode = serverCode
 
         return accessToken
     }
@@ -295,9 +308,14 @@ open class OAuth2Module: AuthzModule {
         if (self.oauth2Session.accessToken == nil) {
             return
         }
+        // return if no revoke endpoint
+        guard let revokeTokenEndpoint = config.revokeTokenEndpoint else {
+            return
+        }
+
         let paramDict: [String:String] = ["token":self.oauth2Session.accessToken!]
 
-        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: revokeTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
@@ -337,15 +355,23 @@ open class OAuth2Module: AuthzModule {
         let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
 
         // extract the code from the URL
-        let code = self.parametersFrom(queryString: url?.query)["code"]
+        let queryParamsDict = self.parametersFrom(queryString: url?.query)
+        let code = queryParamsDict["code"]
         // if exists perform the exchange
         if (code != nil) {
             self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
             // update state
             state = .authorizationStateApproved
         } else {
+            guard let errorName = queryParamsDict["error"] else {
+                let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
+                completionHandler(nil, error)
+                return
+            }
 
-            let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
+            let errorDescription = queryParamsDict["error_description"] ?? "There was an error!"
+            let error = NSError(domain: AGAuthzErrorDomain, code: 1, userInfo: ["error": errorName, "errorDescription": errorDescription])
+
             completionHandler(nil, error)
         }
         // finally, unregister

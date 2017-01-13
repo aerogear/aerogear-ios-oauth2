@@ -92,6 +92,11 @@ open class Config {
     open let clientSecret: String?
 
     /**
+    Applies the "audience" obtained with the client registration process.
+    */
+    public let audienceId: String?
+
+    /**
     Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
     and can be any String. If AccountManager is not used, this field is optional.
     */
@@ -107,7 +112,7 @@ open class Config {
         @available(iOS 9.0, *)
         case safariViewController
     }
-    
+
     /**
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
@@ -122,7 +127,7 @@ open class Config {
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -134,6 +139,7 @@ open class Config {
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.audienceId = audienceId
         self.accountId = accountId
         self.webView = webView
     }
