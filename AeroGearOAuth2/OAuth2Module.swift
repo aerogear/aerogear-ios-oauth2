@@ -286,9 +286,14 @@ open class OAuth2Module: AuthzModule {
         if (self.oauth2Session.accessToken == nil) {
             return
         }
+        // return if no revoke endpoint
+        guard let revokeTokenEndpoint = config.revokeTokenEndpoint else {
+            return
+        }
+
         let paramDict: [String:String] = ["token":self.oauth2Session.accessToken!]
 
-        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: revokeTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
