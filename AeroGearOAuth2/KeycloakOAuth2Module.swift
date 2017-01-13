@@ -27,8 +27,13 @@ open class KeycloakOAuth2Module: OAuth2Module {
         if (self.oauth2Session.accessToken == nil) {
             return
         }
+        // return if no revoke endpoint
+        guard let revokeTokenEndpoint = config.revokeTokenEndpoint else {
+            return
+        }
+
         let paramDict: [String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
-        http.request(method: .post, path: config.revokeTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        http.request(method: .post, path: revokeTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
             if (error != nil) {
                 completionHandler(nil, error)
                 return
