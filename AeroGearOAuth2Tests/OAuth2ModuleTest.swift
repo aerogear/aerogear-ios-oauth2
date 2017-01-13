@@ -17,7 +17,7 @@
 
 import UIKit
 import XCTest
-import AeroGearOAuth2
+@testable import AeroGearOAuth2
 import AeroGearHttp
 import OHHTTPStubs
 
@@ -180,5 +180,23 @@ class OAuth2ModuleTests: XCTestCase {
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
+    }
+
+    func testGoogleURLParams() {
+        let googleConfig = GoogleConfig(
+            clientId: "xxx.apps.googleusercontent.com",
+            scopes:["https://www.googleapis.com/auth/drive"],
+            audienceId: "xxx2.apps.googleusercontent.com"
+        )
+        googleConfig.isWebView = true
+
+        let mockedSession = MockOAuth2SessionWithRefreshToken()
+        let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
+        oauth2Module.requestAuthorizationCode { (response: AnyObject?, error:NSError?) -> Void in
+            // noop
+        }
+
+        let urlString = oauth2Module.webView!.targetURL.absoluteString
+        XCTAssertNotNil(urlString.range(of: "audience"), "If URL string doesn't contain an audience field")
     }
 }

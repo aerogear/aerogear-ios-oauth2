@@ -92,6 +92,11 @@ open class Config {
     open let clientSecret: String?
 
     /**
+    Applies the "audience" obtained with the client registration process.
+    */
+    public let audienceId: String?
+
+    /**
     Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
     and can be any String. If AccountManager is not used, this field is optional.
     */
@@ -111,7 +116,7 @@ open class Config {
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -123,6 +128,7 @@ open class Config {
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.audienceId = audienceId
         self.accountId = accountId
         self.isWebView = isWebView
     }

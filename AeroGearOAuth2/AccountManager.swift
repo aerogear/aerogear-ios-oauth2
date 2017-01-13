@@ -62,19 +62,22 @@ open class GoogleConfig: Config {
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
     :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, scopes: [String], audienceId: String? = nil, accountId: String? = nil, isOpenIDConnect: Bool = false) {
         let bundleString = Bundle.main.bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/v2/auth",
             redirectURL: "\(bundleString):/oauth2Callback",
             accessTokenEndpoint: "o/oauth2/token",
             clientId: clientId,
+            audienceId: audienceId,
             refreshTokenEndpoint: "o/oauth2/token",
             revokeTokenEndpoint: "o/oauth2/revoke",
             isOpenIDConnect: isOpenIDConnect,
             userInfoEndpoint: isOpenIDConnect ? "https://www.googleapis.com/plus/v1/people/me/openIdConnect" : nil,
             scopes: scopes,
-            accountId: accountId)
+            accountId: accountId
+        )
+
         // Add openIdConnect scope
         if self.isOpenIDConnect {
             self.scopes += ["openid", "email", "profile"]
@@ -96,14 +99,16 @@ open class KeycloakConfig: Config {
         let bundleString = Bundle.main.bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
-        super.init(base: "\(host)/auth",
+        super.init(
+            base: "\(host)/auth",
             authzEndpoint: "realms/\(realm)/protocol/openid-connect/auth",
             redirectURL: "\(bundleString)://oauth2Callback",
             accessTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             clientId: clientId,
             refreshTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             revokeTokenEndpoint: "realms/\(realm)/protocol/openid-connect/logout",
-            isOpenIDConnect: isOpenIDConnect)
+            isOpenIDConnect: isOpenIDConnect
+        )
         // Add openIdConnect scope
         if self.isOpenIDConnect {
             self.scopes += ["openid", "email", "profile"]

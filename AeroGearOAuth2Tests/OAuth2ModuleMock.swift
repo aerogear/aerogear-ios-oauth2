@@ -34,6 +34,7 @@ open class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
     open var refreshTokenExpirationDate: Date?
     open var refreshToken: String?
     open var idToken: String?
+    open var serverCode: String?
     open func tokenIsNotExpired() -> Bool {
         return true
     }
