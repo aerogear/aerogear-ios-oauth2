@@ -114,7 +114,7 @@ open class KeycloakConfig: Config {
 /**
 A Config object that sets up Telenor Connect specific configuration parameters.
 */
-public class TelenorConnectConfig: Config {
+open class TelenorConnectConfig: Config {
     /**
     Init a Telenor Connect configuration.
     :param: clientId OAuth2 credentials identifier.
