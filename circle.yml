@@ -1,4 +1,6 @@
 machine:
   xcode:
     version: 8.1
-
+  environment:
+    XCODE_WORKSPACE:AeroGearOAuth2.xcworkspace
+    XCODE_SCHEME:AeroGearOAuth2Tests
