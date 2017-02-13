@@ -48,6 +48,31 @@ public enum OAuth2Error: Error {
     case UnequalStateParameter(String)
 }
 
+
+fileprivate extension UIApplication {
+    var tdcTopViewController: UIViewController? {
+        guard let rootViewController = keyWindow?.rootViewController else {
+            return nil
+        }
+
+        var pointedViewController: UIViewController? = rootViewController
+
+        while  pointedViewController?.presentedViewController != nil {
+            switch pointedViewController?.presentedViewController {
+            case let navagationController as UINavigationController:
+                pointedViewController = navagationController.viewControllers.last
+            case let tabBarController as UITabBarController:
+                pointedViewController = tabBarController.selectedViewController
+            default:
+                pointedViewController = pointedViewController?.presentedViewController
+            }
+        }
+
+        return pointedViewController
+    }
+}
+
+
 /**
 Parent class of any OAuth2 module implementing generic OAuth2 authorization flow.
 */
@@ -163,13 +188,13 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             controller = OAuth2WebViewController()
             (controller as! OAuth2WebViewController).targetURL = url as URL!
         }
-        
-        UIApplication.shared.keyWindow?.rootViewController?.present(controller, animated: true, completion: nil)
+
+        UIApplication.shared.tdcTopViewController?.present(controller, animated: true, completion: nil)
     }
     
     func callCompletion(success: AnyObject?, error: NSError?, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         if self.config.isWebView {
-            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: {
+            UIApplication.shared.tdcTopViewController?.dismiss( animated: true, completion: {
                 completionHandler(success, error)
             })
         } else {
