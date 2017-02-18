@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6E7558A51E58D289003B6844"
-               BuildableName = "AeroGearOAuth2 macOS.framework"
+               BuildableName = "AeroGearOAuth2.framework"
                BlueprintName = "AeroGearOAuth2 macOS"
                ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E7558A51E58D289003B6844"
-            BuildableName = "AeroGearOAuth2 macOS.framework"
+            BuildableName = "AeroGearOAuth2.framework"
             BlueprintName = "AeroGearOAuth2 macOS"
             ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E7558A51E58D289003B6844"
-            BuildableName = "AeroGearOAuth2 macOS.framework"
+            BuildableName = "AeroGearOAuth2.framework"
             BlueprintName = "AeroGearOAuth2 macOS"
             ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
          </BuildableReference>
