@@ -15,9 +15,7 @@
 * limitations under the License.
 */
 import Foundation
-
 import Security
-import UIKit
 
 /**
 The type of token to be saved in KeychainWrap:

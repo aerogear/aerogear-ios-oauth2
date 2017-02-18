@@ -15,14 +15,10 @@
  * limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for AeroGearOAuth2.
 FOUNDATION_EXPORT double AeroGearOAuth2VersionNumber;
 
 //! Project version string for AeroGearOAuth2.
 FOUNDATION_EXPORT const unsigned char AeroGearOAuth2VersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <AeroGearOAuth2/PublicHeader.h>
-
-
