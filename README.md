@@ -13,6 +13,8 @@ OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-
 
 100% Swift 3.0
 
+Please use the GitHub _Watch_ feature to get notified on new releases of the SDK.
+
 ## Hello World app using the SDK
 
 The easiest way to get started is looking at the _Hello World_ example app.
