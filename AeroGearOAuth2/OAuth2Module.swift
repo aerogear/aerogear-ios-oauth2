@@ -59,7 +59,9 @@ open class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
+    #if os(iOS)
     open var webView: OAuth2WebViewController?
+    #endif
     open var idToken: String?
     open var serverCode: String?
     open var customDismiss: Bool = false
@@ -85,9 +87,11 @@ open class OAuth2Module: AuthzModule {
         }
         
         self.config = config
+        #if os(iOS)
         if config.isWebView {
             self.webView = OAuth2WebViewController()
         }
+        #endif
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .authorizationStateUnknown
     }
@@ -105,9 +109,11 @@ open class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
+            #if os(iOS)
             if ( self.webView != nil && !self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
+            #endif
         })
 
         // register to receive notification when the application becomes active so we
@@ -139,14 +145,17 @@ open class OAuth2Module: AuthzModule {
             completionHandler(nil, error)
             return
         }
+        #if os(iOS)
         if let url = URL(string: computedUrl.absoluteString + params) {
             if self.webView != nil {
                 self.webView!.targetURL = url
                 config.webViewHandler(self.webView!, completionHandler)
             } else {
+                
                 UIApplication.shared.openURL(url)
             }
         }
+        #endif
     }
 
     /**
@@ -351,7 +360,11 @@ open class OAuth2Module: AuthzModule {
 
     func extractCode(_ notification: Notification, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         let info = notification.userInfo!
+        #if os(iOS)
         let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
+        #else
+        let url: URL? = nil
+        #endif
 
         // extract the code from the URL
         let queryParamsDict = self.parametersFrom(queryString: url?.query)
