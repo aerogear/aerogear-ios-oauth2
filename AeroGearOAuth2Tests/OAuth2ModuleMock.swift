@@ -18,85 +18,86 @@
 import Foundation
 import AeroGearOAuth2
 
-public class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
-    public var accountId: String {
+open class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
+    open var accountId: String {
         get {
             return "account"
         }
     }
-    public var accessToken: String? {
+    open var accessToken: String? {
         get {
             return "TOKEN"
         }
         set(data) {}
     }
-    public var accessTokenExpirationDate: NSDate?
-    public var refreshTokenExpirationDate: NSDate?
-    public var refreshToken: String?
-    public func tokenIsNotExpired() -> Bool {
+    open var accessTokenExpirationDate: Date?
+    open var refreshTokenExpirationDate: Date?
+    open var refreshToken: String?
+    open var idToken: String?
+    open var serverCode: String?
+    open func tokenIsNotExpired() -> Bool {
         return true
     }
-    
-    public func refreshTokenIsNotExpired() -> Bool {
+
+    open func refreshTokenIsNotExpired() -> Bool {
         return true
     }
-    
-    public func clearTokens() {}
-    
-    public func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {}
+
+    open func clearTokens() {}
+    open func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?) {}
     public init() {}
 }
 
-public class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccessTokenStored {
-    public var savedRefreshedToken: String?
-    public var initCalled = 0
-    public override var refreshToken: String? {
+open class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccessTokenStored {
+    open var savedRefreshedToken: String?
+    open var initCalled = 0
+    open override var refreshToken: String? {
         get {
             return "REFRESH_TOKEN"
         }
         set(data) {}
     }
-    override public var accessTokenExpirationDate: NSDate? {
+    override open var accessTokenExpirationDate: Date? {
         get {
-            return NSDate()
+            return Date()
         }
         set(value) {}
     }
-    override public var refreshTokenExpirationDate: NSDate? {
+    override open var refreshTokenExpirationDate: Date? {
         get {
-            return NSDate()
+            return Date()
         }
         set(value) {}
     }
-    
-    public override func tokenIsNotExpired() -> Bool {
+
+    open override func tokenIsNotExpired() -> Bool {
         return false
     }
-    public override func saveAccessToken(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?) {
+    open override func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String?) {
         savedRefreshedToken = refreshToken
     }
-    public override func clearTokens() {initCalled = 1}
+    open override func clearTokens() {initCalled = 1}
     public override init() {}
 }
 
-public class MockOAuth2SessionWithAuthzCode: MockOAuth2SessionWithValidAccessTokenStored {
-    public override var refreshToken: String? {
+open class MockOAuth2SessionWithAuthzCode: MockOAuth2SessionWithValidAccessTokenStored {
+    open override var refreshToken: String? {
         get {
             return nil
         }
         set(data) {}
     }
-    public override func tokenIsNotExpired() -> Bool {
+    open override func tokenIsNotExpired() -> Bool {
         return false
     }
-    
+
 }
 
 class OAuth2ModulePartialMock: OAuth2Module {
-    override func refreshAccessToken(completionHandler: (AnyObject?, NSError?) -> Void) {
-        completionHandler("NEW_ACCESS_TOKEN", nil)
+    override func refreshAccessToken(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        completionHandler("NEW_ACCESS_TOKEN" as AnyObject?, nil)
     }
-    override func requestAuthorizationCode(completionHandler: (AnyObject?, NSError?) -> Void) {
-        completionHandler("ACCESS_TOKEN", nil)
+    override func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        completionHandler("ACCESS_TOKEN" as AnyObject?, nil)
     }
 }

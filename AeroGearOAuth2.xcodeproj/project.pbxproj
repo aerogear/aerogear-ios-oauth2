@@ -42,6 +42,7 @@
 		6E0B5F431D77CB930005F6CE /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
 		6E0B5F441D77CB930005F6CE /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		6E0B5F471D77CB930005F6CE /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E67ED351E9FEA6300AD482C /* OpenStackOauth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */; };
 		6E7558A71E58D289003B6844 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
 		6E7558A91E58D289003B6844 /* OpenIDClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */; };
 		6E7558AA1E58D289003B6844 /* OpenStackOauth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */; };
@@ -67,7 +68,6 @@
 		6EDF049E1D7B7B0A004949A0 /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		6EDF04A11D7B7B0A004949A0 /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CAD7A3AB1BAC5C800092315D /* OpenStackOauth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,7 +547,7 @@
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
 				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
-				CAD7A3AB1BAC5C800092315D /* OpenStackOauth2Module.swift in Sources */,
+				6E67ED351E9FEA6300AD482C /* OpenStackOauth2Module.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
@@ -678,7 +678,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;

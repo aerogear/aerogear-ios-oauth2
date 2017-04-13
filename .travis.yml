@@ -1,17 +1,15 @@
 language: objective-c
-osx_image: xcode6.4
-
-before_install:
-    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-
-script:
-    - set -o pipefail
-    - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -sdk iphonesimulator -destination "OS=7.1,name=iPhone 4S" -configuration Release clean test
-    - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -sdk iphonesimulator -destination "OS=8.4,name=iPhone 6 Plus" -configuration Release clean test
+osx_image: xcode8.1
+xcode_workspace: AeroGearOAuth2.xcworkspace
+xcode_scheme: AeroGearOAuth2Tests
+xcode_sdk: iphonesimulator
 
 notifications:
   irc: "irc.freenode.org#aerogear"
 
-branches:
-  only:
-    - master
+before_install:
+  - travis_wait pod repo update
+
+script:
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test
