@@ -20,52 +20,52 @@ import Foundation
 /**
 Configuration object to setup an OAuth2 module
 */
-public class Config {
+open class Config {
     /**
     Applies the baseURL to the configuration.
     */
-    public let baseURL: String
-    
+    open let baseURL: String
+
     /**
     Applies the "callback URL" once request token issued.
     */
-    public let redirectURL: String
+    open let redirectURL: String
 
     /**
     Applies the "authorization endpoint" to the request token.
     */
-    public var authzEndpoint: String
-    
+    open var authzEndpoint: String
+
     /**
     Applies the "access token endpoint" to the exchange code for access token.
     */
-    public var accessTokenEndpoint: String
+    open var accessTokenEndpoint: String
 
     /**
     Endpoint for request to invalidate both accessToken and refreshToken.
     */
-    public let revokeTokenEndpoint: String?
-    
+    open let revokeTokenEndpoint: String?
+
     /**
     Endpoint for request a refreshToken.
     */
-    public let refreshTokenEndpoint: String?
-    
+    open let refreshTokenEndpoint: String?
+
     /**
     Endpoint for OpenID Connect to get user information.
     */
-    public let userInfoEndpoint: String?
-    
+    open let userInfoEndpoint: String?
+
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
     */
-    public var isOpenIDConnect: Bool
-    
+    open var isOpenIDConnect: Bool
+
     /**
     Applies the various scopes of the authorization.
     */
-    public var scopes: [String]
-    
+    open var scopes: [String]
+
     var scope: String {
         get {
             // Create a string to concatenate all scopes existing in the _scopes array.
@@ -80,41 +80,55 @@ public class Config {
             return scopeString
         }
     }
-    
+
     /**
     Applies the "client id" obtained with the client registration process.
     */
-    public let clientId: String
-    
+    open let clientId: String
+
     /**
     Applies the "client secret" obtained with the client registration process.
     */
-    public let clientSecret: String?
-    
+    open let clientSecret: String?
+
+    /**
+    Applies the "audience" obtained with the client registration process.
+    */
+    public let audienceId: String?
+
     /**
     Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
     and can be any String. If AccountManager is not used, this field is optional.
     */
-    public var accountId: String?
-    
+    open var accountId: String?
+
     /**
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
     */
-    public var isWebView: Bool = false
-    
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect:Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    open var isWebView: Bool = false
+
+    /**
+    A handler to allow the webview to be pushed onto the navigation controller
+    */
+    open var webViewHandler: ((OAuth2WebViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+        (webView, completionHandler) in
+        UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
+    }
+
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
         self.accessTokenEndpoint = accessTokenEndpoint
         self.refreshTokenEndpoint = refreshTokenEndpoint
         self.revokeTokenEndpoint = revokeTokenEndpoint
-        self.isOpenIDConnect = isOpenIDConnect ?? false
+        self.isOpenIDConnect = isOpenIDConnect
         self.userInfoEndpoint = userInfoEndpoint
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.audienceId = audienceId
         self.accountId = accountId
         self.isWebView = isWebView
     }

@@ -1,12 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-xcodeproj 'AeroGearOAuth2.xcodeproj'
-platform :ios, '7.0'
+project 'AeroGearOAuth2.xcodeproj'
+platform :ios, '8.0'
 use_frameworks!
 
-pod 'AeroGearHttp', :git => 'https://github.com/aerogear/aerogear-ios-http'
+target 'AeroGearOAuth2' do
+  pod 'AeroGearHttp', '1.0.0'
 
-target 'AeroGearOAuth2Tests' do
-	pod 'OHHTTPStubs', '3.1.10'
+  target 'AeroGearOAuth2Tests' do
+      inherit! :search_paths
+
+      pod 'OHHTTPStubs', '5.2.2'
+  end
 end
-
