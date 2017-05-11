@@ -28,3 +28,7 @@ Pods/
 # rbenv
 .ruby-version
 Carthage
+
+AeroGearOAuth2Tests/Staging.swift
+
+AeroGearOAuth2Tests/Production.swift

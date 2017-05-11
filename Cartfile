@@ -1,1 +1,2 @@
 github "OpenStack-Mobile/aerogear-ios-http" "master"
+github "PureSwift/JSON" "master"

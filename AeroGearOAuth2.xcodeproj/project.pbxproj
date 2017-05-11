@@ -54,6 +54,21 @@
 		6E7558B11E58D289003B6844 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483304A419AF44DF002F8DA9 /* Config.swift */; };
 		6E7558B21E58D289003B6844 /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		6E7558B51E58D289003B6844 /* AeroGearOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4833046719AF1635002F8DA9 /* AeroGearOAuth2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E859F7F1EC507AC003D5B36 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F7E1EC507AC003D5B36 /* Store.swift */; };
+		6E859F811EC507C0003D5B36 /* SummitsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F801EC507C0003D5B36 /* SummitsRequest.swift */; };
+		6E859F851EC50831003D5B36 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F821EC50831003D5B36 /* Configuration.swift */; };
+		6E859F861EC50831003D5B36 /* Production.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F831EC50831003D5B36 /* Production.swift */; };
+		6E859F871EC50831003D5B36 /* Staging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F841EC50831003D5B36 /* Staging.swift */; };
+		6E859F891EC50841003D5B36 /* StoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F881EC50841003D5B36 /* StoreTests.swift */; };
+		6E859F8C1EC508C4003D5B36 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F8B1EC508C4003D5B36 /* Page.swift */; };
+		6E859F8E1EC508D3003D5B36 /* ErrorValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F8D1EC508D3003D5B36 /* ErrorValue.swift */; };
+		6E859F901EC508E2003D5B36 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F8F1EC508E2003D5B36 /* Environment.swift */; };
+		6E859F931EC50953003D5B36 /* Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F911EC50953003D5B36 /* Named.swift */; };
+		6E859F941EC50953003D5B36 /* Unique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F921EC50953003D5B36 /* Unique.swift */; };
+		6E859F961EC50972003D5B36 /* PageJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F951EC50972003D5B36 /* PageJSON.swift */; };
+		6E859F981EC50987003D5B36 /* TimeZoneJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F971EC50987003D5B36 /* TimeZoneJSON.swift */; };
+		6E859F9A1EC50998003D5B36 /* TimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F991EC50998003D5B36 /* TimeZone.swift */; };
+		6E859F9E1EC509ED003D5B36 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E859F9D1EC509ED003D5B36 /* Session.swift */; };
 		6EDF04941D7B7B0A004949A0 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4833049F19AF327D002F8DA9 /* AccountManager.swift */; };
 		6EDF04951D7B7B0A004949A0 /* OpenIDClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D73801A35BCBC0007D9EC /* OpenIDClaim.swift */; };
 		6EDF04961D7B7B0A004949A0 /* OpenStackOauth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */; };
@@ -122,6 +137,21 @@
 		48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2WebViewController.swift; sourceTree = "<group>"; };
 		6E0B5F4B1D77CB930005F6CE /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E7558B91E58D289003B6844 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E859F7E1EC507AC003D5B36 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		6E859F801EC507C0003D5B36 /* SummitsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummitsRequest.swift; sourceTree = "<group>"; };
+		6E859F821EC50831003D5B36 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		6E859F831EC50831003D5B36 /* Production.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Production.swift; sourceTree = "<group>"; };
+		6E859F841EC50831003D5B36 /* Staging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staging.swift; sourceTree = "<group>"; };
+		6E859F881EC50841003D5B36 /* StoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreTests.swift; sourceTree = "<group>"; };
+		6E859F8B1EC508C4003D5B36 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		6E859F8D1EC508D3003D5B36 /* ErrorValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorValue.swift; sourceTree = "<group>"; };
+		6E859F8F1EC508E2003D5B36 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		6E859F911EC50953003D5B36 /* Named.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Named.swift; sourceTree = "<group>"; };
+		6E859F921EC50953003D5B36 /* Unique.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unique.swift; sourceTree = "<group>"; };
+		6E859F951EC50972003D5B36 /* PageJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageJSON.swift; sourceTree = "<group>"; };
+		6E859F971EC50987003D5B36 /* TimeZoneJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneJSON.swift; sourceTree = "<group>"; };
+		6E859F991EC50998003D5B36 /* TimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZone.swift; sourceTree = "<group>"; };
+		6E859F9D1EC509ED003D5B36 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		6EDF04A51D7B7B0A004949A0 /* AeroGearOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AeroGearOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD7A3AA1BAC5C800092315D /* OpenStackOauth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenStackOauth2Module.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -228,6 +258,7 @@
 				485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */,
 				485AAB841A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift */,
 				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
+				6E859F8A1EC50845003D5B36 /* CoreSummit */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
 			);
 			path = AeroGearOAuth2Tests;
@@ -247,6 +278,28 @@
 				485AAB931A383FB500ABEBB2 /* OAuth2ModuleMock.swift */,
 			);
 			name = Mock;
+			sourceTree = "<group>";
+		};
+		6E859F8A1EC50845003D5B36 /* CoreSummit */ = {
+			isa = PBXGroup;
+			children = (
+				6E859F881EC50841003D5B36 /* StoreTests.swift */,
+				6E859F7E1EC507AC003D5B36 /* Store.swift */,
+				6E859F9D1EC509ED003D5B36 /* Session.swift */,
+				6E859F801EC507C0003D5B36 /* SummitsRequest.swift */,
+				6E859F8F1EC508E2003D5B36 /* Environment.swift */,
+				6E859F8D1EC508D3003D5B36 /* ErrorValue.swift */,
+				6E859F911EC50953003D5B36 /* Named.swift */,
+				6E859F921EC50953003D5B36 /* Unique.swift */,
+				6E859F821EC50831003D5B36 /* Configuration.swift */,
+				6E859F831EC50831003D5B36 /* Production.swift */,
+				6E859F841EC50831003D5B36 /* Staging.swift */,
+				6E859F8B1EC508C4003D5B36 /* Page.swift */,
+				6E859F951EC50972003D5B36 /* PageJSON.swift */,
+				6E859F991EC50998003D5B36 /* TimeZone.swift */,
+				6E859F971EC50987003D5B36 /* TimeZoneJSON.swift */,
+			);
+			name = CoreSummit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,13 +537,28 @@
 			files = (
 				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
 				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
+				6E859F811EC507C0003D5B36 /* SummitsRequest.swift in Sources */,
 				485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */,
+				6E859F941EC50953003D5B36 /* Unique.swift in Sources */,
+				6E859F861EC50831003D5B36 /* Production.swift in Sources */,
+				6E859F961EC50972003D5B36 /* PageJSON.swift in Sources */,
+				6E859F981EC50987003D5B36 /* TimeZoneJSON.swift in Sources */,
+				6E859F8C1EC508C4003D5B36 /* Page.swift in Sources */,
+				6E859F8E1EC508D3003D5B36 /* ErrorValue.swift in Sources */,
+				6E859F7F1EC507AC003D5B36 /* Store.swift in Sources */,
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
+				6E859F9A1EC50998003D5B36 /* TimeZone.swift in Sources */,
 				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,
+				6E859F851EC50831003D5B36 /* Configuration.swift in Sources */,
+				6E859F931EC50953003D5B36 /* Named.swift in Sources */,
 				485D737D1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift in Sources */,
 				485AAB831A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift in Sources */,
+				6E859F891EC50841003D5B36 /* StoreTests.swift in Sources */,
+				6E859F9E1EC509ED003D5B36 /* Session.swift in Sources */,
 				485AAB851A372CB000ABEBB2 /* FacebookOAuth2ModuleTest.swift in Sources */,
+				6E859F901EC508E2003D5B36 /* Environment.swift in Sources */,
 				48CD52DF19B0CB5A008D0694 /* OAuth2SessionTest.swift in Sources */,
+				6E859F871EC50831003D5B36 /* Staging.swift in Sources */,
 				485D737C1A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
