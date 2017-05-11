@@ -257,6 +257,10 @@ open class OAuth2Module: AuthzModule {
         } else if (self.oauth2Session.refreshToken != nil && self.oauth2Session.refreshTokenIsNotExpired()) {
             // need to refresh token
             self.refreshAccessToken(completionHandler: completionHandler)
+        } else if (self.config.isServiceAccount) {
+            self.loginClientCredentials() { (accessToken, claims, error) in
+                completionHandler(accessToken, error)
+            }
         } else {
             // ask for authorization code and once obtained exchange code for access token
             self.requestAuthorizationCode(completionHandler: completionHandler)
@@ -306,6 +310,38 @@ open class OAuth2Module: AuthzModule {
         return OpenIdClaim(fromDict: fromDict)
     }
 
+    /**
+     Gateway to login with client credentials
+     
+     :param: completionHandler A block object to be executed when the request operation finishes.
+     */
+    public func loginClientCredentials(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
+        
+        let paramDict: [String: String] = ["client_id": config.clientId, "client_secret": config.clientSecret!, "scope": config.scope, "grant_type": "client_credentials"]
+        
+        http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            
+            if let unwrappedResponse = response as? [String: AnyObject] {
+                let accessToken: String = unwrappedResponse["access_token"] as! String
+                let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
+                let expiration = unwrappedResponse["expires_in"] as? NSNumber
+                let exp: String? = expiration?.stringValue
+                // expiration for refresh token is used in Keycloak
+                let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
+                let expRefresh = expirationRefresh?.stringValue
+                
+                // in Keycloak refresh token get refreshed every time you use them
+                self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: nil)
+                
+                completionHandler(accessToken as AnyObject, nil, nil);
+            }
+        })
+    }
+    
     /**
     Request to revoke access.
 
