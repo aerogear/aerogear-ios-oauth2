@@ -1,1 +1,2 @@
-github "OpenStack-Mobile/aerogear-ios-http" "7bfb27282a5787eec5fc1930c4a942e39b64e135"
+github "AliSoftware/OHHTTPStubs" "6.0.0"
+github "OpenStack-Mobile/aerogear-ios-http" "baeeaf6947d1afb58e3235a732b50c5a58923cad"
