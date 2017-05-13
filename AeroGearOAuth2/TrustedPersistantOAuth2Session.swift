@@ -84,7 +84,6 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
@@ -107,7 +106,7 @@ public class KeychainWrap {
             keychainQuery[kSecValueData as String] = dataFromString!
             let statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
             if(statusAdd != errSecSuccess) {
-                print("tokens not saved")
+                print("tokens not saved (\(statusAdd))")
                 return false
             }
         } else { // error case
@@ -131,8 +130,7 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-
+        
         let statusDelete: OSStatus = SecItemDelete(keychainQuery)
 
         return statusDelete == noErr
@@ -154,8 +152,7 @@ public class KeychainWrap {
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
         keychainQuery[kSecMatchLimit as String] = kSecMatchLimitOne
         keychainQuery[kSecReturnData as String] = kCFBooleanTrue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-
+        
         var dataTypeRef: AnyObject?
         // Search for the keychain items
         let status: OSStatus = withUnsafeMutablePointer(to: &dataTypeRef) {
@@ -174,7 +171,7 @@ public class KeychainWrap {
             return nil
         }
 
-        return String(data: keychainData, encoding: String.Encoding.utf8) as String?
+        return String(data: keychainData, encoding: String.Encoding.utf8)
     }
 
     /**
