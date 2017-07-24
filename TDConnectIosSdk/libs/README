@@ -1,0 +1,11 @@
+To compile libcurl:
+1. curl -O https://curl.haxx.se/download/curl-7.54.0.tar.gz
+2. tar xf curl-7.54.0.tar.gz
+3. cd curl-7.54.0
+4. curl https://raw.githubusercontent.com/sinofool/build-libcurl-ios/master/build_libcurl_dist.sh -O
+5. chmod +x build_libcurl_dist.sh
+6. Edit build_libcurl_dist.sh to compile and link the desired architectures. Preferably: x86_64, armv7, armv7s, arm64
+7. mkdir -p ../curl
+8. export DIST_DIR=../curl && ./build_libcurl_dist.sh
+
+This will build a fat static version of libcurl (both simulator and device architectures are included), which makes development easier. However when preparing the app for submissions, the untargeted architectures will have to be removed using the lipo command.
