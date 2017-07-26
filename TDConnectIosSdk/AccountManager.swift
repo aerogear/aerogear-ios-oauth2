@@ -132,6 +132,7 @@ open class TelenorConnectConfig: Config {
             clientId: clientId,
             refreshTokenEndpoint: "\(baseUrl)/token",
             revokeTokenEndpoint: "\(baseUrl)/revoke",
+            wellKnownConfigurationEndpoint: "\(baseUrl)/.well-known/openid-configuration",
             isOpenIDConnect: true,
             userInfoEndpoint: "\(baseUrl)/userinfo",
             scopes: scopes,

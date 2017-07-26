@@ -105,6 +105,21 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             self.oauth2Session = session!
         }
 
+        if (config.optionalParams == nil) {
+            config.optionalParams = [String: String]();
+        }
+
+        if (!ForcedHEManager.isCellularEnabled()) {
+            config.optionalParams!["prompt"] = "no_seam";
+        } else {
+            if (ForcedHEManager.isWifiEnabled() && config.isWebView) {
+                let mccMnc:String = OperatorInfo.id()
+                config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
+                ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
+                URLProtocol.registerClass(ForcedHEURLProtocol.self)
+            }
+        }
+
         self.config = config
         
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
@@ -173,17 +188,17 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             completionHandler(nil, error)
             return
         }
-        
-        if !self.config.isWebView {
-            UIApplication.shared.openURL(url as URL)
-            return
-        }
-        
+
         var controller: UIViewController
-        if #available(iOS 9.0, *) {
-            let safariViewController = SFSafariViewController(url: url as URL)
-            safariViewController.delegate = self
-            controller = safariViewController
+        if !self.config.isWebView {
+            if #available(iOS 9.0, *) {
+                let safariViewController = SFSafariViewController(url: url as URL)
+                safariViewController.delegate = self
+                controller = safariViewController
+            } else {
+                UIApplication.shared.openURL(url as URL)
+                return
+            }
         } else {
             controller = OAuth2WebViewController()
             (controller as! OAuth2WebViewController).targetURL = url as URL!

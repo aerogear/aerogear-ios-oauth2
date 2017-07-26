@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B3956D1F28B98400AF514E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3956C1F28B98400AF514E /* libcurl.a */; };
+		01B3956F1F28B9C900AF514E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3956E1F28B9C900AF514E /* libz.tbd */; };
+		01BD2C561F28A2370051E77C /* ForcedHEManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BD2C511F28A2370051E77C /* ForcedHEManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01BD2C571F28A2370051E77C /* ForcedHEManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BD2C521F28A2370051E77C /* ForcedHEManager.m */; };
+		01BD2C581F28A2370051E77C /* ForcedHEURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BD2C531F28A2370051E77C /* ForcedHEURLProtocol.swift */; };
+		01BD2C591F28A2370051E77C /* OperatorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BD2C541F28A2370051E77C /* OperatorInfo.swift */; };
 		4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */; };
 		4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */; };
 		4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4814EF4D19C1C10C008BAC4D /* FacebookOAuth2Module.swift */; };
@@ -62,6 +68,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01B3956C1F28B98400AF514E /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = TDConnectIosSdk/libs/curl/lib/libcurl.a; sourceTree = "<group>"; };
+		01B3956E1F28B9C900AF514E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		01BD2C511F28A2370051E77C /* ForcedHEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForcedHEManager.h; sourceTree = "<group>"; };
+		01BD2C521F28A2370051E77C /* ForcedHEManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForcedHEManager.m; sourceTree = "<group>"; };
+		01BD2C531F28A2370051E77C /* ForcedHEURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcedHEURLProtocol.swift; sourceTree = "<group>"; };
+		01BD2C541F28A2370051E77C /* OperatorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperatorInfo.swift; sourceTree = "<group>"; };
 		29CEFEBD6E843FBD5EE93FEB /* Pods_TDConnectIosSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustedPersistantOAuth2Session.swift; sourceTree = "<group>"; };
 		4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UntrustedMemoryOAuth2Session.swift; sourceTree = "<group>"; };
@@ -105,6 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B3956F1F28B9C900AF514E /* libz.tbd in Frameworks */,
+				01B3956D1F28B98400AF514E /* libcurl.a in Frameworks */,
 				4B9A26288B291AE0A3828F98 /* Pods_TDConnectIosSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +168,10 @@
 		4833046419AF1635002F8DA9 /* TDConnectIosSdk */ = {
 			isa = PBXGroup;
 			children = (
+				01BD2C511F28A2370051E77C /* ForcedHEManager.h */,
+				01BD2C521F28A2370051E77C /* ForcedHEManager.m */,
+				01BD2C531F28A2370051E77C /* ForcedHEURLProtocol.swift */,
+				01BD2C541F28A2370051E77C /* OperatorInfo.swift */,
 				4833046519AF1635002F8DA9 /* Supporting Files */,
 				4833049F19AF327D002F8DA9 /* AccountManager.swift */,
 				483304A419AF44DF002F8DA9 /* Config.swift */,
@@ -219,6 +237,8 @@
 		6DA531836D4D42D3E1904E78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01B3956E1F28B9C900AF514E /* libz.tbd */,
+				01B3956C1F28B98400AF514E /* libcurl.a */,
 				9ADB5FF0CB048392A40B2D60 /* Pods.framework */,
 				81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */,
 				29CEFEBD6E843FBD5EE93FEB /* Pods_TDConnectIosSdkTests.framework */,
@@ -233,6 +253,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01BD2C561F28A2370051E77C /* ForcedHEManager.h in Headers */,
 				4833046819AF1635002F8DA9 /* TDConnectIosSdk.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,7 +315,7 @@
 				TargetAttributes = {
 					4833046119AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 					};
 					4833046C19AF1635002F8DA9 = {
 						CreatedOnToolsVersion = 6.0;
@@ -423,13 +444,16 @@
 			files = (
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
+				01BD2C581F28A2370051E77C /* ForcedHEURLProtocol.swift in Sources */,
 				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
+				01BD2C591F28A2370051E77C /* OperatorInfo.swift in Sources */,
 				5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */,
 				48CD52DD19B0C22A008D0694 /* OAuth2Session.swift in Sources */,
 				48CD52D719B0C1CB008D0694 /* OAuth2Module.swift in Sources */,
 				4872F71619EFE7D100F3FDE8 /* DateUtils.swift in Sources */,
 				4814EF4B19C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift in Sources */,
+				01BD2C571F28A2370051E77C /* ForcedHEManager.m in Sources */,
 				4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */,
 				5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */,
 				483304A519AF44DF002F8DA9 /* Config.swift in Sources */,
@@ -569,9 +593,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/TDConnectIosSdk/libs/curl/include";
 				INFOPLIST_FILE = TDConnectIosSdk/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TDConnectIosSdk/libs/curl/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -590,9 +619,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/TDConnectIosSdk/libs/curl/include";
 				INFOPLIST_FILE = TDConnectIosSdk/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TDConnectIosSdk/libs/curl/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.aerogear.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -47,6 +47,11 @@ open class Config {
     open let revokeTokenEndpoint: String?
 
     /**
+     Endpoint for well known configuration.
+     */
+    open let wellKnownConfigurationEndpoint: String?
+
+    /**
     Endpoint for request a refreshToken.
     */
     open let refreshTokenEndpoint: String?
@@ -129,13 +134,14 @@ open class Config {
     */
     public let isPublicClient: Bool
     
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, wellKnownConfigurationEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
         self.accessTokenEndpoint = accessTokenEndpoint
         self.refreshTokenEndpoint = refreshTokenEndpoint
         self.revokeTokenEndpoint = revokeTokenEndpoint
+        self.wellKnownConfigurationEndpoint = wellKnownConfigurationEndpoint
         self.isOpenIDConnect = isOpenIDConnect
         self.userInfoEndpoint = userInfoEndpoint
         self.scopes = scopes

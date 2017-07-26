@@ -16,6 +16,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "ForcedHEManager.h"
 
 //! Project version number for TDConnectIosSdk.
 FOUNDATION_EXPORT double TDConnectIosSdkVersionNumber;
