@@ -11,5 +11,5 @@ before_install:
   - travis_wait pod repo update
 
 script:
-  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
-  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.0' build
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.0' build test
