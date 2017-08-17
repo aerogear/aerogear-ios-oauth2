@@ -3,21 +3,21 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)
 [![Platform](https://img.shields.io/cocoapods/p/AeroGearOAuth2.svg?style=flat)](http://cocoadocs.org/docsets/AeroGearOAuth2)
 
-> This module currently build with Xcode 8 and supports iOS8, iOS9, iOS10.
+> This module currently build with Xcode 9 and supports iOS9, iOS10, iOS11.
 
-OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
-Taking care of: 
+OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http).
+Taking care of:
 
 * account manager for multiple OAuth2 accounts,
 * request access and refresh token,
 * grant access through secure external browser and URI schema to re-enter app,
-* (implicit or explicit) refresh tokens, 
+* (implicit or explicit) refresh tokens,
 * revoke tokens,
 * permanent secure storage,
 * adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.9.3.Final](http://keycloak.jboss.org/) etc...
 * openID Connect login
 
-100% Swift 3.0.
+100% Swift 4.0.
 
 |                 | Project Info  |
 | --------------- | ------------- |
@@ -84,7 +84,7 @@ pod install
 ```
 3. open AeroGearOAuth2.xcworkspace
 
-## Adding the library to your project 
+## Adding the library to your project
 To add the library in your project, you can either use [CocoaPods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
 
 ### Using [CocoaPods](http://cocoapods.org)
@@ -110,7 +110,7 @@ Follow these steps to add the library in your Swift project:
 git submodule add https://github.com/aerogear/aerogear-ios-oauth2.git
 ```
 2. Open the `aerogear-ios-oauth2` folder, and drag the `AeroGearOAuth2.xcodeproj` into the file navigator in Xcode.
-3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearOAuth2.framework (Currently set to 8.0).
+3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearOAuth2.framework (Currently set to 9.0).
 5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `AeroGearOAuth2.framework`.
 7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `AeroGearOAuth2.framework`.
 
