@@ -31,7 +31,7 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
                 let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/oauth/access_token":
-                let string = "access_token=CAAK4k&expires=5183999"
+                let string = "{\"access_token\":\"CAAK4k\",\"expires_in\":5183999}"
                 let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/plain"])
             default: return OHHTTPStubsResponse(data:Data(), statusCode: 404, headers: ["Content-Type" : "text/json"])
