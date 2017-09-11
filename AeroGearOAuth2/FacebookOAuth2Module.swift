@@ -47,25 +47,16 @@ open class FacebookOAuth2Module: OAuth2Module {
                 return
             }
 
-            if let unwrappedResponse = response as? String {
-                var accessToken: String? = nil
-                var expiredIn: String? = nil
-
-                let charSet: NSMutableCharacterSet = NSMutableCharacterSet()
-                charSet.addCharacters(in: "&=")
-                let array = unwrappedResponse.components(separatedBy: charSet as CharacterSet)
-                for (index, elt) in array.enumerated() {
-                    if elt == "access_token" {
-                        accessToken = array[index+1]
-                    }
-                }
-                for (index, elt) in array.enumerated() {
-                    if elt == "expires" {
-                        expiredIn = array[index+1]
-                    }
-                }
+            do {
+                let unwrappedResponse = response as! String
+                let data = unwrappedResponse.data(using: .utf8)!
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                let accessToken: String = json["access_token"] as! String
+                let expiredIn: String = "\(json["expires_in"] ?? "")"
                 self.oauth2Session.save(accessToken: accessToken, refreshToken: nil, accessTokenExpiration: expiredIn, refreshTokenExpiration: nil, idToken: nil)
                 completionHandler(accessToken as AnyObject?, nil)
+            } catch let error as NSError {
+                completionHandler(nil, error)
             }
         })
     }
