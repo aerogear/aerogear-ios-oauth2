@@ -33,7 +33,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
             case "/plus/v1/people/me/openIdConnect":
                 let data = try! JSONSerialization.data(withJSONObject: stubJsonResponse, options: JSONSerialization.WritingOptions())
                 return OHHTTPStubsResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
-            case "/v2.2/me":
+            case "/v2.10/me":
                 let string = "{\"id\":\"10204448880356292\",\"first_name\":\"Corinne\",\"gender\":\"female\",\"last_name\":\"Krych\",\"link\":\"https:\\/\\/www.facebook.com\\/app_scoped_user_id\\/10204448880356292\\/\",\"locale\":\"en_GB\",\"name\":\"Corinne Krych\",\"timezone\":1,\"updated_time\":\"2014-09-24T10:51:12+0000\",\"verified\":true}"
                 let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
