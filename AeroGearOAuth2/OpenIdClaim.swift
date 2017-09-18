@@ -66,9 +66,9 @@ open class OpenIdClaim: CustomStringConvertible {
     open var hd: String?
     /// Display all the claims.
     open var description: String {
-        return  "sub: \(sub)\nname: \(name)\ngivenName: \(givenName)\nfamilyName: \(familyName)\nmiddleName: \(middleName)\n" +
-            "nickname: \(nickname)\npreferredUsername: \(preferredUsername)\nprofile: \(profile)\npicture: \(picture)\n" +
-        "website: \(website)\nemail: \(email)\nemailVerified: \(emailVerified)\ngender: \(gender)\nbirthdate: \(birthdate)\n"
+        return  "sub: \(String(describing: sub))\nname: \(String(describing: name))\ngivenName: \(String(describing: givenName))\nfamilyName: \(String(describing: familyName))\nmiddleName: \(String(describing: middleName))\n" +
+            "nickname: \(String(describing: nickname))\npreferredUsername: \(String(describing: preferredUsername))\nprofile: \(String(describing: profile))\npicture: \(String(describing: picture))\n" +
+        "website: \(String(describing: website))\nemail: \(String(describing: email))\nemailVerified: \(String(describing: emailVerified))\ngender: \(String(describing: gender))\nbirthdate: \(String(describing: birthdate))\n"
     }
 
     /// Initialize an OpenIDClaim from a dictionary. all information not available are optional values set to .None.
