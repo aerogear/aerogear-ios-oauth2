@@ -16,8 +16,12 @@
 */
 
 import Foundation
-import UIKit
 import AeroGearHttp
+
+#if os(iOS)
+import UIKit
+import SafariServices
+#endif
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -55,7 +59,9 @@ open class OAuth2Module: AuthzModule {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
+    #if os(iOS)
     open var webView: OAuth2WebViewController?
+    #endif
     open var idToken: String?
     open var serverCode: String?
     open var customDismiss: Bool = false
@@ -79,11 +85,13 @@ open class OAuth2Module: AuthzModule {
         } else {
             self.oauth2Session = session!
         }
-
+        
         self.config = config
+        #if os(iOS)
         if config.isWebView {
             self.webView = OAuth2WebViewController()
         }
+        #endif
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .authorizationStateUnknown
     }
@@ -101,9 +109,11 @@ open class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
+            #if os(iOS)
             if ( self.webView != nil && !self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
+            #endif
         })
 
         // register to receive notification when the application becomes active so we
@@ -135,14 +145,17 @@ open class OAuth2Module: AuthzModule {
             completionHandler(nil, error)
             return
         }
+        #if os(iOS)
         if let url = URL(string: computedUrl.absoluteString + params) {
             if self.webView != nil {
                 self.webView!.targetURL = url
                 config.webViewHandler(self.webView!, completionHandler)
             } else {
+                
                 UIApplication.shared.openURL(url)
             }
         }
+        #endif
     }
 
     /**
@@ -159,10 +172,14 @@ open class OAuth2Module: AuthzModule {
 
             http.request(method: .post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
                 if (error != nil) {
+                    if (error?.code == 400 || error?.code == 401 || error?.code == 403 || error?.code == 404) {
+                        self.revokeAccess() { _ in }
+                    }
+                    
                     completionHandler(nil, error)
                     return
                 }
-
+                
                 if let unwrappedResponse = response as? [String: AnyObject] {
                     let accessToken: String = unwrappedResponse["access_token"] as! String
                     let expiration = unwrappedResponse["expires_in"] as! NSNumber
@@ -179,7 +196,7 @@ open class OAuth2Module: AuthzModule {
             })
         }
     }
-
+    
     /**
     Exchange an authorization code for an access token.
 
@@ -240,6 +257,10 @@ open class OAuth2Module: AuthzModule {
         } else if (self.oauth2Session.refreshToken != nil && self.oauth2Session.refreshTokenIsNotExpired()) {
             // need to refresh token
             self.refreshAccessToken(completionHandler: completionHandler)
+        } else if (self.config.isServiceAccount) {
+            self.loginClientCredentials() { (accessToken, claims, error) in
+                completionHandler(accessToken, error)
+            }
         } else {
             // ask for authorization code and once obtained exchange code for access token
             self.requestAuthorizationCode(completionHandler: completionHandler)
@@ -289,6 +310,38 @@ open class OAuth2Module: AuthzModule {
         return OpenIdClaim(fromDict: fromDict)
     }
 
+    /**
+     Gateway to login with client credentials
+     
+     :param: completionHandler A block object to be executed when the request operation finishes.
+     */
+    public func loginClientCredentials(completionHandler: @escaping (AnyObject?, OpenIdClaim?, NSError?) -> Void) {
+        
+        let paramDict: [String: String] = ["client_id": config.clientId, "client_secret": config.clientSecret!, "scope": config.scope, "grant_type": "client_credentials"]
+        
+        http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict, completionHandler: { (response, error) in
+            if (error != nil) {
+                completionHandler(nil, nil, error)
+                return
+            }
+            
+            if let unwrappedResponse = response as? [String: AnyObject] {
+                let accessToken: String = unwrappedResponse["access_token"] as! String
+                let refreshToken: String? = unwrappedResponse["refresh_token"] as? String
+                let expiration = unwrappedResponse["expires_in"] as? NSNumber
+                let exp: String? = expiration?.stringValue
+                // expiration for refresh token is used in Keycloak
+                let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
+                let expRefresh = expirationRefresh?.stringValue
+                
+                // in Keycloak refresh token get refreshed every time you use them
+                self.oauth2Session.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: exp, refreshTokenExpiration: expRefresh, idToken: nil)
+                
+                completionHandler(accessToken as AnyObject, nil, nil);
+            }
+        })
+    }
+    
     /**
     Request to revoke access.
 
@@ -343,7 +396,11 @@ open class OAuth2Module: AuthzModule {
 
     func extractCode(_ notification: Notification, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         let info = notification.userInfo!
+        #if os(iOS)
         let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
+        #else
+        let url: URL? = nil
+        #endif
 
         // extract the code from the URL
         let queryParamsDict = self.parametersFrom(queryString: url?.query)

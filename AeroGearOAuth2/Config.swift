@@ -16,6 +16,9 @@
 */
 
 import Foundation
+#if os(iOS)
+import class UIKit.UIApplication
+#endif
 
 /**
 Configuration object to setup an OAuth2 module
@@ -56,6 +59,11 @@ open class Config {
     */
     open let userInfoEndpoint: String?
 
+    /**
+    Boolean to indicate whether service account flow is used.
+    */
+    public var isServiceAccount: Bool
+    
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
     */
@@ -108,6 +116,7 @@ open class Config {
     */
     open var isWebView: Bool = false
 
+    #if os(iOS)
     /**
     A handler to allow the webview to be pushed onto the navigation controller
     */
@@ -115,8 +124,9 @@ open class Config {
         (webView, completionHandler) in
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
+    #endif
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, isServiceAccount: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -130,6 +140,9 @@ open class Config {
         self.clientSecret = clientSecret
         self.audienceId = audienceId
         self.accountId = accountId
+        #if os(iOS)
         self.isWebView = isWebView
+        #endif
+        self.isServiceAccount = isServiceAccount
     }
 }

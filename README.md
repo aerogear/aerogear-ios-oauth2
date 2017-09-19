@@ -28,6 +28,24 @@ Taking care of:
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
 
+## Additions (branch openstack)
+* OpenStack OAuth2 module 
+* Added client credentials login to base oauth2 module
+```swift
+config = Config(
+    base: "https://baseurl.com",
+    authzEndpoint: "oauth2/auth",
+    accessTokenEndpoint: "oauth2/token",
+    revokeTokenEndpoint: "oauth2/token/revoke",
+    isServiceAccount: true, // will use client credential flow when this is true
+    clientId: "clientid",
+    clientSecret: "appsecret"
+)
+
+```
+
+* Improved token clear logic
+
 ## Example Usage
 
 #### OAuth2 grant for GET with a predefined config like Facebook
@@ -91,7 +109,7 @@ To add the library in your project, you can either use [CocoaPods](http://cocoap
 In your ```Podfile``` add:
 
 ```
-pod 'AeroGearOAuth2'
+pod 'AeroGearOAuth2', :git => 'https://github.com/claudioredi/aerogear-ios-oauth2.git', :branch => 'openstack'
 ```
 
 and then:

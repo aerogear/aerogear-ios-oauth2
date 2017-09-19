@@ -15,9 +15,7 @@
 * limitations under the License.
 */
 import Foundation
-
 import Security
-import UIKit
 
 /**
 The type of token to be saved in KeychainWrap:
@@ -86,7 +84,6 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         // Search for the keychain items
         let statusSearch: OSStatus = SecItemCopyMatching(keychainQuery, nil)
@@ -109,7 +106,7 @@ public class KeychainWrap {
             keychainQuery[kSecValueData as String] = dataFromString!
             let statusAdd: OSStatus = SecItemAdd(keychainQuery, nil)
             if(statusAdd != errSecSuccess) {
-                print("tokens not saved")
+                print("tokens not saved (\(statusAdd))")
                 return false
             }
         } else { // error case
@@ -133,8 +130,7 @@ public class KeychainWrap {
         keychainQuery[kSecClass as String] = kSecClassGenericPassword
         keychainQuery[kSecAttrService as String] = self.serviceIdentifier
         keychainQuery[kSecAttrAccount as String] = key + "_" + tokenType.rawValue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-
+        
         let statusDelete: OSStatus = SecItemDelete(keychainQuery)
 
         return statusDelete == noErr
@@ -156,8 +152,7 @@ public class KeychainWrap {
         keychainQuery[kSecAttrAccount as String] = userAccount + "_" + tokenType.rawValue
         keychainQuery[kSecMatchLimit as String] = kSecMatchLimitOne
         keychainQuery[kSecReturnData as String] = kCFBooleanTrue
-        keychainQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-
+        
         var dataTypeRef: AnyObject?
         // Search for the keychain items
         let status: OSStatus = withUnsafeMutablePointer(to: &dataTypeRef) {
@@ -176,7 +171,7 @@ public class KeychainWrap {
             return nil
         }
 
-        return String(data: keychainData, encoding: String.Encoding.utf8) as String?
+        return String(data: keychainData, encoding: String.Encoding.utf8)
     }
 
     /**
@@ -216,18 +211,29 @@ public class TrustedPersistentOAuth2Session: OAuth2Session {
     The access token's expiration date.
     */
     public var accessTokenExpirationDate: Date? {
+        
         get {
-            let dateAsString = self.keychain.read(userAccount: self.accountId, tokenType: .ExpirationDate)
-            if let unwrappedDate: String = dateAsString {
-                return Date(dateString: unwrappedDate) as Date?
+            
+            if let timeIntervalAsString = self.keychain.read(userAccount: self.accountId, tokenType: .ExpirationDate),
+               let unwrappedTimeInterval = TimeInterval(timeIntervalAsString) {
+                
+                return Date(timeIntervalSince1970: unwrappedTimeInterval)
+                
             } else {
+                
                 return nil
             }
         }
+        
         set(value) {
+            
             if let unwrappedValue = value {
-                _ = self.keychain.save(key: self.accountId, tokenType: .ExpirationDate, value: unwrappedValue.toString())
+                
+                let timeInterval = unwrappedValue.timeIntervalSince1970
+                _ = self.keychain.save(key: self.accountId, tokenType: .ExpirationDate, value: String(timeInterval))
+                
             } else {
+                
                 _ = self.keychain.delete(key: self.accountId, tokenType: .ExpirationDate)
             }
         }
@@ -269,18 +275,29 @@ public class TrustedPersistentOAuth2Session: OAuth2Session {
     The refresh token's expiration date.
     */
     public var refreshTokenExpirationDate: Date? {
+        
         get {
-            let dateAsString = self.keychain.read(userAccount: self.accountId, tokenType: .RefreshExpirationDate)
-            if let unwrappedDate: String = dateAsString {
-                return Date(dateString: unwrappedDate)
+            
+            if let timeIntervalAsString = self.keychain.read(userAccount: self.accountId, tokenType: .ExpirationDate),
+               let unwrappedTimeInterval = TimeInterval(timeIntervalAsString) {
+                
+                return Date(timeIntervalSince1970: unwrappedTimeInterval)
+                
             } else {
+                
                 return nil
             }
         }
+        
         set(value) {
+            
             if let unwrappedValue = value {
-                _ = self.keychain.save(key: self.accountId, tokenType: .RefreshExpirationDate, value: unwrappedValue.toString())
+                
+                let timeInterval = unwrappedValue.timeIntervalSince1970
+                _ = self.keychain.save(key: self.accountId, tokenType: .RefreshExpirationDate, value: String(timeInterval))
+                
             } else {
+                
                 _ = self.keychain.delete(key: self.accountId, tokenType: .RefreshExpirationDate)
             }
         }

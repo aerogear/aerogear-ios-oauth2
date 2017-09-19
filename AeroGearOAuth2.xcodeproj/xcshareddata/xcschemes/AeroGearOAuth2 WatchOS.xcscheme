@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,46 +14,26 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4833046119AF1635002F8DA9"
+               BlueprintIdentifier = "6E0B5F371D77CB930005F6CE"
                BuildableName = "AeroGearOAuth2.framework"
-               BlueprintName = "AeroGearOAuth2"
+               BlueprintName = "AeroGearOAuth2 WatchOS"
                ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4833046C19AF1635002F8DA9"
-               BuildableName = "AeroGearOAuth2Tests.xctest"
-               BlueprintName = "AeroGearOAuth2Tests"
-               ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046119AF1635002F8DA9"
-            BuildableName = "AeroGearOAuth2.framework"
-            BlueprintName = "AeroGearOAuth2"
-            ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -65,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BlueprintIdentifier = "6E0B5F371D77CB930005F6CE"
             BuildableName = "AeroGearOAuth2.framework"
-            BlueprintName = "AeroGearOAuth2"
+            BlueprintName = "AeroGearOAuth2 WatchOS"
             ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,15 +63,15 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4833046119AF1635002F8DA9"
+            BlueprintIdentifier = "6E0B5F371D77CB930005F6CE"
             BuildableName = "AeroGearOAuth2.framework"
-            BlueprintName = "AeroGearOAuth2"
+            BlueprintName = "AeroGearOAuth2 WatchOS"
             ReferencedContainer = "container:AeroGearOAuth2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
