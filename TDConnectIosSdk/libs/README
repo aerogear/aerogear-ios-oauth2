@@ -1,11 +1,14 @@
-To compile libcurl:
-1. curl -O https://curl.haxx.se/download/curl-7.54.0.tar.gz
-2. tar xf curl-7.54.0.tar.gz
-3. cd curl-7.54.0
-4. curl https://raw.githubusercontent.com/sinofool/build-libcurl-ios/master/build_libcurl_dist.sh -O
-5. chmod +x build_libcurl_dist.sh
-6. Edit build_libcurl_dist.sh to compile and link the desired architectures. Preferably: x86_64, armv7, armv7s, arm64
-7. mkdir -p ../curl
-8. export DIST_DIR=../curl && ./build_libcurl_dist.sh
+This folder contains the binary packages for libcur for iOS.
+curl/lib/libcurl.a contains a fat archive with the following architectures: armv7 armv7s x86_64 arm64.
+During development, it's convenient to use the fat archive, as it'll run both on the simulator and on iPhones 5 and above.
+When submitting the app to the store, the libcurl_arm64.a should be used, as it only targets arm64.
+If you want to target architectures different that arm64, you should use "lipo -remove" with libcurl.a to strip it off from unnecessary architectures.
 
-This will build a fat static version of libcurl (both simulator and device architectures are included), which makes development easier. However when preparing the app for submissions, the untargeted architectures will have to be removed using the lipo command.
+It's also possible to build libcurl yourself. For the purpose:
+1. Download libcurl source code from https://curl.haxx.se
+2. Use a tool like https://github.com/sinofool/build-libcurl-ios or
+https://github.com/biasedbit/curl-ios-build-scripts to build libcurl
+The included binary has been built with:
+https://curl.haxx.se/download/curl-7.54.0.tar.gz
+using
+https://github.com/sinofool/build-libcurl-ios/tree/for-7.54
