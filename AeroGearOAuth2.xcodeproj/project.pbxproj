@@ -235,8 +235,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */;
 			buildPhases = (
-				33CA4BADC533F6CD2700B471 /* [CP] Check Pods Manifest.lock */,
 				B30191211F7A9C8200FCD8A0 /* Pod install (if needed) */,
+				33CA4BADC533F6CD2700B471 /* [CP] Check Pods Manifest.lock */,
 				4833045D19AF1635002F8DA9 /* Sources */,
 				4833045E19AF1635002F8DA9 /* Frameworks */,
 				4833045F19AF1635002F8DA9 /* Headers */,
