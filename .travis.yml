@@ -7,9 +7,6 @@ xcode_sdk: iphonesimulator
 notifications:
   irc: "irc.freenode.org#aerogear"
 
-before_install:
-  - travis_wait pod repo update
-
 script:
   - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
   - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test

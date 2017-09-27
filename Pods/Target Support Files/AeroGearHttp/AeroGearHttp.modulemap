@@ -1,0 +1,6 @@
+framework module AeroGearHttp {
+  umbrella header "AeroGearHttp-umbrella.h"
+
+  export *
+  module * { export * }
+}
