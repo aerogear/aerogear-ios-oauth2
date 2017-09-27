@@ -102,6 +102,22 @@ pod install
 
 to install your dependencies
 
+### Using [Carthage](https://github.com/Carthage/Carthage)
+In your ```Cartfile``` add:
+
+```
+github "aerogear/aerogear-ios-oauth2"
+github "aerogear/aerogear-ios-http" ~> 1.0.0
+```
+
+and then:
+
+```bash
+carthage update
+```
+
+To build the framework and drag the built ```AeroGearOAuth2.framework``` and ```AeroGearHttp.framework``` into your Xcode project.
+
 ### Manual Installation
 Follow these steps to add the library in your Swift project:
 
