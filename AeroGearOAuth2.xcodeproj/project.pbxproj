@@ -235,7 +235,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4833047519AF1635002F8DA9 /* Build configuration list for PBXNativeTarget "AeroGearOAuth2" */;
 			buildPhases = (
-				B30191211F7A9C8200FCD8A0 /* Pod install (if needed) */,
 				33CA4BADC533F6CD2700B471 /* [CP] Check Pods Manifest.lock */,
 				4833045D19AF1635002F8DA9 /* Sources */,
 				4833045E19AF1635002F8DA9 /* Frameworks */,
@@ -397,20 +396,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		B30191211F7A9C8200FCD8A0 /* Pod install (if needed) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Pod install (if needed)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ! -d ./Pods ]; then\n    pod install\nfi";
 		};
 		FE44ED274111AE8BBB6AE3E2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
