@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.source_files = 'AeroGearOAuth2/*.{swift}'
   s.requires_arc = true
   s.framework = 'Security'
-  s.dependency 'AeroGearHttp', '1.0.0'
+  s.dependency 'AeroGearHttp', '2.0.0'
 end
