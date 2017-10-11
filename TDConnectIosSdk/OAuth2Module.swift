@@ -261,7 +261,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
        
         let jsonClaimsString = NSString(data: jsonClaims as Data, encoding: String.Encoding.utf8.rawValue)
-        let encodedJson = (jsonClaimsString as! String).urlEncode()
+        let encodedJson = (jsonClaimsString! as String).urlEncode()
         return "&claims=\(encodedJson)"
     }
 
