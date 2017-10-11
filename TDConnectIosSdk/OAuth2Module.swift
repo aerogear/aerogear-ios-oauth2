@@ -100,7 +100,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
         }
         if (session == nil) {
-            self.oauth2Session = TrustedPersistantOAuth2Session(accountId: config.accountId!)
+            self.oauth2Session = TrustedPersistentOAuth2Session(accountId: config.accountId!)
         } else {
             self.oauth2Session = session!
         }
