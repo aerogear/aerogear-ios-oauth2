@@ -25,7 +25,7 @@ let KEYCLOAK_TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiU2FtcGxlIFVzZXIiLCJlbWFpb
 
 func setupStubKeycloakWithNSURLSessionDefaultConfiguration() {
     // set up http stub
-    _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
+    _ = stub(condition: {_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             //_ = ["name": "John", "family_name": "Smith"]
             switch request.url!.path {
 

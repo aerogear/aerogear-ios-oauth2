@@ -1,13 +1,15 @@
 language: objective-c
-
 osx_image: xcode8.1
-xcode_workspace: TDConnectIosSdk.xcworkspace
-xcode_scheme: TDConnectIosSdkTests
+xcode_workspace: AeroGearOAuth2.xcworkspace
+xcode_scheme: AeroGearOAuth2Tests
 xcode_sdk: iphonesimulator
+
+notifications:
+  irc: "irc.freenode.org#aerogear"
 
 before_install:
   - travis_wait pod repo update
 
 script:
-  - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdk -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
-  - xcodebuild -workspace TDConnectIosSdk.xcworkspace -scheme TDConnectIosSdkTests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2 -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build
+  - xcodebuild -workspace AeroGearOAuth2.xcworkspace -scheme AeroGearOAuth2Tests -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' build test

@@ -59,10 +59,10 @@ class OpenIDConnectKeycloakOAuth2ModuleTests: XCTestCase {
         let oauth2Module = AccountManager.addAccountWith(config: keycloakConfig, moduleClass: MyKeycloakMockOAuth2ModuleSuccess.self)
         // no need of http stub as Keycloak does not provide a UserInfo endpoint but decode JWT token
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
-            XCTAssertTrue("Sample User" == claims?.name, "name claim shoud be as defined in JWT token")
-            XCTAssertTrue("User" == claims?.familyName, "family name claim shoud be as defined in JWT token")
-            XCTAssertTrue("sample-user@example" == claims?.email, "email claim shoud be as defined in JWT token")
-            XCTAssertTrue("Sample" == claims?.givenName, "given name claim shoud be as defined in JWT token")
+            XCTAssertTrue("Sample User" == claims?.name, "name claim should be as defined in JWT token")
+            XCTAssertTrue("User" == claims?.familyName, "family name claim should be as defined in JWT token")
+            XCTAssertTrue("sample-user@example" == claims?.email, "email claim should be as defined in JWT token")
+            XCTAssertTrue("Sample" == claims?.givenName, "given name claim should be as defined in JWT token")
             loginExpectation.fulfill()
 
         }

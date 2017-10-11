@@ -46,7 +46,7 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     The refresh tokens. This toke does not expire and should be used to renew access token when expired.
     */
     open var refreshToken: String?
-    
+
     /**
     The refresh token's expiration date.
     */
@@ -72,7 +72,7 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     }
 
     /**
-    Save in memory tokens information. Saving tokens allow you to refresh accesstoken transparently for the user without prompting for grant access.
+    Save in memory tokens information. Saving tokens allow you to refresh accessToken transparently for the user without prompting for grant access.
     */
     open func save(accessToken: String?, refreshToken: String?, accessTokenExpiration: String?, refreshTokenExpiration: String?, idToken: String? = nil) {
         self.accessToken = accessToken
@@ -103,11 +103,12 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     /**
     Initialize session using account id.
 
-    :param: accountId uniqueId to identify the oauth2module.
-    :param: accessToken optional parameter to initilaize the storage with initial values.
-    :param: accessTokenExpirationDate optional parameter to initilaize the storage with initial values.
-    :param: refreshToken optional parameter to initilaize the storage with initial values.
-    :param: refreshTokenExpirationDate optional parameter to initilaize the storage with initial values.
+    :param: accountId uniqueId to identify the OAuth2Module.
+    :param: accessToken optional parameter to initialize the storage with initial values.
+    :param: accessTokenExpirationDate optional parameter to initialize the storage with initial values.
+    :param: refreshToken optional parameter to initialize the storage with initial values.
+    :param: refreshTokenExpirationDate optional parameter to initialize the storage with initial values.
+    :param: idToken optional parameter to initialize the storage with initial values.
     */
     public init(accountId: String, accessToken: String? = nil, accessTokenExpirationDate: Date? = nil, refreshToken: String? = nil, refreshTokenExpirationDate: Date? = nil, idToken: String? = nil) {
         self.accessToken = accessToken

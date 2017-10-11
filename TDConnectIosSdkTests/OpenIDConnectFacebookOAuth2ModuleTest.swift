@@ -93,7 +93,7 @@ class OpenIDConnectFacebookOAuth2ModuleTests: XCTestCase {
         oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in
             var erroDict = (error?.userInfo)!
             let value = erroDict["OpenID Connect"] as! String
-            XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim shoud be as mocked")
+            XCTAssertTrue( value == "No UserInfo endpoint available in config", "claim should be as mocked")
             loginExpectation.fulfill()
 
         }

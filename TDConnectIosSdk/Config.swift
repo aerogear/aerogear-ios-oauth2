@@ -65,7 +65,7 @@ open class Config {
     Applies the various scopes of the authorization.
     */
     open var scopes: [String]
-    
+
     /**
     Returns a string that conatins scopes, separated with spaces and url encoded.
     ["scope1", "scope2"] -> "scope1%20scope2"
@@ -87,6 +87,11 @@ open class Config {
     Applies the "client secret" obtained with the client registration process.
     */
     open let clientSecret: String?
+
+    /**
+    Applies the "audience" obtained with the client registration process.
+    */
+    public let audienceId: String?
 
     /**
     Account id is used with AccountManager to store tokens. AccountId is defined by the end-user
@@ -130,6 +135,16 @@ open class Config {
     public let isPublicClient: Bool
     
     public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
+
+    /**
+    A handler to allow the webview to be pushed onto the navigation controller
+    */
+    open var webViewHandler: ((OAuth2WebViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+        (webView, completionHandler) in
+        UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
+    }
+
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -141,6 +156,7 @@ open class Config {
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.audienceId = audienceId
         self.accountId = accountId
         self.claims = claims
         self.optionalParams = optionalParams

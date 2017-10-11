@@ -18,7 +18,7 @@
 import Foundation
 
 /**
-A Config object that setups facebook specific configuration parameters.
+A Config object that setups Facebook specific configuration parameters.
 */
 open class FacebookConfig: Config {
     /**
@@ -27,7 +27,7 @@ open class FacebookConfig: Config {
     :param: clientSecret OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
     :param: scopes an array of scopes the app is asking access to.
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
-    :paream: isOpenIDConnect to identify if fetching id information is required.
+    :param: isOpenIDConnect to identify if fetching id information is required.
     */
     public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
         super.init(base: "",
@@ -60,21 +60,24 @@ open class GoogleConfig: Config {
     :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
     :param: scopes an array of scopes the app is asking access to.
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
-    :paream: isOpenIDConnect to identify if fetching id information is required.
+    :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, scopes: [String], audienceId: String? = nil, accountId: String? = nil, isOpenIDConnect: Bool = false) {
         let bundleString = Bundle.main.bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/v2/auth",
             redirectURL: "\(bundleString):/oauth2Callback",
             accessTokenEndpoint: "o/oauth2/token",
             clientId: clientId,
+            audienceId: audienceId,
             refreshTokenEndpoint: "o/oauth2/token",
             revokeTokenEndpoint: "o/oauth2/revoke",
             isOpenIDConnect: isOpenIDConnect,
             userInfoEndpoint: isOpenIDConnect ? "https://www.googleapis.com/plus/v1/people/me/openIdConnect" : nil,
             scopes: scopes,
-            accountId: accountId)
+            accountId: accountId
+        )
+
         // Add openIdConnect scope
         if self.isOpenIDConnect {
             self.scopes += ["openid", "email", "profile"]
@@ -88,22 +91,24 @@ open class KeycloakConfig: Config {
     /**
     Init a Keycloak configuration.
     :param: clientId OAuth2 credentials an unique string that is generated in the OAuth2 provider Developers Console.
-    :param: host to identify where is the keycloak server located.
-    :param: realm to identify which realm to use. A realm grup a set of application/oauth2 client together.
-    :paream: isOpenIDConnect to identify if fetching id information is required.
+    :param: host to identify where the Keycloak server located.
+    :param: realm to identify which realm to use. A realm group a set of application/OAuth2 client together.
+    :param: isOpenIDConnect to identify if fetching id information is required.
     */
     public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
         let bundleString = Bundle.main.bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
-        super.init(base: "\(host)/auth",
+        super.init(
+            base: "\(host)/auth",
             authzEndpoint: "realms/\(realm)/protocol/openid-connect/auth",
             redirectURL: "\(bundleString)://oauth2Callback",
             accessTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             clientId: clientId,
             refreshTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             revokeTokenEndpoint: "realms/\(realm)/protocol/openid-connect/logout",
-            isOpenIDConnect: isOpenIDConnect)
+            isOpenIDConnect: isOpenIDConnect
+        )
         // Add openIdConnect scope
         if self.isOpenIDConnect {
             self.scopes += ["openid", "email", "profile"]
@@ -242,7 +247,7 @@ open class AccountManager {
     }
 
     /**
-    Convenient method to retrieve a Facebook oauth2 module.
+    Convenient method to retrieve a Facebook OAuth2 module.
 
     :param: config a Facebook configuration object. See FacebookConfig.
 
@@ -253,7 +258,7 @@ open class AccountManager {
     }
 
     /**
-    Convenient method to retrieve a Google oauth2 module ready to be used.
+    Convenient method to retrieve a Google OAuth2 module ready to be used.
 
     :param: config a google configuration object. See GoogleConfig.
 
@@ -264,7 +269,7 @@ open class AccountManager {
     }
 
     /**
-    Convenient method to retrieve a Keycloak oauth2 module ready to be used.
+    Convenient method to retrieve a Keycloak OAuth2 module ready to be used.
 
     :param: config a Keycloak configuration object. See KeycloakConfig.
 
