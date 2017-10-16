@@ -81,6 +81,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     open let config: Config
     open var http: Http
     open var oauth2Session: OAuth2Session
+    var authenticationSession: Any?
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
@@ -125,7 +126,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
-            
             let info = notification.userInfo!
             let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
             
@@ -180,7 +180,28 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
         
         var controller: UIViewController
-        if #available(iOS 9.0, *) {
+        if #available(iOS 11.0, *) {
+            self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
+                let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl?.query)["state"]
+                
+                guard let _ = stateFromRedirectUrl, stateFromRedirectUrl == state else {
+                    let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server,") as NSError
+                    self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
+                    return
+                }
+                
+                self.extractCodeFromUrl(successUrl!, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
+                    guard let accessToken = accessToken else {
+                        self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
+                        return
+                    }
+                    
+                    self.callCompletion(success: accessToken, error: nil, completionHandler: completionHandler)
+                })
+            })
+            (self.authenticationSession as! SFAuthenticationSession).start()
+            return
+        } else if #available(iOS 9.0, *) {
             let safariViewController = SFSafariViewController(url: url as URL)
             safariViewController.delegate = self
             controller = safariViewController
@@ -468,6 +489,25 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
 
         // extract the code from the URL
         let code = self.parametersFrom(queryString: url?.query)["code"]
+        // if exists perform the exchange
+        if (code != nil && self.config.isPublicClient) {
+            self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
+            // update state
+            state = .authorizationStateApproved
+        } else if (code != nil && !self.config.isPublicClient) {
+            completionHandler(code! as AnyObject?, nil)
+            state = .authorizationStateApproved
+        } else {
+            let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
+            completionHandler(nil, error)
+        }
+        // finally, unregister
+        self.stopObserving()
+    }
+    
+    func extractCodeFromUrl(_ url: URL, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        // extract the code from the URL
+        let code = self.parametersFrom(queryString: url.query)["code"]
         // if exists perform the exchange
         if (code != nil && self.config.isPublicClient) {
             self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
