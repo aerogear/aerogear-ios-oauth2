@@ -84,7 +84,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
-    var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not wan't to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
+    var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not want to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
 
     /**
     Initialize an OAuth2 module.
@@ -131,7 +131,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             
             let stateFromRedirectUrl = self.parametersFrom(queryString: url?.query)["state"]
             
-            guard let _ = stateFromRedirectUrl, stateFromRedirectUrl == state else {
+            if stateFromRedirectUrl != state {
                 let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
                 self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
                 return
@@ -178,7 +178,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
                 let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl?.query)["state"]
                 
-                guard let _ = stateFromRedirectUrl, stateFromRedirectUrl == state else {
+                if stateFromRedirectUrl != state {
                     let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
                     self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
                     return
