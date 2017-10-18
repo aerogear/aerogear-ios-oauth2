@@ -132,7 +132,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             let stateFromRedirectUrl = self.parametersFrom(queryString: url?.query)["state"]
             
             guard let _ = stateFromRedirectUrl, stateFromRedirectUrl == state else {
-                let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server,") as NSError
+                let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
                 self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
                 return
             }
@@ -185,7 +185,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
                 let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl?.query)["state"]
                 
                 guard let _ = stateFromRedirectUrl, stateFromRedirectUrl == state else {
-                    let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server,") as NSError
+                    let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
                     self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
                     return
                 }
