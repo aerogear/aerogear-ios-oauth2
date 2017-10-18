@@ -77,7 +77,7 @@ class FacebookOAuth2ModuleTests: XCTestCase {
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module = FacebookOAuth2Module(config: facebookConfig, session: mockedSession, requestSerializer: JsonRequestSerializer(), responseSerializer: StringResponseSerializer())
         oauth2Module.revokeAccess(completionHandler: {(response: AnyObject?, error: NSError?) -> Void in
-            XCTAssertTrue(mockedSession.initCalled == 1, "revoke token reset session")
+            XCTAssertTrue(mockedSession.clearTokensCalled, "revoke token reset session")
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)

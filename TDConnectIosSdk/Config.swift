@@ -55,6 +55,11 @@ open class Config {
     Endpoint for OpenID Connect to get user information.
     */
     open let userInfoEndpoint: String?
+    
+    /**
+    Endpoint for performing a token-based logout, which will log the user out of any SSO session.
+    */
+    open let logOutEndpoint: String?
 
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
@@ -142,7 +147,7 @@ open class Config {
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, logOutEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, claims: Set<String>? = nil, optionalParams: [String: String]? = nil, isWebView: Bool = false, isPublicClient: Bool = true) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -151,6 +156,7 @@ open class Config {
         self.revokeTokenEndpoint = revokeTokenEndpoint
         self.isOpenIDConnect = isOpenIDConnect
         self.userInfoEndpoint = userInfoEndpoint
+        self.logOutEndpoint = logOutEndpoint
         self.scopes = scopes
         self.clientId = clientId
         self.clientSecret = clientSecret
