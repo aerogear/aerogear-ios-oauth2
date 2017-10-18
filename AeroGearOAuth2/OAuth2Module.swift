@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 import AeroGearHttp
 
 /**
@@ -81,7 +82,7 @@ open class OAuth2Module: AuthzModule {
         }
 
         self.config = config
-        if config.isWebView {
+        if config.webView == .embeddedWebView {
             self.webView = OAuth2WebViewController()
         }
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
@@ -135,12 +136,20 @@ open class OAuth2Module: AuthzModule {
             completionHandler(nil, error)
             return
         }
-        if let url = URL(string: computedUrl.absoluteString + params) {
-            if self.webView != nil {
-                self.webView!.targetURL = url
-                config.webViewHandler(self.webView!, completionHandler)
-            } else {
+        if let url = URL(string:computedUrl.absoluteString + params) {
+            switch config.webView {
+            case .embeddedWebView:
+                if self.webView != nil {
+                    self.webView!.targetURL = url
+                    config.webViewHandler(self.webView!, completionHandler)
+                }
+            case .externalSafari:
                 UIApplication.shared.openURL(url)
+            case .safariViewController:
+                if #available(iOS 9.0, *) {
+                    let safariController = SFSafariViewController(url: url)
+                    config.webViewHandler(safariController, completionHandler)
+                }
             }
         }
     }

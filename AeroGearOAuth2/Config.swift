@@ -103,20 +103,31 @@ open class Config {
     open var accountId: String?
 
     /**
+    Enum to denote what kind of webView to use.
+    */
+    public enum WebViewType {
+        case embeddedWebView
+        case externalSafari
+        // SFSafariViewController only available in iOS 9+
+        @available(iOS 9.0, *)
+        case safariViewController
+    }
+
+    /**
     Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
     for authorization code grant flow.
     */
-    open var isWebView: Bool = false
+    open var webView: WebViewType = WebViewType.externalSafari
 
     /**
     A handler to allow the webview to be pushed onto the navigation controller
     */
-    open var webViewHandler: ((OAuth2WebViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+    open var webViewHandler: ((UIViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
         (webView, completionHandler) in
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -130,6 +141,6 @@ open class Config {
         self.clientSecret = clientSecret
         self.audienceId = audienceId
         self.accountId = accountId
-        self.isWebView = isWebView
+        self.webView = webView
     }
 }
