@@ -138,12 +138,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             }
             
             self.extractCode(notification, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
-                guard let accessToken = accessToken else {
-                    self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
-                    return
-                }
-                
-                self.callCompletion(success: accessToken, error: nil, completionHandler: completionHandler)
+                self.callCompletion(success: accessToken, error: error, completionHandler: completionHandler)
             })
             
         })
@@ -179,7 +174,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             return
         }
         
-        var controller: UIViewController
         if #available(iOS 11.0, *) {
             self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
                 let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl?.query)["state"]
@@ -191,17 +185,15 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
                 }
                 
                 self.extractCode(fromUrl: successUrl, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
-                    guard let accessToken = accessToken else {
-                        self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
-                        return
-                    }
-                    
-                    self.callCompletion(success: accessToken, error: nil, completionHandler: completionHandler)
+                    self.callCompletion(success: accessToken, error: error, completionHandler: completionHandler)
                 })
             })
             (self.authenticationSession as! SFAuthenticationSession).start()
             return
-        } else if #available(iOS 9.0, *) {
+        }
+        
+        var controller: UIViewController
+        if #available(iOS 9.0, *) {
             let safariViewController = SFSafariViewController(url: url as URL)
             safariViewController.delegate = self
             controller = safariViewController
