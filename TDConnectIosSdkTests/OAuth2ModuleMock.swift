@@ -58,7 +58,7 @@ open class MockOAuth2SessionWithValidAccessTokenStored: OAuth2Session {
 
 open class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccessTokenStored {
     open var savedRefreshedToken: String?
-    open var initCalled = 0
+    open var clearTokensCalled = false
     open override var refreshToken: String? {
         get {
             return "REFRESH_TOKEN"
@@ -85,7 +85,7 @@ open class MockOAuth2SessionWithRefreshToken: MockOAuth2SessionWithValidAccessTo
         savedRefreshedToken = refreshToken
         super.save(accessToken: accessToken, refreshToken: refreshToken, accessTokenExpiration: accessTokenExpiration, refreshTokenExpiration: refreshTokenExpiration, idToken: idToken)
     }
-    open override func clearTokens() {initCalled = 1}
+    open override func clearTokens() {clearTokensCalled = true}
     public override init() {}
 }
 

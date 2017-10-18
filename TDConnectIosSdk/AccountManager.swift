@@ -139,6 +139,7 @@ open class TelenorConnectConfig: Config {
             revokeTokenEndpoint: "\(baseUrl)/revoke",
             isOpenIDConnect: true,
             userInfoEndpoint: "\(baseUrl)/userinfo",
+            logOutEndpoint: "\(baseUrl)/logout",
             scopes: scopes,
             clientSecret: nil,
             accountId: accountId,
