@@ -190,7 +190,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
                     return
                 }
                 
-                self.extractCodeFromUrl(successUrl!, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
+                self.extractCode(fromUrl: successUrl, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
                     guard let accessToken = accessToken else {
                         self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
                         return
@@ -487,27 +487,12 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         let info = notification.userInfo!
         let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
 
-        // extract the code from the URL
-        let code = self.parametersFrom(queryString: url?.query)["code"]
-        // if exists perform the exchange
-        if (code != nil && self.config.isPublicClient) {
-            self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
-            // update state
-            state = .authorizationStateApproved
-        } else if (code != nil && !self.config.isPublicClient) {
-            completionHandler(code! as AnyObject?, nil)
-            state = .authorizationStateApproved
-        } else {
-            let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "User cancelled authorization."])
-            completionHandler(nil, error)
-        }
-        // finally, unregister
-        self.stopObserving()
+        extractCode(fromUrl: url, completionHandler: completionHandler)
     }
     
-    func extractCodeFromUrl(_ url: URL, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+    func extractCode(fromUrl url: URL?, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // extract the code from the URL
-        let code = self.parametersFrom(queryString: url.query)["code"]
+        let code = self.parametersFrom(queryString: url?.query)["code"]
         // if exists perform the exchange
         if (code != nil && self.config.isPublicClient) {
             self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
