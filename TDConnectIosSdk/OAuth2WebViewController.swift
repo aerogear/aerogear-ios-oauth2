@@ -26,7 +26,7 @@ rather than an external browser approach.
 open class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
     /// Login URL for OAuth.
     var targetURL: URL!
-    /// WebView intance used to load login page.
+    /// WebView instance used to load login page.
     var webView: UIWebView = UIWebView()
 
     /// Override of viewDidLoad to load the login page.
@@ -42,7 +42,11 @@ open class OAuth2WebViewController: UIViewController, UIWebViewDelegate {
         super.viewDidLayoutSubviews()
         self.webView.frame = self.view.bounds
     }
-    
+
+    override open func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
     func loadAddressURL() {
         let req = URLRequest(url: targetURL)
         webView.loadRequest(req)

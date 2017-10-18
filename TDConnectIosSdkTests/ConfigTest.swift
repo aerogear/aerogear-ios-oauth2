@@ -66,7 +66,7 @@ class ConfigTests: XCTestCase {
             scopes:["photo_upload, publish_actions"],
             isOpenIDConnect: true)
         print(facebookConfig.scopes)
-        XCTAssert(facebookConfig.scopes[0] == "photo_upload, publish_actions, public_profile", "public_profile defined for Open ID Connect config, facebook does not use openid")
+        XCTAssert(facebookConfig.scopes[0] == "photo_upload, publish_actions, public_profile", "public_profile defined for Open ID Connect config, Facebook does not use openid")
 
     }
 
