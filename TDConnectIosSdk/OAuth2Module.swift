@@ -113,7 +113,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     }
 
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
-
+    
     /**
     Request an authorization code.
 
@@ -128,19 +128,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             let info = notification.userInfo!
             let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
-            
-            let stateFromRedirectUrl = self.parametersFrom(queryString: url?.query)["state"]
-            
-            if stateFromRedirectUrl != state {
-                let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
-                self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
-                return
-            }
-            
-            self.extractCode(notification, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
-                self.callCompletion(success: accessToken, error: error, completionHandler: completionHandler)
-            })
-            
+            self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
         })
 
         // register to receive notification when the application becomes active so we
@@ -176,17 +164,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         
         if #available(iOS 11.0, *) {
             self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
-                let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl?.query)["state"]
-                
-                if stateFromRedirectUrl != state {
-                    let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
-                    self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
-                    return
-                }
-                
-                self.extractCode(fromUrl: successUrl, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
-                    self.callCompletion(success: accessToken, error: error, completionHandler: completionHandler)
-                })
+                self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
             })
             (self.authenticationSession as! SFAuthenticationSession).start()
             return
@@ -203,6 +181,25 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
 
         UIApplication.shared.tdcTopViewController?.present(controller, animated: true, completion: nil)
+    }
+    
+    func handleCallback(_ successUrl: URL?, error: Error?, state: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        guard let successUrl = successUrl, error == nil else {
+            self.callCompletion(success: nil, error: error as NSError?, completionHandler: completionHandler)
+            return
+        }
+        
+        let stateFromRedirectUrl = self.parametersFrom(queryString: successUrl.query)["state"]
+        
+        if stateFromRedirectUrl != state {
+            let error = OAuth2Error.UnequalStateParameter("The state parameter in the redirect url was not the same as the one sent to the auth server.") as NSError
+            self.callCompletion(success: nil, error: error, completionHandler: completionHandler)
+            return
+        }
+        
+        self.extractCode(fromUrl: successUrl, completionHandler: { (accessToken: AnyObject?, error: NSError?) in
+            self.callCompletion(success: accessToken, error: error, completionHandler: completionHandler)
+        })
     }
     
     func callCompletion(success: AnyObject?, error: NSError?, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
