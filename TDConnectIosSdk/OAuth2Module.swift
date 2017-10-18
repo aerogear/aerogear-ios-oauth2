@@ -471,13 +471,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     open func isAuthorized() -> Bool {
         return self.oauth2Session.accessToken != nil && self.oauth2Session.tokenIsNotExpired()
     }
-
-    func extractCode(_ notification: Notification, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
-        let info = notification.userInfo!
-        let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
-
-        extractCode(fromUrl: url, completionHandler: completionHandler)
-    }
     
     func extractCode(fromUrl url: URL?, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         // extract the code from the URL
