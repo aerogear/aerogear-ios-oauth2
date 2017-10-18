@@ -81,10 +81,10 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     open let config: Config
     open var http: Http
     open var oauth2Session: OAuth2Session
-    var authenticationSession: Any?
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
+    var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not wan't to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
 
     /**
     Initialize an OAuth2 module.
