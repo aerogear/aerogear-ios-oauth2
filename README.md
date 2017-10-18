@@ -1,96 +1,56 @@
-# aerogear-ios-oauth2 [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-oauth2.png)](https://travis-ci.org/aerogear/aerogear-ios-oauth2)
+# aerogear-ios-oauth2 
 
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)
-[![Platform](https://img.shields.io/cocoapods/p/AeroGearOAuth2.svg?style=flat)](http://cocoadocs.org/docsets/AeroGearOAuth2)
+![Maintenance](https://img.shields.io/maintenance/yes/2017.svg)
+[![circle-ci](https://img.shields.io/circleci/project/github/aerogear/aerogear-ios-oauth2/master.svg)](https://circleci.com/gh/aerogear/aerogear-ios-oauth2)
+[![License](https://img.shields.io/badge/-Apache%202.0-blue.svg)](https://opensource.org/s/Apache-2.0)
+[![GitHub release](https://img.shields.io/github/release/aerogear/aerogear-ios-oauth2.svg)](https://github.com/aerogear/aerogear-ios-oauth2/releases)
+[![CocoaPods](https://img.shields.io/cocoapods/v/AeroGearOAuth2.svg)](https://cocoapods.org/pods/AeroGearOAuth2)
+[![Platform](https://img.shields.io/cocoapods/p/AeroGearOAuth2.svg)](https://cocoapods.org/pods/AeroGearOAuth2)
 
-> This module currently build with Xcode 8 and supports iOS8, iOS9, iOS10.
+OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http).
 
-OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http). 
-Taking care of: 
+|                 | Project Info                                 |
+| --------------- | -------------------------------------------- |
+| License:        | Apache License, Version 2.0                  |
+| Build:          | CocoaPods                                    |
+| Languague:      | Swift 4                                      |
+| Documentation:  | http://aerogear.org/ios/                     |
+| Issue tracker:  | https://issues.jboss.org/browse/AGIOS        |
+| Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))                            |
+|                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))                              |
 
-* account manager for multiple OAuth2 accounts,
-* request access and refresh token,
-* grant access through secure external browser and URI schema to re-enter app,
-* (implicit or explicit) refresh tokens, 
-* revoke tokens,
-* permanent secure storage,
-* adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak 1.9.3.Final](http://keycloak.jboss.org/) etc...
-* openID Connect login
+## Table of Content
 
-100% Swift 3.0.
+* [Features](#features)
+* [Installation](#installation)
+   * [CocoaPods](#cocoapods)
+* [Usage](#usage)
+   * [Grant for GET with a predefined config like Facebook](#grant-for-get-with-a-predefined-config-like-facebook)
+   * [OpenID Connect with Keycloak](#openid-connect-with-keycloak)
+* [Documentation](#documentation)
+* [Demo apps](#demo-apps)
+* [Development](#development)
+* [Questions?](#questions)
+* [Found a bug?](#found-a-bug)
 
-|                 | Project Info  |
-| --------------- | ------------- |
-| License:        | Apache License, Version 2.0  |
-| Build:          | CocoaPods  |
-| Documentation:  | https://aerogear.org/docs/guides/aerogear-ios-2.X/ |
-| Issue tracker:  | https://issues.jboss.org/browse/AGIOS  |
-| Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
-|                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
+## Features
 
-## Example Usage
+* Account manager for multiple OAuth2 accounts,
+* Request access and refresh token,
+* Grant access through secure external browser and URI schema to re-enter app,
+* (implicit or explicit) refresh tokens,
+* Revoke tokens,
+* Permanent secure storage,
+* Adaptable to OAuth2 specific providers. Existing extensions: Google, Facebook, [Keycloak](http://keycloak.jboss.org/)
+* OpenID Connect login
 
-#### OAuth2 grant for GET with a predefined config like Facebook
-```swift
-let http = Http() 						// [1]
-let facebookConfig = FacebookConfig(	// [2]
-    clientId: "YYY",
-    clientSecret: "XXX",
-    scopes:["photo_upload, publish_actions"])
-let oauth2Module = AccountManager.addFacebookAccount(config: facebookConfig)  // [3]
-http.authzModule = oauth2Module			// [4]
-http.request(method: .get, path: "/get", completionHandler: {(response, error) in	// [5]
-	// handle response
-})
-```
-Create an instance of Http [1] from [aerogear-ios-http](https://github.com/aerogear/aerogear-ios-http) a thin layer on top of NSURLSession.
+## Installation
 
-Fill-in the OAuth2 configuration in [2], here we use a predefined Config with all Facebook endpoint filled-in for us.
+### CocoaPods
 
-Create an OAuth2Module from AccountManager's factory method in [3].
+In your `Podfile` add:
 
-Inject OAuth2Module into http object in [4] and uses the http object to GET/POST etc...
-
-See full description in [aerogear.org](https://aerogear.org/docs/guides/aerogear-ios-2.X/Authorization/)
-
-#### OpenID Connect with Keycloak
-```swift
-let http = Http()
-let keycloakConfig = KeycloakConfig(
-    clientId: "sharedshoot-third-party",
-    host: "http://localhost:8080",
-    realm: "shoot-realm",
-    isOpenIDConnect: true)
-let oauth2Module = AccountManager.addKeycloakAccount(config: keycloakConfig)
-http.authzModule = oauth2Module
-oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in // [1]
-    // Do your own stuff here
-}
-
-```
-Similar approach for configuration, here we want to login as Keycloak user, using ```login``` method we get some user information back in OpenIdClaim object.
-
-> **NOTE:**  The latest version of the library works with Keycloak 1.1.0.Final. Previous version of Keycloak 1.0.x will work except for the transparent refresh of tokens (ie: after access token expires you will have to go through grant process).
-
-### Build, test and play with aerogear-ios-oauth2
-
-1. Clone this project
-
-2. Get the dependencies
-
-The project uses [CocoaPods](http://cocoapods.org) for handling its dependencies. As a pre-requisite, install CocoaPods and then install the pod. On the root directory of the project run:
 ```bash
-pod install
-```
-3. open AeroGearOAuth2.xcworkspace
-
-## Adding the library to your project 
-To add the library in your project, you can either use [CocoaPods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
-
-### Using [CocoaPods](http://cocoapods.org)
-In your ```Podfile``` add:
-
-```
 pod 'AeroGearOAuth2'
 ```
 
@@ -102,21 +62,54 @@ pod install
 
 to install your dependencies
 
-### Manual Installation
-Follow these steps to add the library in your Swift project:
+## Usage
 
-1. Add AeroGearOAuth2 as a [submodule](http://git-scm.com/docs/git-submodule) in your project. Open a terminal and navigate to your project directory. Then enter:
-```bash
-git submodule add https://github.com/aerogear/aerogear-ios-oauth2.git
+### Grant for GET with a predefined config like Facebook
+
+```swift
+let facebookConfig = FacebookConfig(
+    clientId: "YYY",
+    clientSecret: "XXX",
+    scopes:["photo_upload, publish_actions"]
+)
+let oauth2Module = AccountManager.addFacebookAccount(config: facebookConfig)
+
+let http = Http()
+http.authzModule = oauth2Module
+http.request(method: .get, path: "/get", completionHandler: {(response, error) in
+	// handle response
+})
 ```
-2. Open the `aerogear-ios-oauth2` folder, and drag the `AeroGearOAuth2.xcodeproj` into the file navigator in Xcode.
-3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearOAuth2.framework (Currently set to 8.0).
-5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `AeroGearOAuth2.framework`.
-7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `AeroGearOAuth2.framework`.
+
+#### OpenID Connect with Keycloak
+
+```swift
+let keycloakConfig = KeycloakConfig(
+    clientId: "sharedshoot-third-party",
+    host: "http://localhost:8080",
+    realm: "shoot-realm",
+    isOpenIDConnect: true
+)
+let oauth2Module = AccountManager.addKeycloakAccount(config: keycloakConfig)
+
+let http = Http()
+http.authzModule = oauth2Module
+oauth2Module.login {(accessToken: AnyObject?, claims: OpenIdClaim?, error: NSError?) in // [1]
+    // Do your own stuff here
+}
+
+```
 
 ## Documentation
 
-For more details about the current release, please consult [our documentation](https://aerogear.org/docs/guides/aerogear-ios-2.X/).
+For more details about that please consult [our documentation](http://aerogear.org/ios/).
+
+## Demo apps
+
+Take a look in our demo apps:
+
+* [Shoot and Share](https://github.com/aerogear/aerogear-ios-cookbook/blob/master/SharedShoot)
+* [Shoot](https://github.com/aerogear/aerogear-ios-cookbook/blob/master/Shoot)
 
 ## Development
 

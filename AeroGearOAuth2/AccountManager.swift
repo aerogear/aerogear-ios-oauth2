@@ -38,7 +38,7 @@ open class FacebookConfig: Config {
             refreshTokenEndpoint: "https://graph.facebook.com/oauth/access_token",
             revokeTokenEndpoint: "https://www.facebook.com/me/permissions",
             isOpenIDConnect: isOpenIDConnect,
-            userInfoEndpoint: isOpenIDConnect ? "https://graph.facebook.com/v2.2/me" : nil,
+            userInfoEndpoint: isOpenIDConnect ? "https://graph.facebook.com/v2.10/me" : nil,
             scopes: scopes,
             clientSecret: clientSecret,
             accountId: accountId)
