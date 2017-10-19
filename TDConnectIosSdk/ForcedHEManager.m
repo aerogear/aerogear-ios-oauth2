@@ -7,7 +7,7 @@
 #import <ifaddrs.h>
 #import <netdb.h>
 
-#include <curl/curl.h>
+#include "libs/curl/include/curl/curl.h"
 
 int MAX_REDIRECTS_TO_FOLLOW_FOR_HE = 5;
 

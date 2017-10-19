@@ -7,7 +7,9 @@ Pod::Spec.new do |s|
   s.author       = "Telenor Digital"
   s.source       = { :git => 'https://github.com/telenordigital/connect-ios-sdk.git', :tag => s.version }
   s.platform     = :ios, 8.0
-  s.source_files = 'TDConnectIosSdk/*.{swift}'
+  s.source_files = 'TDConnectIosSdk/*.{swift,h,m}', 'TDConnectIosSdk/libs/curl/include/curl/*.{h}'
+  s.vendored_libraries = 'TDConnectIosSdk/libs/curl/lib/libcurl.a'
+  s.libraries    = 'z'
   s.requires_arc = true
   s.framework = 'Security'
   s.dependency 'AeroGearHttp'
