@@ -11,7 +11,7 @@ OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-
 * revoke tokens,
 * permanent secure storage,
 
-100% Swift 3.0
+Swift 4.0
 
 Please use the GitHub _Watch_ feature to get notified on new releases of the SDK.
 
