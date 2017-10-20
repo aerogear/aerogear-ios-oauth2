@@ -186,15 +186,10 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         })
 
         var controller: UIViewController
-        if !self.config.isWebView {
-            if #available(iOS 9.0, *) {
-                let safariViewController = SFSafariViewController(url: url as URL)
-                safariViewController.delegate = self
-                controller = safariViewController
-            } else {
-                UIApplication.shared.openURL(url as URL)
-                return
-            }
+        if #available(iOS 9.0, *) {
+            let safariViewController = SFSafariViewController(url: url as URL)
+            safariViewController.delegate = self
+            controller = safariViewController
         } else {
             controller = OAuth2WebViewController()
             (controller as! OAuth2WebViewController).targetURL = url as URL!
