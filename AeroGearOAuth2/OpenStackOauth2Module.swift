@@ -166,9 +166,9 @@ public class OpenStackOAuth2Module: OAuth2Module {
                 completionHandler(accessToken, error)
             }
         } else {
-            self.revokeAccess() { _ in }
+            self.revokeLocalAccess()
             // error, must enforce user to request interactive login
-            completionHandler(nil, NSError(domain: "OpenStackOAuth2Module", code: 8, userInfo: ["OpenStack OAuth2 Module": "User must do interactive login"]))
+            completionHandler(nil, NSError(domain: "OpenStackOAuth2Module", code: 0, userInfo: ["OpenStack OAuth2 Module": "User must do interactive login"]))
         }
     }
     

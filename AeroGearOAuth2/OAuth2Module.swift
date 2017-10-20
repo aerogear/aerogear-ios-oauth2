@@ -66,6 +66,8 @@ open class OAuth2Module: AuthzModule {
     open var serverCode: String?
     open var customDismiss: Bool = false
 
+    public static let revokeNotification = Notification.Name(rawValue: "AeroGearOAuth2.OAuth2Module.RevokeNotification")
+    
     /**
     Initialize an OAuth2 module.
 
@@ -173,7 +175,7 @@ open class OAuth2Module: AuthzModule {
             http.request(method: .post, path: config.refreshTokenEndpoint!, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
                 if (error != nil) {
                     if (error?.code == 400 || error?.code == 401 || error?.code == 403 || error?.code == 404) {
-                        self.revokeAccess() { _ in }
+                        self.revokeLocalAccess()
                     }
                     
                     completionHandler(nil, error)
@@ -370,6 +372,28 @@ open class OAuth2Module: AuthzModule {
         })
     }
 
+    /**
+     Revoke local access by clearing session tokens.
+     
+     :param: notify A boolean indicating whether a notification should be issued.
+     */
+    public func revokeLocalAccess(notify: Bool) -> Void {
+        
+        self.oauth2Session.clearTokens()
+        
+        if notify {
+            
+            let notification = Notification(name: OAuth2Module.revokeNotification, object: nil, userInfo: nil)
+            
+            NotificationCenter.default.post(notification)
+        }
+    }
+    
+    public func revokeLocalAccess() -> Void {
+        
+        revokeLocalAccess(notify: true)
+    }
+    
     /**
     Return any authorization fields.
 
