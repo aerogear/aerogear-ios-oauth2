@@ -123,7 +123,8 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         let state = NSUUID().uuidString
         
         // register with the notification system in order to be notified when the 'authorization' process completes in the
-        // external browser and the oauth code is available
+        // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
+        // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             let info = notification.userInfo!
             let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
@@ -178,6 +179,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             controller = OAuth2WebViewController()
             (controller as! OAuth2WebViewController).targetURL = url as URL!
         }
+
         UIApplication.shared.tdcTopViewController?.present(controller, animated: true, completion: nil)
     }
     
