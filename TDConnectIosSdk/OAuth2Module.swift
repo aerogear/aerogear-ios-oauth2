@@ -121,15 +121,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     */
     open func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         let state = NSUUID().uuidString
-        
-        // register with the notification system in order to be notified when the 'authorization' process completes in the
-        // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
-        // from the server.
-        applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
-            let info = notification.userInfo!
-            let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
-            self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
-        })
 
         // register to receive notification when the application becomes active so we
         // can clear any pending authorization requests which are not completed properly,
@@ -170,6 +161,14 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             return
         }
         
+        // register with the notification system in order to be notified when the 'authorization' process completes in the
+        // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
+        // from the server.
+        applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
+            let info = notification.userInfo!
+            let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
+            self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
+        })
         var controller: UIViewController
         if #available(iOS 9.0, *) {
             let safariViewController = SFSafariViewController(url: url as URL)
