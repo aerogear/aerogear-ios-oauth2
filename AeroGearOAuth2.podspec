@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AeroGearOAuth2"
-  s.version      = "1.0.1"
+  s.version      = "2.0.0"
   s.summary      = "OAuth2 client library based on aerogear-ios-http"
   s.homepage     = "https://github.com/aerogear/aerogear-ios-oauth2"
   s.license      = 'Apache License, Version 2.0'
