@@ -6,7 +6,7 @@ machine:
     XCODE_SCHEME: "AeroGearOAuth2"
     XCODE_SCHEME_TEST: "AeroGearOAuth2Tests"
     SIMULATOR: "iPhone 7"
-    OS: "11.0"
+    OS: "11.0.1"
 
 general:
   branches:
@@ -39,4 +39,4 @@ test:
         -scheme $XCODE_SCHEME_TEST
         clean build test |
       tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml      
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
