@@ -103,20 +103,28 @@ open class Config {
     open var accountId: String?
 
     /**
-    Boolean to indicate to either used a webview (if true) or an external browser (by default, false)
-    for authorization code grant flow.
+    Enum to denote what kind of webView to use.
     */
-    open var isWebView: Bool = false
+    public enum WebViewType {
+        case embeddedWebView
+        case externalSafari
+        case safariViewController
+    }
+
+    /**
+    Set type of webView to use during OAuth flow.
+    */
+    open var webView: WebViewType = WebViewType.externalSafari
 
     /**
     A handler to allow the webview to be pushed onto the navigation controller
     */
-    open var webViewHandler: ((OAuth2WebViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
+    open var webViewHandler: ((UIViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
         (webView, completionHandler) in
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, isWebView: Bool = false) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -130,6 +138,6 @@ open class Config {
         self.clientSecret = clientSecret
         self.audienceId = audienceId
         self.accountId = accountId
-        self.isWebView = isWebView
+        self.webView = webView
     }
 }

@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 import AeroGearHttp
 
 /**
@@ -81,9 +82,16 @@ open class OAuth2Module: AuthzModule {
         }
 
         self.config = config
-        if config.isWebView {
+
+        if config.webView == .embeddedWebView {
             self.webView = OAuth2WebViewController()
+            self.customDismiss = true
         }
+
+        if config.webView == .safariViewController {
+            self.customDismiss = true
+        }
+
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .authorizationStateUnknown
     }
@@ -101,7 +109,7 @@ open class OAuth2Module: AuthzModule {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             self.extractCode(notification, completionHandler: completionHandler)
-            if ( self.webView != nil && !self.customDismiss) {
+            if ( self.webView != nil || self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         })
@@ -135,12 +143,19 @@ open class OAuth2Module: AuthzModule {
             completionHandler(nil, error)
             return
         }
-        if let url = URL(string: computedUrl.absoluteString + params) {
-            if self.webView != nil {
-                self.webView!.targetURL = url
-                config.webViewHandler(self.webView!, completionHandler)
-            } else {
+
+        if let url = URL(string:computedUrl.absoluteString + params) {
+            switch config.webView {
+            case .embeddedWebView:
+                if self.webView != nil {
+                    self.webView!.targetURL = url
+                    config.webViewHandler(self.webView!, completionHandler)
+                }
+            case .externalSafari:
                 UIApplication.shared.openURL(url)
+            case .safariViewController:
+                let safariController = SFSafariViewController(url: url)
+                config.webViewHandler(safariController, completionHandler)
             }
         }
     }
