@@ -39,4 +39,4 @@ test:
         -scheme $XCODE_SCHEME_TEST
         clean build test |
       tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml      
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
