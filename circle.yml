@@ -6,7 +6,7 @@ machine:
     XCODE_SCHEME: "AeroGearOAuth2"
     XCODE_SCHEME_TEST: "AeroGearOAuth2Tests"
     SIMULATOR: "iPhone 7"
-    OS: "11.0"
+    OS: "11.0.1"
 
 general:
   branches:
