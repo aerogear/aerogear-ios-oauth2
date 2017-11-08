@@ -1,0 +1,8 @@
+framework module TDConnectIosSdk {
+  umbrella header "TDConnectIosSdk-umbrella.h"
+
+  export *
+  module * { export * }
+
+  header "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/clang/include/inttypes.h"
+}

@@ -14,4 +14,7 @@ Pod::Spec.new do |s|
   s.framework = 'Security'
   s.dependency 'AeroGearHttp'
   s.dependency 'JSONWebToken'
+  s.module_map = 'TDConnectIosSdk/TDConnectIosSdk.modulemap'
+  s.preserve_paths = 'TDConnectIosSdk/TDConnectIosSdk.modulemap'
+  s.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/TDConnectIosSdk/TDConnectIosSdk' }
 end
