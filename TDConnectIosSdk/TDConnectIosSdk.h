@@ -11,6 +11,16 @@
 #endif
 
 #import "ForcedHEManager.h"
+#import "curl.h"
+#import "curlbuild.h"
+#import "curlrules.h"
+#import "curlver.h"
+#import "easy.h"
+#import "mprintf.h"
+#import "multi.h"
+#import "stdcheaders.h"
+#import "system.h"
+#import "typecheck-gcc.h"
 
 FOUNDATION_EXPORT double AeroGearHttpVersionNumber;
 FOUNDATION_EXPORT const unsigned char AeroGearHttpVersionString[];
