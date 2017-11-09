@@ -20,7 +20,6 @@
 #import "multi.h"
 #import "stdcheaders.h"
 #import "system.h"
-#import "typecheck-gcc.h"
 
 FOUNDATION_EXPORT double AeroGearHttpVersionNumber;
 FOUNDATION_EXPORT const unsigned char AeroGearHttpVersionString[];
