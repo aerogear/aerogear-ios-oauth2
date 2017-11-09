@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.dependency 'JSONWebToken'
   s.module_map = 'TDConnectIosSdk/TDConnectIosSdk.modulemap'
   s.preserve_paths = 'TDConnectIosSdk/TDConnectIosSdk.modulemap'
-  s.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/TDConnectIosSdk/TDConnectIosSdk' }
+  s.prepare_command = 'TDConnectIosSdk/injectXcodePath.sh'
 end
