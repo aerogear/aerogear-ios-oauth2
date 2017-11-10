@@ -110,15 +110,21 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.optionalParams = [String: String]();
         }
 
+        var useForcedHeaderInjection:Bool = false;
+        if #available(iOS 9.0, *) {
+            useForcedHeaderInjection = false;
+        } else {
+            useForcedHeaderInjection = ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled() && config.isWebView;
+        }
+
         if (!ForcedHEManager.isCellularEnabled()) {
             config.optionalParams!["prompt"] = "no_seam";
-        } else {
-            if (ForcedHEManager.isWifiEnabled() && config.isWebView) {
-                let mccMnc:String = OperatorInfo.id()
-                config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
-                ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
-                URLProtocol.registerClass(ForcedHEURLProtocol.self)
-            }
+        }
+        if (useForcedHeaderInjection) {
+            let mccMnc:String = OperatorInfo.id()
+            config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
+            ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
+            URLProtocol.registerClass(ForcedHEURLProtocol.self)
         }
 
         self.config = config

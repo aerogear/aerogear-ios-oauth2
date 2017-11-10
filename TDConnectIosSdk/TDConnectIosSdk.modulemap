@@ -6,6 +6,6 @@ framework module TDConnectIosSdk {
 
   explicit module SysHeaders {
     // Explicetely define some system headers included by libcurl to prevent the “non-modular header inside framework module”
-    header "{xcodepath}/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/clang/include/inttypes.h"
+    header "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/clang/include/inttypes.h"
   }
 }
