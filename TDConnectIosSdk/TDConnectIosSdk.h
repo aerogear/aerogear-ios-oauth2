@@ -12,8 +12,6 @@
 
 #import "ForcedHEManager.h"
 #import "curl.h"
-#import "curlbuild.h"
-#import "curlrules.h"
 #import "curlver.h"
 #import "easy.h"
 #import "mprintf.h"
