@@ -110,7 +110,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.optionalParams = [String: String]();
         }
 
-        var useForcedHeaderInjection:Bool = false;
+        var useForcedHeaderInjection = false;
         if #available(iOS 9.0, *) {
             useForcedHeaderInjection = false;
         } else {
