@@ -142,7 +142,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     */
     open func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         let state = NSUUID().uuidString
-
         // register to receive notification when the application becomes active so we
         // can clear any pending authorization requests which are not completed properly,
         // that is a user switched into the app without Accepting or Cancelling the authorization
@@ -169,19 +168,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             return
         }
         
-        if !self.config.isWebView {
-            UIApplication.shared.openURL(url as URL)
-            return
-        }
-        
-        if #available(iOS 11.0, *) {
-            self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
-                self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
-            })
-            (self.authenticationSession as! SFAuthenticationSession).start()
-            return
-        }
-        
         // register with the notification system in order to be notified when the 'authorization' process completes in the
         // external browser, and the oauth code is available so that we can then proceed to request the 'access_token'
         // from the server.
@@ -191,17 +177,26 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
         })
 
-        var controller: UIViewController
-        if #available(iOS 9.0, *) {
-            let safariViewController = SFSafariViewController(url: url as URL)
-            safariViewController.delegate = self
-            controller = safariViewController
+        if self.config.isWebView {
+            let webViewController = OAuth2WebViewController()
+            webViewController.targetURL = url;
+            UIApplication.shared.tdcTopViewController?.present(webViewController, animated: true, completion: nil)
         } else {
-            controller = OAuth2WebViewController()
-            (controller as! OAuth2WebViewController).targetURL = url as URL!
+            if #available(iOS 11.0, *) {
+                self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
+                    self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
+                })
+                (self.authenticationSession as! SFAuthenticationSession).start()
+                return
+            }
+            if #available(iOS 9.0, *) {
+                let safariViewController = SFSafariViewController(url: url as URL)
+                safariViewController.delegate = self
+                UIApplication.shared.tdcTopViewController?.present(safariViewController, animated: true, completion: nil)
+                return
+            }
+            UIApplication.shared.openURL(url as URL)
         }
-
-        UIApplication.shared.tdcTopViewController?.present(controller, animated: true, completion: nil)
     }
     
     func handleCallback(_ successUrl: URL?, error: Error?, state: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
