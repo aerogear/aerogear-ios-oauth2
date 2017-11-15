@@ -48,12 +48,22 @@ public enum OAuth2Error: Error {
     case UnequalStateParameter(String)
 }
 
-enum BrowserType {
+public enum BrowserType {
     case webView
     case safariViewController
     case safariAuthenticationSession
     case safariExternalBrowser
     case unknown
+
+    var description : String {
+        switch self {
+        case .webView: return "web-view";
+        case .safariViewController: return "safari-view-controller";
+        case .safariAuthenticationSession: return "safari-authentication-session";
+        case .safariExternalBrowser: return "safari-external-browser";
+        case .unknown: return "unknown";
+        }
+    }
 }
 
 fileprivate extension UIApplication {
@@ -182,7 +192,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // calculate final url
         var url: URL
         do {
-            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state)
+            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state, browserType: browserType)
         } catch let error as NSError {
             completionHandler(nil, error)
             return
@@ -248,7 +258,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
     }
     
-    public class func getAuthUrl(config: Config, http: Http, state: String? = nil) throws -> URL {
+    public class func getAuthUrl(config: Config, http: Http, state: String? = nil, browserType: BrowserType) throws -> URL {
         let optionalParamsEncoded = config.optionalParams?.keys.reduce("", { (current: String, key: String) -> String in
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
@@ -258,7 +268,8 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             if let dict = NSDictionary(contentsOfFile: path) {
                 let osVersion = ProcessInfo.processInfo.operatingSystemVersion
                 let podVersion = dict["CFBundleShortVersionString"] as! String
-                version = "v\(podVersion)_\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
+                let browserTypeDesc = browserType.description;
+                version = "v\(podVersion)_\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)_\(browserTypeDesc)"
             }
         }
         
