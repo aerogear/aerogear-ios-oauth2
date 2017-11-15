@@ -118,22 +118,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.optionalParams = [String: String]();
         }
 
-        var useForcedHeaderInjection = false;
-        if #available(iOS 9.0, *) {
-            useForcedHeaderInjection = false;
-        } else {
-            useForcedHeaderInjection = ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled() && config.isWebView;
-        }
-
-        if (!ForcedHEManager.isCellularEnabled()) {
-            config.optionalParams!["prompt"] = "no_seam";
-        }
-        if (useForcedHeaderInjection) {
-            let mccMnc:String = OperatorInfo.id()
-            config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
-            ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
-            URLProtocol.registerClass(ForcedHEURLProtocol.self)
-        }
+        ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
 
         self.config = config
         
@@ -183,6 +168,16 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
 
         // get the user agent we will use for authentication
         self.browserType = getBrowserTypeToUse();
+
+        let useForcedHeaderInjection = browserType == .webView && ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled();
+        if (!ForcedHEManager.isCellularEnabled()) {
+            config.optionalParams!["prompt"] = "no_seam";
+        }
+        if (useForcedHeaderInjection) {
+            let mccMnc:String = OperatorInfo.id()
+            config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
+            URLProtocol.registerClass(ForcedHEURLProtocol.self)
+        }
 
         // calculate final url
         var url: URL
