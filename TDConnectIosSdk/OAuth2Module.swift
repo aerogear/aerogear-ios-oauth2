@@ -48,6 +48,13 @@ public enum OAuth2Error: Error {
     case UnequalStateParameter(String)
 }
 
+enum BrowserType {
+    case webView
+    case safariViewController
+    case safariAuthenticationSession
+    case safariExternalBrowser
+    case unknown
+}
 
 fileprivate extension UIApplication {
     var tdcTopViewController: UIViewController? {
@@ -84,6 +91,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     var applicationLaunchNotificationObserver: NSObjectProtocol?
     var applicationDidBecomeActiveNotificationObserver: NSObjectProtocol?
     var state: AuthorizationState
+    var browserType: BrowserType
     var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not want to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
 
     /**
@@ -110,27 +118,26 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.optionalParams = [String: String]();
         }
 
-        var useForcedHeaderInjection = false;
-        if #available(iOS 9.0, *) {
-            useForcedHeaderInjection = false;
-        } else {
-            useForcedHeaderInjection = ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled() && config.isWebView;
-        }
-
-        if (!ForcedHEManager.isCellularEnabled()) {
-            config.optionalParams!["prompt"] = "no_seam";
-        }
-        if (useForcedHeaderInjection) {
-            let mccMnc:String = OperatorInfo.id()
-            config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
-            ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
-            URLProtocol.registerClass(ForcedHEURLProtocol.self)
-        }
+        ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
 
         self.config = config
         
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .authorizationStateUnknown
+        self.browserType = .unknown;
+    }
+
+    func getBrowserTypeToUse() -> BrowserType {
+        if self.config.isWebView {
+            return .webView;
+        }
+        if #available(iOS 11.0, *) {
+            return .safariAuthenticationSession;
+        }
+        if #available(iOS 9.0, *) {
+            return .safariViewController;
+        }
+        return .safariExternalBrowser;
     }
 
     // MARK: Public API - To be overriden if necessary by OAuth2 specific adapter
@@ -142,7 +149,6 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     */
     open func requestAuthorizationCode(completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
         let state = NSUUID().uuidString
-
         // register to receive notification when the application becomes active so we
         // can clear any pending authorization requests which are not completed properly,
         // that is a user switched into the app without Accepting or Cancelling the authorization
@@ -160,25 +166,25 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // update state to 'Pending'
         self.state = .authorizationStatePendingExternalApproval
 
+        // get the user agent we will use for authentication
+        self.browserType = getBrowserTypeToUse();
+
+        let useForcedHeaderInjection = browserType == .webView && ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled();
+        if (!ForcedHEManager.isCellularEnabled()) {
+            config.optionalParams!["prompt"] = "no_seam";
+        }
+        if (useForcedHeaderInjection) {
+            let mccMnc:String = OperatorInfo.id()
+            config.optionalParams!["login_hint"] = "MCCMNC:" + mccMnc;
+            URLProtocol.registerClass(ForcedHEURLProtocol.self)
+        }
+
         // calculate final url
         var url: URL
         do {
             url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state)
         } catch let error as NSError {
             completionHandler(nil, error)
-            return
-        }
-        
-        if !self.config.isWebView {
-            UIApplication.shared.openURL(url as URL)
-            return
-        }
-        
-        if #available(iOS 11.0, *) {
-            self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
-                self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
-            })
-            (self.authenticationSession as! SFAuthenticationSession).start()
             return
         }
         
@@ -191,17 +197,26 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
         })
 
-        var controller: UIViewController
-        if #available(iOS 9.0, *) {
-            let safariViewController = SFSafariViewController(url: url as URL)
-            safariViewController.delegate = self
-            controller = safariViewController
-        } else {
-            controller = OAuth2WebViewController()
-            (controller as! OAuth2WebViewController).targetURL = url as URL!
+        if browserType == .webView || browserType == .unknown {
+            let webViewController = OAuth2WebViewController()
+            webViewController.targetURL = url;
+            UIApplication.shared.tdcTopViewController?.present(webViewController, animated: true, completion: nil)
+        } else if browserType == .safariAuthenticationSession {
+            if #available(iOS 11.0, *) {
+                self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
+                    self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
+                })
+                (self.authenticationSession as! SFAuthenticationSession).start()
+            }
+        } else if browserType == .safariViewController {
+            if #available(iOS 9.0, *) {
+                let safariViewController = SFSafariViewController(url: url as URL)
+                safariViewController.delegate = self
+                UIApplication.shared.tdcTopViewController?.present(safariViewController, animated: true, completion: nil)
+            }
+        } else if browserType == .safariExternalBrowser {
+            UIApplication.shared.openURL(url as URL)
         }
-
-        UIApplication.shared.tdcTopViewController?.present(controller, animated: true, completion: nil)
     }
     
     func handleCallback(_ successUrl: URL?, error: Error?, state: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
@@ -224,7 +239,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     }
     
     func callCompletion(success: AnyObject?, error: NSError?, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
-        if self.config.isWebView {
+        if browserType == .safariViewController || browserType == .webView {
             UIApplication.shared.tdcTopViewController?.dismiss( animated: true, completion: {
                 completionHandler(success, error)
             })
