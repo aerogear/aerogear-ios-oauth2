@@ -41,6 +41,7 @@
 		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
 		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
 		6F1432B81A168594003BEE5B /* TDConnectIosSdk.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84D373F11FD38C060072C433 /* ForcedHEManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D373F01FD38C060072C433 /* ForcedHEManagerTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
 		81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82795C1D3260B724DC6F6A00 /* Pods-TDConnectIosSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk.release.xcconfig"; sourceTree = "<group>"; };
+		84D373F01FD38C060072C433 /* ForcedHEManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcedHEManagerTest.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8BA81BC938C950FC172C5D7 /* Pods-TDConnectIosSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C6412BF91B7738BE06CECC5A /* Pods-TDConnectIosSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdkTests/Pods-TDConnectIosSdkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				48432BE81A2F727C00F7A0FF /* ConfigTest.swift */,
 				5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */,
 				4833046F19AF1635002F8DA9 /* Supporting Files */,
+				84D373F01FD38C060072C433 /* ForcedHEManagerTest.swift */,
 			);
 			path = TDConnectIosSdkTests;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
 				5C542B581CABD3C400039789 /* IdTokenValidatorTest.swift in Sources */,
 				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
+				84D373F11FD38C060072C433 /* ForcedHEManagerTest.swift in Sources */,
 				485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */,
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
 				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,

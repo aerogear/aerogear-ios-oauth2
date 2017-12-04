@@ -4,11 +4,12 @@
 #import <Foundation/Foundation.h>
 
 @interface ForcedHEManager : NSObject
-+ (bool) isWifiEnabled;
-+ (bool) isCellularEnabled;
-+ (bool) shouldFetchThroughCellular:(NSString *)url;
++ (bool)isWifiEnabled;
++ (bool)isCellularEnabled;
++ (bool)shouldFetchThroughCellular:(NSString *)url;
 + (NSDictionary *) openUrlThroughCellular:(NSString *)url;
-+ (void) initForcedHE:(NSString *)wellKnownConfigurationEndpoint;
++ (void)initForcedHE:(NSString *)wellKnownConfigurationEndpoint;
++ (void)fetchWellknown:(NSString *)wellKnownConfigurationEndpoint completion:(void(^)(BOOL))completionHandler;
 @end
 
 #endif

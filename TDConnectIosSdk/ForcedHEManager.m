@@ -15,29 +15,50 @@ int MAX_REDIRECTS_TO_FOLLOW_FOR_HE = 5;
 
 static NSSet *_urlsForHE = nil;
 
-+ (void) initForcedHE:(NSString *)wellKnownConfigurationEndpoint {
++ (void)initForcedHE:(NSString *)wellKnownConfigurationEndpoint {
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
-    [self fetchWellknown:wellKnownConfigurationEndpoint];
+    [self fetchWellknown:wellKnownConfigurationEndpoint completion:nil];
 }
 
-+ (void) fetchWellknown:(NSString *)wellKnownConfigurationEndpoint {
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:wellKnownConfigurationEndpoint]];
++ (void)fetchWellknown:(NSString *)wellKnownConfigurationEndpoint completion:(void(^)(BOOL))completionHandler {
+    NSURL *URL = [NSURL URLWithString:wellKnownConfigurationEndpoint];
 
     __block NSDictionary *json;
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               json = [NSJSONSerialization JSONObjectWithData:data
-                                                                      options:0
-                                                                        error:nil];
-                               @synchronized(self) {
-                                   _urlsForHE = json[@"network_authentication_target_urls"];
-                               }
-                           }];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                if (error || !data) {
+                    NSLog(@"Error fetching data from the endpoint %@", [error localizedDescription]);
+                    if (completionHandler) {
+                        completionHandler(false);
+                    }
+                    return;
+                }
+
+                NSError *serializationError = nil;
+                json = [NSJSONSerialization JSONObjectWithData:data
+                                                       options:0
+                                                         error:&serializationError];
+                if (serializationError) {
+                    NSLog(@"Error serializing the data %@", [serializationError localizedDescription]);
+                    if (completionHandler) {
+                        completionHandler(false);
+                    }
+                    return;
+                }
+
+                @synchronized(self) {
+                    _urlsForHE = json[@"network_authentication_target_urls"];
+                }
+
+                if (completionHandler) {
+                    completionHandler(true);
+                }
+    }] resume];
 }
 
-+ (bool) isInterfaceEnabled:(NSString *)iface {
++ (bool)isInterfaceEnabled:(NSString *)iface {
     struct ifaddrs *interfaces = nil;
     struct ifaddrs *current_interface = nil;
     NSInteger success = getifaddrs(&interfaces);
@@ -58,16 +79,15 @@ static NSSet *_urlsForHE = nil;
     return false;
 }
 
-+ (bool) isWifiEnabled {
++ (bool)isWifiEnabled {
     return [self isInterfaceEnabled:@"en0"];
 }
 
-+ (bool) isCellularEnabled {
++ (bool)isCellularEnabled {
     return [self isInterfaceEnabled:@"pdp_ip0"];
 }
 
-
-+ (bool) shouldFetchThroughCellular:(NSString *)url {
++ (bool)shouldFetchThroughCellular:(NSString *)url {
     @synchronized(self) {
         for (NSString *urlForHE in _urlsForHE) {
             if ([url containsString:urlForHE]) {
@@ -118,7 +138,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
     return realsize;
 }
 
-+ (NSDictionary*) openUrlThroughCellular:(NSString *)url {
++ (NSDictionary*)openUrlThroughCellular:(NSString *)url {
     bool useCellular = true;
     CURL *curl;
     NSString *newUrl = url;
@@ -146,7 +166,6 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
         }
         setsockopt(socketfd, IPPROTO_IP, IP_BOUND_IF, &interfaceIndex, sizeof(interfaceIndex));
         curl_easy_setopt(curl, CURLOPT_OPENSOCKETDATA, &socketfd);
-
 
         // memory
         struct MemoryStruct chunk;
@@ -177,7 +196,9 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
         if (responseCode != 303 && responseCode != 302 && responseCode != 301) {
             char *pszContentType;
             curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &pszContentType);
-            resDict =  @{@"responseCode" : [NSNumber numberWithLong:responseCode], @"contentType" : [NSString stringWithUTF8String:pszContentType], @"data": data};
+            resDict =  @{@"responseCode" : [NSNumber numberWithLong:responseCode],
+                         @"contentType" : [NSString stringWithUTF8String:pszContentType],
+                         @"data": data};
             break;
         }
 

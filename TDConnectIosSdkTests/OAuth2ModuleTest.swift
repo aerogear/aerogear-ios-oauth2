@@ -193,8 +193,8 @@ class OAuth2ModuleTests: XCTestCase {
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
-            claims: ["claim1", "claim2"],
-            webView: false)
+            webView: false,
+            claims: ["claim1", "claim2"])
         let mockedSession = MockOAuth2SessionWithRefreshToken()
         let oauth2Module: OAuth2Module = TelenorConnectOAuth2Module(config: config, session: mockedSession)
         oauth2Module.revokeAccess { (success, error) in
@@ -224,12 +224,12 @@ class OAuth2ModuleTests: XCTestCase {
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
+            webView: false,
             claims: ["claim1", "claim2"],
-            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
-            webView: false)
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"])
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
             XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22%3A%7B%22claim1%22%3A%7B%22essential%22%3Atrue%7D%2C%22claim2%22%3A%7B%22essential%22%3Atrue%7D%7D%7D"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
@@ -243,12 +243,12 @@ class OAuth2ModuleTests: XCTestCase {
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
+            webView: false,
             claims: nil,
-            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
-            webView: false)
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"])
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
             XCTAssertNil(url.query?.range(of: "&claims="))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
@@ -262,12 +262,12 @@ class OAuth2ModuleTests: XCTestCase {
             useStaging: true,
             scopes: ["scope1", "scope2"],
             accountId: "accountId",
+            webView: false,
             claims: nil,
-            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"],
-            webView: false)
+            optionalParams: ["optParam1Key": "optParam1Value", "optParam2Key": "optParam2Value"])
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
-            let url = try OAuth2Module.getAuthUrl(config: config, http: http)
+            let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
             XCTAssertNil(url.query?.range(of: "&scope=scope1%20scope2"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")

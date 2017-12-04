@@ -16,6 +16,7 @@
 */
 
 import Foundation
+import UIKit
 
 /**
 Configuration object to setup an OAuth2 module

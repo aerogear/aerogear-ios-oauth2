@@ -5,3 +5,5 @@
 #define __warning__ deprecated
 
 #endif
+
+#import "ForcedHEManager.h"
