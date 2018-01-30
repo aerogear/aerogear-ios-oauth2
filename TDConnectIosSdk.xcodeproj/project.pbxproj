@@ -40,8 +40,8 @@
 		5CF359B21CAA8C800064C43D /* IdTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */; };
 		5CF359B31CAA8C800064C43D /* TelenorConnectOAuth2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */; };
 		6F1432B81A168594003BEE5B /* TDConnectIosSdk.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* TDConnectIosSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9F74D7BCCF0D94A87CEEB1FE /* Pods_TDConnectIosSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A11A0B9B0A172620872B76 /* Pods_TDConnectIosSdkTests.framework */; };
 		84D373F11FD38C060072C433 /* ForcedHEManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D373F01FD38C060072C433 /* ForcedHEManagerTest.swift */; };
+		9F74D7BCCF0D94A87CEEB1FE /* Pods_TDConnectIosSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A11A0B9B0A172620872B76 /* Pods_TDConnectIosSdkTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,8 +106,6 @@
 		5C542B571CABD3C400039789 /* IdTokenValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidatorTest.swift; sourceTree = "<group>"; };
 		5CF359B01CAA8C800064C43D /* IdTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdTokenValidator.swift; sourceTree = "<group>"; };
 		5CF359B11CAA8C800064C43D /* TelenorConnectOAuth2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelenorConnectOAuth2Module.swift; sourceTree = "<group>"; };
-		81AA15F7C5D0DEB4D9842A1A /* Pods_TDConnectIosSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TDConnectIosSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82795C1D3260B724DC6F6A00 /* Pods-TDConnectIosSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk.release.xcconfig"; sourceTree = "<group>"; };
 		84D373F01FD38C060072C433 /* ForcedHEManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcedHEManagerTest.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A82EF108CA6E1CE1CB08AAE1 /* Pods-TDConnectIosSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDConnectIosSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TDConnectIosSdk/Pods-TDConnectIosSdk.debug.xcconfig"; sourceTree = "<group>"; };
@@ -671,7 +669,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A42B9DDD17FD11C81018F70 /* Pods-TDConnectIosSdkTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M4Q75B4WS4;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -694,7 +691,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CAF4DA6D67969EE7E6DB6C71 /* Pods-TDConnectIosSdkTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M4Q75B4WS4;
 				INFOPLIST_FILE = TDConnectIosSdkTests/Info.plist;

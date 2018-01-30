@@ -11,6 +11,6 @@ target 'TDConnectIosSdk' do
 	target 'TDConnectIosSdkTests' do
 		inherit! :search_paths
 
-	    pod 'OHHTTPStubs', '6.0.0'
+	    pod 'OHHTTPStubs', '6.1.0'
 	end
 end

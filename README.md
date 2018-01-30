@@ -40,7 +40,7 @@ pod install
 ## Adding the library to your project 
 To add the library in your project, you can either use [CocoaPods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
 
-### Using [CocoaPods](http://cocoapods.org)
+### Using [CocoaPods](https://cocoapods.org)
 In your ```Podfile``` add:
 
 ```
@@ -66,6 +66,23 @@ git submodule add https://github.com/telenordigital/connect-ios-sdk.git
 3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of TDConnectIosSdk.framework (Currently set to 8.0).
 5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `TDConnectIosSdk.framework`.
 7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `TDConnectIosSdk.framework`.
+
+### Using [Carthage](https://github.com/Carthage/Carthage)
+Create `Cartfile` in your project that contains
+
+```bash
+github "telenordigital/connect-ios-sdk"
+```
+
+Because the SDK project manages it's depencies with Cocoapods you will have to install the SDK depencies with Cocoapod locally, even though you don't have to use it for your project
+
+```bash
+carthage update
+cd Carthage/Checkouts/connect-ios-sdk
+pod install
+cd ../../..
+carthage update
+```
 
 ## Advanced Usage
 

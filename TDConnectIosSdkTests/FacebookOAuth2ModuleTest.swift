@@ -25,7 +25,10 @@ func setupStubFacebookWithNSURLSessionDefaultConfiguration() {
     // set up http stub
     _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             _ = ["name": "John", "family_name": "Smith"]
-            switch request.url!.path {
+            guard let url = request.url else {
+                return OHHTTPStubsResponse(data:Data(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            }
+            switch url.path {
             case "/me/permissions":
                 let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"nnn\",\"expires_in\":23}"
                 let data = string.data(using: String.Encoding.utf8)

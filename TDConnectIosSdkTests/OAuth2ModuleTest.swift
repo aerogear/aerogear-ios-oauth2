@@ -29,7 +29,10 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
     // set up http stub
     _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
             let stubJsonResponse = ["name": "John", "family_name": "Smith"]
-            switch request.url!.path {
+            guard let url = request.url else {
+                return OHHTTPStubsResponse(data:Data(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            }
+            switch url.path {
             case "/plus/v1/people/me/openIdConnect":
                 let data = try! JSONSerialization.data(withJSONObject: stubJsonResponse, options: JSONSerialization.WritingOptions())
                 return OHHTTPStubsResponse(data:data, statusCode: 200, headers: ["Content-Type" : "text/json"])
@@ -56,7 +59,10 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
 func setupStubWithNSURLSessionDefaultConfigurationWithoutRefreshTokenIssued() {
     // set up http stub
     _ = stub({_ in return true}, response: { (request: URLRequest!) -> OHHTTPStubsResponse in
-            switch request.url!.path {
+            guard let url = request.url else {
+                return OHHTTPStubsResponse(data:Data(), statusCode: 404, headers: ["Content-Type" : "text/json"])
+            }
+            switch url.path {
             case "/o/oauth2/token":
                 let string = "{\"access_token\":\"ACCESS_TOKEN\"}"
                 let data = string.data(using: String.Encoding.utf8)
@@ -211,7 +217,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         do {
             let actual = try OAuth2Module.getParam(claims: claims)
-            XCTAssertEqual("&claims=%7B%22userinfo%22%3A%7B%22phone%22%3A%7B%22essential%22%3Atrue%7D%2C%22email%22%3A%7B%22essential%22%3Atrue%7D%7D%7D", actual)
+            XCTAssertEqual("&claims=%7B%22userinfo%22:%7B%22phone%22:%7B%22essential%22:true%7D,%22email%22:%7B%22essential%22:true%7D%7D%7D", actual)
         } catch {
             XCTFail(String(describing: error))
         }
@@ -230,7 +236,7 @@ class OAuth2ModuleTests: XCTestCase {
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
             let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
-            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22%3A%7B%22claim1%22%3A%7B%22essential%22%3Atrue%7D%2C%22claim2%22%3A%7B%22essential%22%3Atrue%7D%7D%7D"))
+            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22:%7B%22claim1%22:%7B%22essential%22:true%7D,%22claim2%22:%7B%22essential%22:true%7D%7D%7D"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
