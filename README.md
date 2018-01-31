@@ -77,12 +77,14 @@ github "telenordigital/connect-ios-sdk"
 Because the SDK project manages it's depencies with Cocoapods you will have to install the SDK depencies with Cocoapod locally, even though you don't have to use it for your project
 
 ```bash
-carthage update
+carthage update # this will give an error but will generate the files needed
 cd Carthage/Checkouts/connect-ios-sdk
 pod install
 cd ../../..
 carthage update
 ```
+
+Note: Make sure you have the latest version of Cocoapods (1.4.0 at the time of writing)
 
 ## Advanced Usage
 
