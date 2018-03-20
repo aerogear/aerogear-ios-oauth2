@@ -42,7 +42,7 @@ func setupStubWithNSURLSessionDefaultConfiguration() {
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/o/oauth2/token",
                  "/oauth/token":
-                let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23, \"id_token\":\"NEW_ID_TOKEN\"}"
+                let string = "{\"access_token\":\"NEWLY_REFRESHED_ACCESS_TOKEN\", \"refresh_token\":\"REFRESH_TOKEN\",\"expires_in\":23}"
                 let data = string.data(using: String.Encoding.utf8)
                 return OHHTTPStubsResponse(data:data!, statusCode: 200, headers: ["Content-Type" : "text/json"])
             case "/o/oauth2/revoke",
@@ -298,24 +298,4 @@ class OAuth2ModuleTests: XCTestCase {
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
-    
-    func testExchangeAuthorizationCodeForAccessTokenCallsSaveAccessTokenWithNonNilIdToken() {
-        setupStubWithNSURLSessionDefaultConfiguration()
-        let expectation = self.expectation(description: "AccessRequest");
-        let googleConfig = GoogleConfig(
-            clientId: "xxx.apps.googleusercontent.com",
-            scopes:["https://www.googleapis.com/auth/drive"])
-        
-        let mockedSession = MockOAuth2SessionWithRefreshToken()
-        let oauth2Module = OAuth2Module(config: googleConfig, session: mockedSession)
-        oauth2Module.exchangeAuthorizationCodeForAccessToken (code: "CODE", completionHandler: {(response: AnyObject?, error:NSError?) -> Void in
-            if error != nil {
-                XCTFail("Got error")
-            }
-            XCTAssertTrue(mockedSession.idTokenChanged)
-            expectation.fulfill()
-        })
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-    
 }

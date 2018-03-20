@@ -96,6 +96,7 @@ Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     
     open let config: Config
+    let jsonResponseSerializerWithDate: JsonResponseSerializerWithDate?
     open var http: Http
     open var oauth2Session: OAuth2Session
     var applicationLaunchNotificationObserver: NSObjectProtocol?
@@ -114,7 +115,9 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
 
     :returns: the newly initialized OAuth2Module.
     */
-    public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializer()) {
+    public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializerWithDate()) {
+        self.jsonResponseSerializerWithDate = responseSerializer as? JsonResponseSerializerWithDate
+
         if (config.accountId == nil) {
             config.accountId = "ACCOUNT_FOR_CLIENTID_\(config.clientId)"
         }
@@ -400,6 +403,14 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             let expirationRefresh = unwrappedResponse["refresh_expires_in"] as? NSNumber
             let expRefresh = expirationRefresh?.stringValue
             
+            if idToken != nil {
+                let error = self.validateCodedIdToken(idToken: idToken!)
+                if (error != nil) {
+                    completionHandler(nil, error! as NSError)
+                    return
+                }
+            }
+            
             self.oauth2Session.save(accessToken: accessToken,
                 refreshToken: refreshToken,
                 accessTokenExpiration: exp,
@@ -565,18 +576,24 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         return parameters
     }
     
-    public func getIdTokenPayload() throws -> Payload? {
+    public func getIdTokenPayload() -> Payload? {
         guard let signedJwt = oauth2Session.idToken else {
             return nil
         }
 
-        let token = try JWT.decode(signedJwt, algorithm: .none, verify: false, audience: config.clientId, issuer: config.baseURL)
-        
-        if let failure = validateIdToken(token: token as [String : AnyObject], expectedIssuer: config.baseURL, expectedAudience: config.clientId) {
-            throw failure
+        return try? JWT.decode(signedJwt, algorithm: .none, verify: false, audience: config.clientId, issuer: config.baseURL)
+    }
+    
+    public func validateCodedIdToken(idToken: String) -> Error? {
+        var token: Payload
+        do {
+            token = try JWT.decode(idToken, algorithm: .none, verify: false, audience: self.config.clientId, issuer: self.config.baseURL)
+        } catch {
+            return error
         }
         
-        return token
+        let serverTime = self.jsonResponseSerializerWithDate?.lastServerTime
+        return validateIdToken(token: token as [String : AnyObject], expectedIssuer: self.config.baseURL, expectedAudience: self.config.clientId, serverTime: serverTime)
     }
     
     public func getIdTokenEncoded() -> String? {

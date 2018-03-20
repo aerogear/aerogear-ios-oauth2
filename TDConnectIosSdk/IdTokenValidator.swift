@@ -20,7 +20,7 @@ public enum IdTokenValidationError: Error {
     case MissingIssueTime(String)
 }
 
-public func validateIdToken(token: [String:AnyObject], expectedIssuer: String, expectedAudience: String) -> IdTokenValidationError? {
+public func validateIdToken(token: [String:AnyObject], expectedIssuer: String, expectedAudience: String, serverTime: Date?) -> IdTokenValidationError? {
     
     guard let issuer = token["iss"] as? String else {
         return IdTokenValidationError.MissingIssuer
@@ -58,8 +58,8 @@ public func validateIdToken(token: [String:AnyObject], expectedIssuer: String, e
         return IdTokenValidationError.ExperationTimeMissing
     }
     
-    let experationDate = NSDate(timeIntervalSince1970: experationTime)
-    if experationDate.timeIntervalSinceNow.sign == FloatingPointSign.minus {
+    let expirationDate = Date(timeIntervalSince1970: experationTime)
+    if !isValidExpirationTime(expirationDate: expirationDate, serverDate: serverTime) {
         return IdTokenValidationError.Expired("ID token has expired.")
     }
     
@@ -68,4 +68,17 @@ public func validateIdToken(token: [String:AnyObject], expectedIssuer: String, e
     }
     
     return nil
+}
+
+func isValidExpirationTime(expirationDate: Date, serverDate: Date?) -> Bool {
+    if expirationDate.timeIntervalSinceNow.sign == FloatingPointSign.plus {
+        return true
+    }
+    
+    guard let serverDate = serverDate else {
+        return false
+    }
+    
+    let expired = expirationDate > serverDate
+    return expired
 }
