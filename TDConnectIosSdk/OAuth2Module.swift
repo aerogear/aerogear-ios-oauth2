@@ -404,7 +404,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             let expRefresh = expirationRefresh?.stringValue
             
             if idToken != nil {
-                let error = self.validateCodedIdToken(idToken: idToken!)
+                let error = self.validateJwtIdToken(idToken: idToken!)
                 if (error != nil) {
                     completionHandler(nil, error! as NSError)
                     return
@@ -584,7 +584,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         return try? JWT.decode(signedJwt, algorithm: .none, verify: false, audience: config.clientId, issuer: config.baseURL)
     }
     
-    public func validateCodedIdToken(idToken: String) -> Error? {
+    public func validateJwtIdToken(idToken: String) -> Error? {
         var token: Payload
         do {
             token = try JWT.decode(idToken, algorithm: .none, verify: false, audience: self.config.clientId, issuer: self.config.baseURL)
