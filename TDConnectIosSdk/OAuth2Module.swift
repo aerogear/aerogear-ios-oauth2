@@ -104,6 +104,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     var state: AuthorizationState
     var browserType: BrowserType
     var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not want to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
+    var urlsForHE: [String]?
 
     /**
     Initialize an OAuth2 module.
@@ -131,13 +132,28 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             config.optionalParams = [String: String]();
         }
 
-        ForcedHEManager.initForcedHE(config.wellKnownConfigurationEndpoint);
-
         self.config = config
         
         self.http = Http(baseURL: config.baseURL, requestSerializer: requestSerializer, responseSerializer:  responseSerializer)
         self.state = .authorizationStateUnknown
         self.browserType = .unknown;
+
+        super.init()
+
+        ForcedHEManager.initForcedHE()
+        self.fetchWellknownConfig()
+    }
+
+    func fetchWellknownConfig() {
+        self.http.request(method: .get, path: config.wellKnownConfigurationEndpoint!, completionHandler: { (response, error) in
+            guard let unwrappedResponse = response as? [String: AnyObject], error == nil else {
+                return;
+            }
+            guard let urls = unwrappedResponse["network_authentication_target_urls"] as? [String] else {
+                return
+            }
+            ForcedHEManager.setHEUrls(Set<String>(urls))
+        });
     }
 
     func getBrowserTypeToUse() -> BrowserType {

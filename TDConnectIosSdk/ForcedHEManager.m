@@ -15,47 +15,14 @@ int MAX_REDIRECTS_TO_FOLLOW_FOR_HE = 5;
 
 static NSSet *_urlsForHE = nil;
 
-+ (void)initForcedHE:(NSString *)wellKnownConfigurationEndpoint {
++ (void)initForcedHE {
     curl_global_init(CURL_GLOBAL_DEFAULT);
-
-    [self fetchWellknown:wellKnownConfigurationEndpoint completion:nil];
 }
 
-+ (void)fetchWellknown:(NSString *)wellKnownConfigurationEndpoint completion:(void(^)(BOOL))completionHandler {
-    NSURL *URL = [NSURL URLWithString:wellKnownConfigurationEndpoint];
-
-    __block NSDictionary *json;
-
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                if (error || !data) {
-                    NSLog(@"Error fetching data from the endpoint %@", [error localizedDescription]);
-                    if (completionHandler) {
-                        completionHandler(false);
-                    }
-                    return;
-                }
-
-                NSError *serializationError = nil;
-                json = [NSJSONSerialization JSONObjectWithData:data
-                                                       options:0
-                                                         error:&serializationError];
-                if (serializationError) {
-                    NSLog(@"Error serializing the data %@", [serializationError localizedDescription]);
-                    if (completionHandler) {
-                        completionHandler(false);
-                    }
-                    return;
-                }
-
-                @synchronized(self) {
-                    _urlsForHE = json[@"network_authentication_target_urls"];
-                }
-
-                if (completionHandler) {
-                    completionHandler(true);
-                }
-    }] resume];
++ (void)setHEUrls:(NSSet *)urlsForHE {
+    @synchronized(self) {
+        _urlsForHE = urlsForHE;
+    }
 }
 
 + (bool)isInterfaceEnabled:(NSString *)iface {
