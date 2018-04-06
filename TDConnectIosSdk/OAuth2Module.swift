@@ -21,6 +21,7 @@ import AeroGearHttp
 import JWT
 import SafariServices
 import WebKit
+import AdSupport
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -105,6 +106,13 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     var browserType: BrowserType
     var authenticationSession: Any? // We need this optional on the object otherwise the popup dialog disappears immediately. It has to be an Any instead of a SFAuthenticationSession because SFAuthenticationSession is only available in iOS 11+ and we do not want to mark the whole class with `@available(iOS 11.0, *)` and we can't use that syntax on stored properties.
     var urlsForHE: [String]?
+    var logSessionId: String?
+    var advertisingId: String?
+    var analyticsEndpoint: String?
+    var tsSdkInitiliazation: NSInteger?
+    var tsLoginButtonClicked: NSInteger?
+    var tsRedirectUrlInvoked: NSInteger?
+    var tsTokenResponseReceived: NSInteger?
 
     /**
     Initialize an OAuth2 module.
@@ -117,6 +125,8 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     :returns: the newly initialized OAuth2Module.
     */
     public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializerWithDate()) {
+        self.tsSdkInitiliazation = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+        self.advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString;
         self.jsonResponseSerializerWithDate = responseSerializer as? JsonResponseSerializerWithDate
 
         if (config.accountId == nil) {
@@ -147,12 +157,14 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     func fetchWellknownConfig() {
         self.http.request(method: .get, path: config.wellKnownConfigurationEndpoint!, completionHandler: { (response, error) in
             guard let unwrappedResponse = response as? [String: AnyObject], error == nil else {
-                return;
-            }
-            guard let urls = unwrappedResponse["network_authentication_target_urls"] as? [String] else {
                 return
             }
-            ForcedHEManager.setHEUrls(Set<String>(urls))
+            if let heUrls = unwrappedResponse["network_authentication_target_urls"] as? [String] {
+                ForcedHEManager.setHEUrls(Set<String>(heUrls))
+            }
+            if let analyticsEndpoint = unwrappedResponse["telenordigital_sdk_analytics_endpoint"] as? String {
+                self.analyticsEndpoint = analyticsEndpoint + "/V1/ios/";
+            }
         });
     }
 
@@ -198,6 +210,8 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // get the user agent we will use for authentication
         self.browserType = getBrowserTypeToUse();
 
+        self.logSessionId = NSUUID().uuidString
+
         let useForcedHeaderInjection = browserType == .webView && ForcedHEManager.isCellularEnabled() && ForcedHEManager.isWifiEnabled();
         if (!ForcedHEManager.isCellularEnabled()) {
             config.optionalParams!["prompt"] = "no_seam";
@@ -211,7 +225,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // calculate final url
         var url: URL
         do {
-            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state, browserType: browserType)
+            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state, logSessionId:logSessionId, browserType: browserType)
         } catch let error as NSError {
             completionHandler(nil, error)
             return
@@ -277,7 +291,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
     }
     
-    public class func getAuthUrl(config: Config, http: Http, state: String? = nil, browserType: BrowserType) throws -> URL {
+    public class func getAuthUrl(config: Config, http: Http, state: String? = nil, logSessionId: String? = nil, browserType: BrowserType) throws -> URL {
         let optionalParamsEncoded = config.optionalParams?.keys.reduce("", { (current: String, key: String) -> String in
             return "\(current)&\(key.urlEncode())=\(config.optionalParams![key]!.urlEncode())"
         })
@@ -291,7 +305,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
                 version = "v\(podVersion)_\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)_\(browserTypeDesc)"
             }
         }
-        
+
         var params = "?scope=\(config.scopesEncoded)&redirect_uri=\(config.redirectURL.urlEncode())&client_id=\(config.clientId)&response_type=code&telenordigital_sdk_version=ios_\(version)"
         if let optionalParamsEncoded = optionalParamsEncoded {
             params += optionalParamsEncoded
@@ -307,6 +321,10 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         
         if let state = state {
             params += "&state=\(state)"
+        }
+
+        if let lsi = logSessionId {
+            params += "&lsi=\(lsi)"
         }
         
         guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url:config.authzEndpoint) else {
@@ -386,6 +404,54 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         })
     }
 
+    func sendAnalyticsData(accessToken: String?, subjectId: String?) {
+        guard let analyticsEndpoint = self.analyticsEndpoint else {
+            return
+        }
+
+        var paramDict = [String: String]()
+
+        if let logSessionId = self.logSessionId {
+            paramDict["lsi"] = logSessionId
+        }
+        if let advertisingId = self.advertisingId {
+            paramDict["advertisingId"] = advertisingId
+        }
+        if let tsSdkInitiliazation = self.tsSdkInitiliazation {
+            paramDict["tsSdkInitiliazation"] = String(tsSdkInitiliazation);
+        }
+        if let tsLoginButtonClicked = self.tsLoginButtonClicked {
+            paramDict["tsLoginButtonClicked"] = String(tsLoginButtonClicked)
+        }
+        if let tsRedirectUrlInvoked = self.tsRedirectUrlInvoked {
+            paramDict["tsRedirectUrlInvoked"] = String(tsRedirectUrlInvoked)
+        }
+        if let tsTokenResponseReceived = self.tsTokenResponseReceived {
+            paramDict["tsTokenResponseReceived"] = String(tsTokenResponseReceived)
+        }
+        if let subjectId = subjectId {
+            paramDict["subject"] = subjectId
+        }
+        if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
+            paramDict["appName"] = appName
+        }
+        if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            paramDict["appVersion"] = appVersion
+        }
+
+        paramDict["deviceName"] = UIDevice.current.name
+        paramDict["deviceModel"] = UIDevice.current.modelName
+        paramDict["osName"] = UIDevice.current.systemName
+        paramDict["osVersion"] = UIDevice.current.systemVersion
+
+        let http = Http()
+        if accessToken != nil {
+            http.authzModule = self
+        }
+        http.request(method: .post, path: analyticsEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+        })
+    }
+
     /**
     Exchange an authorization code for an access token.
 
@@ -399,13 +465,19 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             paramDict["client_secret"] = unwrapped
         }
 
+        self.tsRedirectUrlInvoked = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+
         http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
+            self.tsTokenResponseReceived = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+
             if (error != nil) {
+                self.sendAnalyticsData(accessToken: nil, subjectId: nil)
                 completionHandler(nil, error)
                 return
             }
 
             guard let unwrappedResponse = responseObject as? [String: AnyObject] else {
+                self.sendAnalyticsData(accessToken: nil, subjectId: nil)
                 completionHandler(nil, OAuth2Error.UnexpectedResponse(responseObject as! String) as NSError)
                 return
             }
@@ -422,16 +494,22 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             if idToken != nil {
                 let error = self.validateJwtIdToken(idToken: idToken!)
                 if (error != nil) {
+                    self.sendAnalyticsData(accessToken: accessToken, subjectId: nil)
                     completionHandler(nil, error! as NSError)
                     return
                 }
             }
-            
+
             self.oauth2Session.save(accessToken: accessToken,
                 refreshToken: refreshToken,
                 accessTokenExpiration: exp,
                 refreshTokenExpiration: expRefresh,
                 idToken: idToken)
+
+            let idTokenPayload = self.getIdTokenPayload()
+            let subjectId = idTokenPayload?["sub"] as? String
+            self.sendAnalyticsData(accessToken: accessToken, subjectId: subjectId)
+
             completionHandler(accessToken as AnyObject?, nil)
         })
     }
@@ -449,6 +527,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             // need to refresh token
             self.refreshAccessToken(completionHandler: completionHandler)
         } else {
+            self.tsLoginButtonClicked = NSInteger(NSDate().timeIntervalSince1970 * 1000);
             // ask for authorization code and once obtained exchange code for access token
             self.requestAuthorizationCode(completionHandler: completionHandler)
         }
