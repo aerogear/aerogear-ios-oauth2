@@ -163,7 +163,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
                 ForcedHEManager.setHEUrls(Set<String>(heUrls))
             }
             if let analyticsEndpoint = unwrappedResponse["telenordigital_sdk_analytics_endpoint"] as? String {
-                self.analyticsEndpoint = analyticsEndpoint + "/V1/ios/";
+                self.analyticsEndpoint = analyticsEndpoint + "/V1/ios";
             }
         });
     }
