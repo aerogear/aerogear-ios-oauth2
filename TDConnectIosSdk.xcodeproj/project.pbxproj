@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01809E06207B99A20007A4A7 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01809E05207B99A20007A4A7 /* UIDeviceExtension.swift */; };
 		01B3956D1F28B98400AF514E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3956C1F28B98400AF514E /* libcurl.a */; };
 		01B3956F1F28B9C900AF514E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3956E1F28B9C900AF514E /* libz.tbd */; };
 		01BD2C561F28A2370051E77C /* ForcedHEManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BD2C511F28A2370051E77C /* ForcedHEManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01809E05207B99A20007A4A7 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		01B3956C1F28B98400AF514E /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = TDConnectIosSdk/libs/curl/lib/libcurl.a; sourceTree = "<group>"; };
 		01B3956E1F28B9C900AF514E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		01BD2C511F28A2370051E77C /* ForcedHEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForcedHEManager.h; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		4833046419AF1635002F8DA9 /* TDConnectIosSdk */ = {
 			isa = PBXGroup;
 			children = (
+				01809E05207B99A20007A4A7 /* UIDeviceExtension.swift */,
 				01BD2C511F28A2370051E77C /* ForcedHEManager.h */,
 				01BD2C521F28A2370051E77C /* ForcedHEManager.m */,
 				01BD2C531F28A2370051E77C /* ForcedHEURLProtocol.swift */,
@@ -464,6 +467,7 @@
 				483304A019AF327D002F8DA9 /* AccountManager.swift in Sources */,
 				48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */,
 				01BD2C581F28A2370051E77C /* ForcedHEURLProtocol.swift in Sources */,
+				01809E06207B99A20007A4A7 /* UIDeviceExtension.swift in Sources */,
 				485D73811A35BCBC0007D9EC /* OpenIDClaim.swift in Sources */,
 				48DE90A619CDEAEE007F9B21 /* KeycloakOAuth2Module.swift in Sources */,
 				5C8F38A2205A72260008756F /* JsonResponseSerializerWithDate.swift in Sources */,
