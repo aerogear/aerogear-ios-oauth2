@@ -225,7 +225,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // calculate final url
         var url: URL
         do {
-            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state, logSessionId:logSessionId, browserType: browserType)
+            url = try OAuth2Module.getAuthUrl(config: config, http: http, state: state, logSessionId: logSessionId, browserType: browserType)
         } catch let error as NSError {
             completionHandler(nil, error)
             return
@@ -324,7 +324,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         }
 
         if let lsi = logSessionId {
-            params += "&lsi=\(lsi)"
+            params += "&log_session_id=\(lsi)"
         }
         
         guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url:config.authzEndpoint) else {
@@ -412,7 +412,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         var paramDict = [String: String]()
 
         if let logSessionId = self.logSessionId {
-            paramDict["lsi"] = logSessionId
+            paramDict["log_session_id"] = logSessionId
         }
         if let advertisingId = self.advertisingId {
             paramDict["advertisingId"] = advertisingId
