@@ -109,10 +109,10 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     var logSessionId: String?
     var advertisingId: String?
     var analyticsEndpoint: String?
-    var tsSdkInitiliazation: NSInteger?
-    var tsLoginButtonClicked: NSInteger?
-    var tsRedirectUrlInvoked: NSInteger?
-    var tsTokenResponseReceived: NSInteger?
+    var tsSdkInitiliazation: Int64?
+    var tsLoginButtonClicked: Int64?
+    var tsRedirectUrlInvoked: Int64?
+    var tsTokenResponseReceived: Int64?
 
     /**
     Initialize an OAuth2 module.
@@ -125,7 +125,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     :returns: the newly initialized OAuth2Module.
     */
     public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializerWithDate()) {
-        self.tsSdkInitiliazation = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+        self.tsSdkInitiliazation = Int64(NSDate().timeIntervalSince1970 * 1000);
         self.advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString;
         self.jsonResponseSerializerWithDate = responseSerializer as? JsonResponseSerializerWithDate
 
@@ -465,10 +465,10 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             paramDict["client_secret"] = unwrapped
         }
 
-        self.tsRedirectUrlInvoked = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+        self.tsRedirectUrlInvoked = Int64(NSDate().timeIntervalSince1970 * 1000);
 
         http.request(method: .post, path: config.accessTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: {(responseObject, error) in
-            self.tsTokenResponseReceived = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+            self.tsTokenResponseReceived = Int64(NSDate().timeIntervalSince1970 * 1000);
 
             if (error != nil) {
                 self.sendAnalyticsData(accessToken: nil, subjectId: nil)
@@ -527,7 +527,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             // need to refresh token
             self.refreshAccessToken(completionHandler: completionHandler)
         } else {
-            self.tsLoginButtonClicked = NSInteger(NSDate().timeIntervalSince1970 * 1000);
+            self.tsLoginButtonClicked = Int64(NSDate().timeIntervalSince1970 * 1000);
             // ask for authorization code and once obtained exchange code for access token
             self.requestAuthorizationCode(completionHandler: completionHandler)
         }
