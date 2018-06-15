@@ -21,7 +21,6 @@ import AeroGearHttp
 import JWT
 import SafariServices
 import WebKit
-import AdSupport
 
 /**
 Notification constants emitted during oauth authorization flow.
@@ -126,7 +125,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     */
     public required init(config: Config, session: OAuth2Session? = nil, requestSerializer: RequestSerializer = HttpRequestSerializer(), responseSerializer: ResponseSerializer = JsonResponseSerializerWithDate()) {
         self.tsSdkInitiliazation = Int64(NSDate().timeIntervalSince1970 * 1000);
-        self.advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString;
+        self.advertisingId = "";
         self.jsonResponseSerializerWithDate = responseSerializer as? JsonResponseSerializerWithDate
 
         if (config.accountId == nil) {
