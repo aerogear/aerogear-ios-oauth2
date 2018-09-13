@@ -217,7 +217,7 @@ class OAuth2ModuleTests: XCTestCase {
         
         do {
             let actual = try OAuth2Module.getParam(claims: claims)
-            XCTAssertEqual("&claims=%7B%22userinfo%22:%7B%22phone%22:%7B%22essential%22:true%7D,%22email%22:%7B%22essential%22:true%7D%7D%7D", actual)
+            XCTAssertEqual("&claims=%7B%22userinfo%22:%7B%22email%22:%7B%22essential%22:true%7D,%22phone%22:%7B%22essential%22:true%7D%7D%7D", actual)
         } catch {
             XCTFail(String(describing: error))
         }
@@ -236,7 +236,7 @@ class OAuth2ModuleTests: XCTestCase {
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
             let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
-            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22:%7B%22claim1%22:%7B%22essential%22:true%7D,%22claim2%22:%7B%22essential%22:true%7D%7D%7D"))
+            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22:%7B%22claim2%22:%7B%22essential%22:true%7D,%22claim1%22:%7B%22essential%22:true%7D%7D%7D"))
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
