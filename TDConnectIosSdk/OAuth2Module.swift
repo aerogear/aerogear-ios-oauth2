@@ -150,7 +150,9 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         super.init()
 
         ForcedHEManager.initForcedHE()
-        self.fetchWellknownConfig()
+        if (config.wellKnownConfigurationEndpoint != nil) {
+            self.fetchWellknownConfig()
+        }
     }
 
     func fetchWellknownConfig() {
