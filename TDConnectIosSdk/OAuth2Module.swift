@@ -98,7 +98,7 @@ Parent class of any OAuth2 module implementing generic OAuth2 authorization flow
 */
 open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
     
-    open let config: Config
+    public let config: Config
     let jsonResponseSerializerWithDate: JsonResponseSerializerWithDate?
     open var http: Http
     open var oauth2Session: OAuth2Session
@@ -243,7 +243,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         // from the server.
         applicationLaunchNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AGAppLaunchedWithURLNotification), object: nil, queue: nil, using: { (notification: Notification!) -> Void in
             let info = notification.userInfo!
-            let url: URL? = info[UIApplicationLaunchOptionsKey.url] as? URL
+            let url: URL? = info[UIApplication.LaunchOptionsKey.url] as? URL
             self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
         })
 

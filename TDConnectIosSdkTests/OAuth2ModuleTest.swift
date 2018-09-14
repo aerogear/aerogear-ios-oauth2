@@ -21,6 +21,15 @@ import TDConnectIosSdk
 import AeroGearHttp
 import OHHTTPStubs
 
+extension String {
+    func encodeUrl() -> String? {
+        return self.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+    }
+    func decodeUrl() -> String? {
+        return self.removingPercentEncoding
+    }
+}
+
 public func stub(_ condition: @escaping OHHTTPStubsTestBlock, response: @escaping OHHTTPStubsResponseBlock) -> OHHTTPStubsDescriptor {
     return OHHTTPStubs.stubRequests(passingTest: condition, withStubResponse: response)
 }
@@ -216,8 +225,17 @@ class OAuth2ModuleTests: XCTestCase {
         let claims: Set<String> = ["email", "phone"]
         
         do {
-            let actual = try OAuth2Module.getParam(claims: claims)
-            XCTAssertEqual("&claims=%7B%22userinfo%22:%7B%22email%22:%7B%22essential%22:true%7D,%22phone%22:%7B%22essential%22:true%7D%7D%7D", actual)
+            let claimParams = try OAuth2Module.getParam(claims: claims)
+            let url = "http://example.com?foo=baz" + claimParams
+            let claims : String = getQueryStringParameter(url: url, param: "claims")!
+            let decodedClaims = claims.decodeUrl()!
+            let data = decodedClaims.data(using: .utf8)!
+            let claimsMap = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            let userInfo = claimsMap!["userinfo"] as! [String: Any]
+            let email = userInfo["email"] as! [String: Bool]
+            let phone = userInfo["phone"] as! [String: Bool]
+            XCTAssertTrue(email["essential"]!)
+            XCTAssertTrue(phone["essential"]!)
         } catch {
             XCTFail(String(describing: error))
         }
@@ -236,10 +254,23 @@ class OAuth2ModuleTests: XCTestCase {
         let http = Http(baseURL: "https://connect.staging.telenordigital.com/oauth")
         do {
             let url = try OAuth2Module.getAuthUrl(config: config, http: http, browserType: BrowserType.unknown)
-            XCTAssertNotNil(url.query?.range(of: "&claims=%7B%22userinfo%22:%7B%22claim2%22:%7B%22essential%22:true%7D,%22claim1%22:%7B%22essential%22:true%7D%7D%7D"))
+            let claims : String = getQueryStringParameter(url: url.absoluteString, param: "claims")!
+            let decodedClaims = claims.decodeUrl()!
+            let data = decodedClaims.data(using: .utf8)!
+            let claimsMap = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            let userInfo = claimsMap!["userinfo"] as! [String: Any]
+            let claim1 = userInfo["claim1"] as! [String: Bool]
+            let claim2 = userInfo["claim2"] as! [String: Bool]
+            XCTAssertTrue(claim1["essential"]!)
+            XCTAssertTrue(claim2["essential"]!)
         } catch {
             XCTFail("Failed to getAuthUrl with config=\(config) and http=\(http)")
         }
+    }
+    
+    func getQueryStringParameter(url: String, param: String) -> String? {
+        guard let url = URLComponents(string: url) else { return nil }
+        return url.queryItems?.first(where: { $0.name == param })?.value
     }
     
     func testMissingClaimsIsAllowed() {
