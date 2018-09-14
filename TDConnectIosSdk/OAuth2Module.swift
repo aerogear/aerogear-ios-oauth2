@@ -19,6 +19,7 @@ import Foundation
 import UIKit
 import AeroGearHttp
 import JWT
+import AuthenticationServices
 import SafariServices
 import WebKit
 
@@ -51,17 +52,19 @@ public enum OAuth2Error: Error {
 public enum BrowserType {
     case webView
     case safariViewController
+    case webAuthenticationSession
     case safariAuthenticationSession
     case safariExternalBrowser
     case unknown
 
     var description : String {
         switch self {
-        case .webView: return "web-view";
-        case .safariViewController: return "safari-view-controller";
-        case .safariAuthenticationSession: return "safari-authentication-session";
-        case .safariExternalBrowser: return "safari-external-browser";
-        case .unknown: return "unknown";
+            case .webView: return "web-view";
+            case .safariViewController: return "safari-view-controller";
+            case .webAuthenticationSession: return "web-authentication-session";
+            case .safariAuthenticationSession: return "safari-authentication-session";
+            case .safariExternalBrowser: return "safari-external-browser";
+            case .unknown: return "unknown";
         }
     }
 }
@@ -173,6 +176,9 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         if self.config.isWebView {
             return .webView;
         }
+        if #available(iOS 12.0, *) {
+            return .webAuthenticationSession;
+        }
         if #available(iOS 11.0, *) {
             return .safariAuthenticationSession;
         }
@@ -241,26 +247,7 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
             self.handleCallback(url, error: nil, state: state, completionHandler: completionHandler)
         })
 
-        if browserType == .webView || browserType == .unknown {
-            let webViewController = OAuth2WebViewController()
-            webViewController.targetURL = url;
-            UIApplication.shared.tdcTopViewController?.present(webViewController, animated: true, completion: nil)
-        } else if browserType == .safariAuthenticationSession {
-            if #available(iOS 11.0, *) {
-                self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
-                    self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
-                })
-                (self.authenticationSession as! SFAuthenticationSession).start()
-            }
-        } else if browserType == .safariViewController {
-            if #available(iOS 9.0, *) {
-                let safariViewController = SFSafariViewController(url: url as URL)
-                safariViewController.delegate = self
-                UIApplication.shared.tdcTopViewController?.present(safariViewController, animated: true, completion: nil)
-            }
-        } else if browserType == .safariExternalBrowser {
-            UIApplication.shared.openURL(url as URL)
-        }
+        launchBrowser(url, state, completionHandler)
     }
     
     func handleCallback(_ successUrl: URL?, error: Error?, state: String, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
@@ -358,6 +345,36 @@ open class OAuth2Module: NSObject, AuthzModule, SFSafariViewControllerDelegate {
         let jsonClaimsString = NSString(data: jsonClaims as Data, encoding: String.Encoding.utf8.rawValue)
         let encodedJson = (jsonClaimsString! as String).urlEncode()
         return "&claims=\(encodedJson)"
+    }
+    
+    fileprivate func launchBrowser(_ url: URL, _ state: String, _ completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        if browserType == .webView || browserType == .unknown {
+            let webViewController = OAuth2WebViewController()
+            webViewController.targetURL = url;
+            UIApplication.shared.tdcTopViewController?.present(webViewController, animated: true, completion: nil)
+        } else if browserType == .webAuthenticationSession {
+            guard #available(iOS 12.0, *) else {
+                fatalError("Inconstant iOS version between here and getBrowserTypeToUse()")
+            }
+            self.authenticationSession = ASWebAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
+                self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
+            })
+            (self.authenticationSession as! ASWebAuthenticationSession).start()
+        } else if browserType == .safariAuthenticationSession {
+            guard #available(iOS 11.0, *) else {
+                fatalError("Inconstant iOS version between here and getBrowserTypeToUse()")
+            }
+            self.authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: nil, completionHandler: { (successUrl: URL?, error: Error?) in
+                self.handleCallback(successUrl, error: error, state: state, completionHandler: completionHandler)
+            })
+            (self.authenticationSession as! SFAuthenticationSession).start()
+        } else if browserType == .safariViewController {
+            let safariViewController = SFSafariViewController(url: url as URL)
+            safariViewController.delegate = self
+            UIApplication.shared.tdcTopViewController?.present(safariViewController, animated: true, completion: nil)
+        } else if browserType == .safariExternalBrowser {
+            UIApplication.shared.openURL(url as URL)
+        }
     }
 
     /**

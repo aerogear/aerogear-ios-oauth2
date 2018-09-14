@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TDConnectIosSdk"
-  s.version      = "1.4.6"
+  s.version      = "1.4.7"
   s.summary      = "OAuth2 client library based on aerogear-ios-http"
   s.homepage     = "https://github.com/telenordigital/connect-ios-sdk"
   s.license      = 'Apache License, Version 2.0'
