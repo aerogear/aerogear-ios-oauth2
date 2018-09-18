@@ -11,7 +11,7 @@ import CoreTelephony
 
 class OperatorInfo {
     class func id() -> String {
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        #if targetEnvironment(simulator)
             return "24201"
         #else
             let networkInfo =  CTTelephonyNetworkInfo()
