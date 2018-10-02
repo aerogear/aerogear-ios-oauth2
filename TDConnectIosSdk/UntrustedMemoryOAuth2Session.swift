@@ -68,7 +68,9 @@ open class UntrustedMemoryOAuth2Session: OAuth2Session {
     Check validity of refreshToken. return true if still valid, false when expired.
     */
     open func refreshTokenIsNotExpired() -> Bool {
-        return self.refreshTokenExpirationDate != nil ? (self.refreshTokenExpirationDate!.timeIntervalSince(Date()) > 0) : true
+        return self.refreshTokenExpirationDate != nil
+            ? (self.refreshTokenExpirationDate!.timeIntervalSince(Date()) > 0)
+            : refreshToken != nil
     }
 
     /**
