@@ -127,8 +127,18 @@ open class TelenorConnectConfig: Config {
     :param: scopes values for authorization
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
     */
-    public init (clientId: String, redirectUrl: String, useStaging: Bool, scopes: [String], accountId: String, webView: Bool, claims: Set<String>? = nil, optionalParams: [String:String]? = nil, isPublicClient: Bool = true) {
-        let baseUrl = useStaging ? "https://connect.staging.telenordigital.com/oauth" : "https://connect.telenordigital.com/oauth"
+    public init (clientId: String,
+                 redirectUrl: String,
+                 useStaging: Bool,
+                 scopes: [String],
+                 accountId: String,
+                 webView: Bool,
+                 claims: Set<String>? = nil,
+                 optionalParams: [String:String]? = nil,
+                 isPublicClient: Bool = true,
+                 idProvider: IdProvider = IdProvider.connectId
+        ) {
+        let baseUrl = idProvider.getUrl(useStaging: useStaging)
         
         super.init(base: baseUrl,
             authzEndpoint: "\(baseUrl)/authorize",
