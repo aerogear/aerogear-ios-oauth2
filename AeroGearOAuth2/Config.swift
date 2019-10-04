@@ -24,12 +24,12 @@ open class Config {
     /**
     Applies the baseURL to the configuration.
     */
-    open let baseURL: String
+    public let baseURL: String
 
     /**
     Applies the "callback URL" once request token issued.
     */
-    open let redirectURL: String
+    public let redirectURL: String
 
     /**
     Applies the "authorization endpoint" to the request token.
@@ -44,17 +44,17 @@ open class Config {
     /**
     Endpoint for request to invalidate both accessToken and refreshToken.
     */
-    open let revokeTokenEndpoint: String?
+    public let revokeTokenEndpoint: String?
 
     /**
     Endpoint for request a refreshToken.
     */
-    open let refreshTokenEndpoint: String?
+    public let refreshTokenEndpoint: String?
 
     /**
     Endpoint for OpenID Connect to get user information.
     */
-    open let userInfoEndpoint: String?
+    public let userInfoEndpoint: String?
 
     /**
     Boolean to indicate whether OpenID Connect on authorization code grant flow is used.
@@ -84,12 +84,12 @@ open class Config {
     /**
     Applies the "client id" obtained with the client registration process.
     */
-    open let clientId: String
+    public let clientId: String
 
     /**
     Applies the "client secret" obtained with the client registration process.
     */
-    open let clientSecret: String?
+    public let clientSecret: String?
 
     /**
     Applies the "audience" obtained with the client registration process.
