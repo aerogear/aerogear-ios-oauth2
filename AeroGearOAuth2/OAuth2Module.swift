@@ -356,13 +356,7 @@ open class OAuth2Module: AuthzModule {
 
     // MARK: Internal Methods
 
-    func extractCode(_ notification: Notification, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
-        let info = notification.userInfo!
-        let url: URL? = info[UIApplication.LaunchOptionsKey.url] as? URL
-
-        // extract the code from the URL
-        let queryParamsDict = self.parametersFrom(queryString: url?.query)
-        let code = queryParamsDict["code"]
+    fileprivate func extractCodeFromQuery(_ code: String?, _ completionHandler: @escaping (AnyObject?, NSError?) -> Void, _ queryParamsDict: [String : String]) {
         // if exists perform the exchange
         if (code != nil) {
             self.exchangeAuthorizationCodeForAccessToken(code: code!, completionHandler: completionHandler)
@@ -374,10 +368,24 @@ open class OAuth2Module: AuthzModule {
                 completionHandler(nil, error)
                 return
             }
-
+            
             let errorDescription = queryParamsDict["error_description"] ?? "There was an error!"
             let error = NSError(domain: AGAuthzErrorDomain, code: 1, userInfo: ["error": errorName, "errorDescription": errorDescription])
-
+            
+            completionHandler(nil, error)
+        }
+    }
+    
+    func extractCode(_ notification: Notification, completionHandler: @escaping (AnyObject?, NSError?) -> Void) {
+        let info = notification.userInfo!
+        if let url = info[UIApplication.LaunchOptionsKey.url] as? URL {
+            //let url: URL? = info[UIApplication.LaunchOptionsKey.url] as? URL
+            // extract the code from the URL
+            let queryParamsDict = self.parametersFrom(queryString: url.query)
+            let code = queryParamsDict["code"]
+            extractCodeFromQuery(code, completionHandler, queryParamsDict)
+        } else {
+            let error = NSError(domain: AGAuthzErrorDomain, code: 1, userInfo: ["error": "Url Failed", "errorDescription": "error in fetching code"])
             completionHandler(nil, error)
         }
         // finally, unregister

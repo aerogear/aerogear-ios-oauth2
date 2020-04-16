@@ -95,14 +95,15 @@ open class KeycloakConfig: Config {
     :param: realm to identify which realm to use. A realm group a set of application/OAuth2 client together.
     :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false, redirectUrl: String? = nil) {
         let bundleString = Bundle.main.bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
+        let redirectUrl = redirectUrl ?? "\(bundleString)://oauth2Callback"
         super.init(
             base: "\(host)/auth",
             authzEndpoint: "realms/\(realm)/protocol/openid-connect/auth",
-            redirectURL: "\(bundleString)://oauth2Callback",
+            redirectURL: redirectUrl,
             accessTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             clientId: clientId,
             refreshTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
