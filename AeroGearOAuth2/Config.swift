@@ -121,6 +121,7 @@ open class Config {
     */
     open var webViewHandler: ((UIViewController, _ completionHandler: (AnyObject?, NSError?) -> Void) -> ()) = {
         (webView, completionHandler) in
+        webView.modalPresentationStyle = .fullScreen
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
