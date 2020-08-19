@@ -137,6 +137,9 @@ open class OAuth2Module: AuthzModule {
         if let audienceId = config.audienceId {
             params = "\(params)&audience=\(audienceId)"
         }
+        
+        // add additional parameters
+        params.append("&\(config.additionalParameters?.toQueryString() ?? "")")
 
         guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url: config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])

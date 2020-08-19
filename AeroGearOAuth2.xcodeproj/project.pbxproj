@@ -31,6 +31,8 @@
 		48F79D9D1ABC191E00D8B712 /* OAuth2WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */; };
 		508544F2B38CDEDC0A4CE6C9 /* Pods_AeroGearOAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 425AC596F1B7BEC7C7342EC5 /* Pods_AeroGearOAuth2.framework */; };
 		6F1432B81A168594003BEE5B /* AeroGearOAuth2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4833046219AF1635002F8DA9 /* AeroGearOAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		830CCE1824ED89F4006CAAD2 /* DictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CCE1724ED89F4006CAAD2 /* DictionaryUtils.swift */; };
+		830CCE1A24ED8E09006CAAD2 /* DictionaryUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CCE1924ED8E09006CAAD2 /* DictionaryUtilsTest.swift */; };
 		B18D33472E86C2B2AA07D19D /* Pods_AeroGearOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2917739A0BF73285D969FA56 /* Pods_AeroGearOAuth2Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,8 @@
 		48F79D9C1ABC191E00D8B712 /* OAuth2WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2WebViewController.swift; sourceTree = "<group>"; };
 		4BEBEA405587A6D46CBF5CBC /* Pods-AeroGearOAuth2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2.release.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2/Pods-AeroGearOAuth2.release.xcconfig"; sourceTree = "<group>"; };
 		6CB5D8DB5479CD05722EB5A2 /* Pods-AeroGearOAuth2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		830CCE1724ED89F4006CAAD2 /* DictionaryUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryUtils.swift; sourceTree = "<group>"; };
+		830CCE1924ED8E09006CAAD2 /* DictionaryUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryUtilsTest.swift; sourceTree = "<group>"; };
 		9ADB5FF0CB048392A40B2D60 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0589EF0A39385A17C91B99C /* Pods-AeroGearOAuth2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2Tests/Pods-AeroGearOAuth2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D75BD934F346EB2E7AB2F18D /* Pods-AeroGearOAuth2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AeroGearOAuth2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AeroGearOAuth2/Pods-AeroGearOAuth2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				48CD52D619B0C1CB008D0694 /* OAuth2Module.swift */,
 				485D73801A35BCBC0007D9EC /* OpenIdClaim.swift */,
 				48CD52DC19B0C22A008D0694 /* OAuth2Session.swift */,
+				830CCE1724ED89F4006CAAD2 /* DictionaryUtils.swift */,
 				4872F71519EFE7D100F3FDE8 /* DateUtils.swift */,
 				4814EF4919C1C0FA008BAC4D /* TrustedPersistantOAuth2Session.swift */,
 				4814EF4A19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift */,
@@ -181,6 +186,7 @@
 				485D73791A35B6240007D9EC /* OpenIDConnectGoogleOAuth2ModuleTest.swift */,
 				485D737A1A35B6240007D9EC /* OpenIDConnectKeycloakOAuth2ModuleTest.swift */,
 				48CD52DE19B0CB5A008D0694 /* OAuth2SessionTest.swift */,
+				830CCE1924ED8E09006CAAD2 /* DictionaryUtilsTest.swift */,
 				4872F71919EFE80F00F3FDE8 /* DateUtilsTest.swift */,
 				48C94D7F19C1F0970000ABBB /* OAuth2ModuleTest.swift */,
 				485AAB821A37259E00ABEBB2 /* KeycloakOAuth2ModuleTest.swift */,
@@ -400,6 +406,7 @@
 				4814EF4E19C1C10C008BAC4D /* FacebookOAuth2Module.swift in Sources */,
 				483304A519AF44DF002F8DA9 /* Config.swift in Sources */,
 				4814EF4C19C1C0FA008BAC4D /* UntrustedMemoryOAuth2Session.swift in Sources */,
+				830CCE1824ED89F4006CAAD2 /* DictionaryUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +416,7 @@
 			files = (
 				4872F71A19EFE80F00F3FDE8 /* DateUtilsTest.swift in Sources */,
 				485D737B1A35B6240007D9EC /* OpenIDConnectFacebookOAuth2ModuleTest.swift in Sources */,
+				830CCE1A24ED8E09006CAAD2 /* DictionaryUtilsTest.swift in Sources */,
 				485AAB941A383FB500ABEBB2 /* OAuth2ModuleMock.swift in Sources */,
 				48432BE91A2F727C00F7A0FF /* ConfigTest.swift in Sources */,
 				48C94D8019C1F0970000ABBB /* OAuth2ModuleTest.swift in Sources */,
