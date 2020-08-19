@@ -29,7 +29,7 @@ open class FacebookConfig: Config {
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
     :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, clientSecret: String, scopes: [String], accountId: String? = nil, isOpenIDConnect: Bool = false, additionalParameters: [String: String] = [:]) {
         super.init(base: "",
             authzEndpoint: "https://www.facebook.com/dialog/oauth",
             redirectURL: "fb\(clientId)://authorize/",
@@ -41,7 +41,8 @@ open class FacebookConfig: Config {
             userInfoEndpoint: isOpenIDConnect ? "https://graph.facebook.com/v2.10/me" : nil,
             scopes: scopes,
             clientSecret: clientSecret,
-            accountId: accountId)
+            accountId: accountId,
+            additionalParameters: additionalParameters)
         // Add openIdConnect scope
         if self.isOpenIDConnect {
             if self.scopes[0].range(of: "public_profile") == nil {
@@ -62,7 +63,7 @@ open class GoogleConfig: Config {
     :param: accountId this unique id is used by AccountManager to identify the OAuth2 client.
     :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, scopes: [String], audienceId: String? = nil, accountId: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, scopes: [String], audienceId: String? = nil, accountId: String? = nil, isOpenIDConnect: Bool = false, additionalParameters: [String: String] = [:]) {
         let bundleString = Bundle.main.bundleIdentifier ?? "google"
         super.init(base: "https://accounts.google.com",
             authzEndpoint: "o/oauth2/v2/auth",
@@ -75,7 +76,8 @@ open class GoogleConfig: Config {
             isOpenIDConnect: isOpenIDConnect,
             userInfoEndpoint: isOpenIDConnect ? "https://www.googleapis.com/plus/v1/people/me/openIdConnect" : nil,
             scopes: scopes,
-            accountId: accountId
+            accountId: accountId,
+            additionalParameters: additionalParameters
         )
 
         // Add openIdConnect scope
@@ -95,7 +97,7 @@ open class KeycloakConfig: Config {
     :param: realm to identify which realm to use. A realm group a set of application/OAuth2 client together.
     :param: isOpenIDConnect to identify if fetching id information is required.
     */
-    public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false) {
+    public init(clientId: String, host: String, realm: String? = nil, isOpenIDConnect: Bool = false, additionalParameters: [String: String] = [:]) {
         let bundleString = Bundle.main.bundleIdentifier ?? "keycloak"
         let defaulRealmName = String(format: "%@-realm", clientId)
         let realm = realm ?? defaulRealmName
@@ -107,7 +109,8 @@ open class KeycloakConfig: Config {
             clientId: clientId,
             refreshTokenEndpoint: "realms/\(realm)/protocol/openid-connect/token",
             revokeTokenEndpoint: "realms/\(realm)/protocol/openid-connect/logout",
-            isOpenIDConnect: isOpenIDConnect
+            isOpenIDConnect: isOpenIDConnect,
+            additionalParameters: additionalParameters
         )
         // Add openIdConnect scope
         if self.isOpenIDConnect {
