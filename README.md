@@ -37,7 +37,7 @@ OAuth2 Client based on [aerogear-ios-http](https://github.com/aerogear/aerogear-
 
 * Account manager for multiple OAuth2 accounts,
 * Request access and refresh token,
-* Grant access through secure external browser and URI schema to re-enter app,
+* Grant access through the secure external browser and URI schema to re-enter the app,
 * (implicit or explicit) refresh tokens,
 * Revoke tokens,
 * Permanent secure storage,
